@@ -11,6 +11,12 @@
    ```bash
    poetry install
    ```
+3. **Luo .env-tiedosto**:
+   ```bash
+   DATABASE_URL=<your_database_service>
+   TEST_ENV=true
+   SECRET=<your_own_secret>
+   ```
 
 ## Backlogit
 * [Product backlog](https://github.com/users/ruokokoski/projects/3)
