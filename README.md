@@ -1,5 +1,4 @@
-# ohtu-miniprojekti
-Ohjelmistotuotanto - Miniprojekti
+# Ohjelmistotuotanto - Miniprojekti
 
-Projekti cloonattu T: Touko
-Kloonasin T: Joni
+## Product backlog
+[Product backlog](https://github.com/users/ruokokoski/projects/3)
