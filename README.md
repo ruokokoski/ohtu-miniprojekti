@@ -7,3 +7,4 @@
 
 Definition of Done:
  - PyLint 
+ - testi
