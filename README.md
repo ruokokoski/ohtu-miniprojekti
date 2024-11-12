@@ -7,4 +7,4 @@
 
 Definition of Done:
  - PyLint 
- - testi
+ - Robot testit
