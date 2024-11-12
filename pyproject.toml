@@ -6,8 +6,20 @@ authors = ["Teemu Ruokokoski <teemu.ruokokoski@helsinki.fi>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">=3.10,<3.13"
+flask = "^3.0.3"
+flask-sqlalchemy = "^3.1.1"
+psycopg2-binary = "^2.9.10"
+python-dotenv = "^1.0.1"
+getenv = "^0.2.0"
+robotframework = "^7.1.1"
+robotframework-seleniumlibrary = "^6.6.1"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+pylint = "^3.3.1"
+coverage = "^7.6.4"
 
 [build-system]
 requires = ["poetry-core"]
