@@ -1,4 +1,6 @@
 # Ohjelmistotuotanto - Miniprojekti
 
 ## Product backlog
-[Product backlog](https://github.com/users/ruokokoski/projects/3)
+* [Product backlog](https://github.com/users/ruokokoski/projects/3)
+
+* [Sprint backlog](https://github.com/users/ruokokoski/projects/5)
