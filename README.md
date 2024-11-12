@@ -1,0 +1,2 @@
+# ohtu-miniprojekti
+Ohjelmistotuotanto - Miniprojekti
