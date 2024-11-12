@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "ohtu-miniprojekti"
+version = "0.1.0"
+description = "ohtu-mini"
+authors = ["Teemu Ruokokoski <teemu.ruokokoski@helsinki.fi>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
