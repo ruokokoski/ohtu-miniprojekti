@@ -14,10 +14,12 @@ disable=raw-checker-failed,
         use-symbolic-message-instead,
         missing-module-docstring,
         missing-function-docstring,
-        missing-class-docstring
+        missing-class-docstring,
+        pointless-string-statement
 
 [FORMAT]
 
 [REFACTORING]
 
 [DESIGN]
+min-public-methods=1

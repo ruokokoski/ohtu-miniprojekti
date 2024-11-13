@@ -18,11 +18,25 @@
    SECRET=<your_own_secret>
    ```
 
+## Sovelluksen käynnistäminen
+
+1. **Käynnistä virtuaaliympäristö**:
+   ```bash
+   poetry shell
+   ```
+2. **Käynnistä sovellus**:
+   ```bash
+   python3 src/index.py
+   ```
+3. **Sovellus käynnistyy osoitteessa**: http://localhost:5001
+
 ## Backlogit
 * [Product backlog](https://github.com/users/ruokokoski/projects/3)
 
 * [Sprint backlog](https://github.com/users/ruokokoski/projects/5)
 
 ## Definition of Done:
- - PyLint 
- - Robot testit
+ - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
+ - Koodi täyttää määritellyt PyLint-laatuvaatiumukset
+ - Robot-testit User Storylle
+ - unittest-kattavuus 60% (?)

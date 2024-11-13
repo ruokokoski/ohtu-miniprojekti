@@ -1,3 +1,4 @@
+'''
 from config import db, app
 from sqlalchemy import text
 
@@ -46,3 +47,4 @@ def setup_db():
 if __name__ == "__main__":
     with app.app_context():
       setup_db()
+'''
