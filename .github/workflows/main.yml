@@ -41,7 +41,7 @@ jobs:
       - name: Run Python linting with Pylint
         run: poetry run pylint src
       - name: Run Robot tests
-        run: poetry run robot src/story_tests
+        run: poetry run robot --variable HEADLESS:true src/story_tests
       # - name: Run unit tests
       #   run: poetry run pytest src/tests
       # - name: Setup chromedriver
