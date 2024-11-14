@@ -1,6 +1,10 @@
 # Ohjelmistotuotanto - Miniprojekti
 
-## Setup
+
+
+## Projektin käyttöönotto
+
+### Asentaminen
 
 1. **Kloonaa repositorio**:
    ```bash
@@ -13,12 +17,19 @@
    ```
 3. **Luo .env-tiedosto**:
    ```bash
-   DATABASE_URL=<your_database_service>
+   DATABASE_URL=postgresql://<your_database_service>
    TEST_ENV=true
    SECRET=<your_own_secret>
    ```
 
-## Sovelluksen käynnistäminen
+### Yhteyden ottaminen tietokantaan
+
+Tietokantaan yhdistäminen suoraan konsolista:
+```bash
+   psql <DATABASE_URL>
+```
+
+### Sovelluksen käynnistäminen
 
 1. **Käynnistä virtuaaliympäristö**:
    ```bash
@@ -33,10 +44,10 @@
 ## Backlogit
 * [Product backlog](https://github.com/users/ruokokoski/projects/3)
 
-* [Sprint backlog](https://github.com/users/ruokokoski/projects/5)
+* [Sprint backlog viikko 1](https://github.com/users/ruokokoski/projects/5)
 
 ## Definition of Done:
  - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
- - Koodi täyttää määritellyt PyLint-laatuvaatiumukset
+ - Koodi täyttää määritellyt PyLint-laatuvaatimukset
  - Robot-testit User Storylle
  - unittest-kattavuus 60% (?)
