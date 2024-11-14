@@ -6,8 +6,53 @@ Uusi viite
 
 {% block body %}
 
-<h2>Uuden viitteen luominen</h2>
+<h2>Uuden book-viitteen luominen</h2>
 
-<p>lomake tähän...</p>
+<form action="/create_reference" method="post" style="display: inline-block;">
+    <!-- <label for="reference_type" style="display: inline-block; width: 200px;">Valitse viitteen tyyppi:</label> -->
+
+    <label for="citation_key" style="display: inline-block; width: 200px;">Viitteen tunniste:</label>
+    <input type="text" name="citation_key" required>
+    <br>
+    <label for="author" style="display: inline-block; width: 200px;">Author:</label>
+    <input type="text" name="author" required>
+    <br>
+    <label for="title" style="display: inline-block; width: 200px;">Title:</label>
+    <input type="text" name="title" required>
+    <br>
+    <label for="publisher" style="display: inline-block; width: 200px;">Publisher:</label>
+    <input type="text" name="publisher" required>
+    <br>
+    <label for="year" style="display: inline-block; width: 200px;">Year:</label>
+    <input type="text" name="year" required>
+    <br>
+    <label for="volume" style="display: inline-block; width: 200px;">Volume/Number:</label>
+    <input type="text" name="volume">
+    <br>
+    <label for="series" style="display: inline-block; width: 200px;">Series:</label>
+    <input type="text" name="series">
+    <br>
+    <label for="address" style="display: inline-block; width: 200px;">Address:</label>
+    <input type="text" name="address">
+    <br>
+    <label for="edition" style="display: inline-block; width: 200px;">Edition:</label>
+    <input type="text" name="edition">
+    <br>
+    <label for="month" style="display: inline-block; width: 200px;">Month:</label>
+    <input type="text" name="month">
+    <br>
+    <label for="year" style="display: inline-block; width: 200px;">Year:</label>
+    <input type="text" name="year">
+    <br>
+    <label for="note" style="display: inline-block; width: 200px;">Note:</label>
+    <input type="text" name="note">
+    <br>
+    <label for="key" style="display: inline-block; width: 200px;">Key:</label>
+    <input type="text" name="key">
+    <br>
+    <button type="submit">
+      Tallenna
+    </button>
+  </form>
 
 {% endblock %}
