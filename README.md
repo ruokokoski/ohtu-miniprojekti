@@ -22,13 +22,6 @@
    SECRET=<your_own_secret>
    ```
 
-### Yhteyden ottaminen tietokantaan
-
-Tietokantaan yhdistäminen suoraan konsolista:
-```bash
-   psql <DATABASE_URL>
-```
-
 ### Sovelluksen käynnistäminen
 
 1. **Käynnistä virtuaaliympäristö**:
@@ -40,6 +33,13 @@ Tietokantaan yhdistäminen suoraan konsolista:
    python3 src/index.py
    ```
 3. **Sovellus käynnistyy osoitteessa**: http://localhost:5001
+
+### Yhteyden ottaminen tietokantaan
+
+Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
+```bash
+   psql <DATABASE_URL>
+```
 
 ## Backlogit
 * [Product backlog](https://github.com/users/ruokokoski/projects/3)
