@@ -51,3 +51,5 @@ Tietokantaan yhdistäminen suoraan konsolista:
  - Koodi täyttää määritellyt PyLint-laatuvaatimukset
  - Robot-testit User Storylle
  - unittest-kattavuus 60% (?)
+
+
