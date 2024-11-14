@@ -1,5 +1,5 @@
-from config import db
-from sqlalchemy import text
+#from config import db
+#from sqlalchemy import text
 #from entities.reference import Reference
 
 def get_references():

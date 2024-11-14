@@ -1,7 +1,7 @@
 from flask import render_template#, redirect, request, jsonify, flash
 #from db_helper import reset_db
 from config import app#, test_env
-from repositories.reference_repository import list_references
+#from repositories.reference_repository import list_references
 
 
 @app.route("/")

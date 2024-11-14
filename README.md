@@ -1,6 +1,6 @@
 # Ohjelmistotuotanto - Miniprojekti
 
-
+[![GHA_workflow_badge](https://github.com/ruokokoski/ohtu-miniprojekti/workflows/CI/badge.svg)](https://github.com/ruokokoski/ohtu-miniprojekti/actions)
 
 ## Projektin käyttöönotto
 
