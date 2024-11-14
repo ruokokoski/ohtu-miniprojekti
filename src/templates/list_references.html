@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}Viitteet{% endblock %}
+
+{% block body %}
+  <h2>Viitteet</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Author</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reference in references %}
+        <tr>
+          <td>{{ reference[0] }}</td> <!-- author -->
+          <td>{{ reference[1] }}</td> <!-- title -->
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="2">Ei viitteitä saatavilla.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
