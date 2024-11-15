@@ -2,6 +2,6 @@
 .venv
 .pytest_cache
 __pycache__
-log.html
-output.html
-report.html
+*.html
+*.xml
+*.png

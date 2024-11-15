@@ -46,6 +46,16 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Sprint backlog viikko 1](https://github.com/users/ruokokoski/projects/5)
 
+## Koodin laatutarkasten suoritus
+```bash
+   poetry run pylint src
+```
+
+## Robot-testien suoritus
+```bash
+   bash run_robot_tests.sh
+```
+
 ## Definition of Done:
  - Toteutus täyttää user storyn vaatimukset
  - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
