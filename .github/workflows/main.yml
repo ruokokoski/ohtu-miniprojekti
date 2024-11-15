@@ -43,7 +43,7 @@ jobs:
       # - name: Run unit tests
       #   run: poetry run pytest src/tests
       - name: Setup chromedriver
-         uses: nanasess/setup-chromedriver@master
+        uses: nanasess/setup-chromedriver@master
       - run: |
            export DISPLAY=:99
            chromedriver --url-base=/wd/hub &
