@@ -4,6 +4,6 @@ Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
 
 *** Test Cases ***
-Open And Configure Browser
+At start main page works
     Go To  ${HOME_URL}
     Title Should Be  Viitelistaus
