@@ -1,5 +1,5 @@
-#from config import db
-#from sqlalchemy import text
+from config import db
+from sqlalchemy import text
 #from entities.reference import Reference
 
 def get_references():
@@ -9,11 +9,11 @@ def get_references():
     #references = result.fetchall()
     #return
 
-def list_references(): # need to create the database first
-    pass
-    #sql = text('SELECT author, title FROM "references" ORDER BY author DESC')
-    #result = db.session.execute(sql).fetchall()
-    #return result
+
+def list_references():
+    sql = text('SELECT author, year, title, publisher, address, key FROM books ORDER BY author DESC')
+    result = db.session.execute(sql).fetchall()
+    return result
 
 
 

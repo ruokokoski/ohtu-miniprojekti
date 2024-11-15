@@ -8,14 +8,22 @@
     <thead>
       <tr>
         <th>Author</th>
+        <th>Year</th>
         <th>Title</th>
+        <th>Publisher</th>
+        <th>Address</th>
+        <th>Key</th>
       </tr>
     </thead>
     <tbody>
       {% for reference in references %}
         <tr>
-          <td>{{ reference[0] }}</td> <!-- author -->
-          <td>{{ reference[1] }}</td> <!-- title -->
+          <td>{{ reference[0] }}</td>  <!-- author -->
+          <td>{{ reference[1] }}</td>  <!-- year -->
+          <td>{{ reference[2] }}</td>  <!-- title -->
+          <td>{{ reference[3] }}</td>  <!-- publisher -->
+          <td>{{ reference[4] }}</td>  <!-- address -->
+          <td>{{ reference[5] }}</td>  <!-- key -->
         </tr>
       {% else %}
         <tr>
