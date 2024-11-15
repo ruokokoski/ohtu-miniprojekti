@@ -41,10 +41,12 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
    psql <DATABASE_URL>
 ```
 
-## Backlogit
+## Dokumentit
 * [Product backlog](https://github.com/users/ruokokoski/projects/3)
 
 * [Sprint backlog viikko 1](https://github.com/users/ruokokoski/projects/5)
+
+* [Burndown ja Daily Scrum-muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
 ## Koodin laatutarkasten suoritus
 ```bash
