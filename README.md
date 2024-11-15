@@ -47,10 +47,11 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 * [Sprint backlog viikko 1](https://github.com/users/ruokokoski/projects/5)
 
 ## Definition of Done:
+ - Toteutus täyttää user storyn vaatimukset
  - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
  - Koodi täyttää määritellyt PyLint-laatuvaatimukset
  - Robot-testit User Storylle
- - unittest-kattavuus 60% (?)
+ - unittest-kattavuus >75%
 
 ## Current sprint burndown chart
 ![Alt text](https://docs.google.com/spreadsheets/d/e/2PACX-1vSgmI9CcnHExwW76f3Iid2vBFtww8dJj3gGbKORF8bFOcxoj4qKHqvyHGiRsX7gq379fEPJEW54qcTe/pubchart?oid=1546569514&format=image)
