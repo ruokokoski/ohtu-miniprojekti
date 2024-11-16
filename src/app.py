@@ -17,5 +17,4 @@ def new():
 @app.route("/references")
 def browse_references():
     references_list = list_references()
-    print(references_list)
     return render_template("list_references.html", references=references_list)
