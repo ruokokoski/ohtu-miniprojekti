@@ -53,6 +53,18 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
    poetry run pylint src
 ```
 
+## Yksikkötestien suoritus
+```bash
+   poetry run pytest
+```
+
+## Testikattavuus html-tiedostoksi
+```bash
+   poetry shell
+   coverage run --branch -m pytest
+   coverage html
+```
+
 ## Robot-testien suoritus
 ```bash
    bash run_robot_tests.sh

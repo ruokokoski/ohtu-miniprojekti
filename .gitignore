@@ -5,3 +5,5 @@ __pycache__
 *.html
 *.xml
 *.png
+htmlcov
+.coverage
