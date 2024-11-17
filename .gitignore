@@ -2,7 +2,8 @@
 .venv
 .pytest_cache
 __pycache__
-*.html
+report.html
+log.html
 *.xml
 *.png
 htmlcov
