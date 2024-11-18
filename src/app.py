@@ -49,5 +49,3 @@ if test_env:
     def reset_database():
         reset_db()
         return jsonify({ 'message': "db reset" })
-
-

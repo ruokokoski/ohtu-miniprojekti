@@ -1,6 +1,6 @@
 [MASTER]
 
-ignore=tests
+ignore=tests,story_tests,db_helper.py
 
 [MESSAGE CONTROL]
 
