@@ -2,10 +2,11 @@
 Resource  resource.robot
 Suite Setup  Open And Configure Browser
 Suite Teardown  Close Browser
+Test Setup  Reset Table And Go To Starting Page
 
 *** Test Cases ***
 At start main page works
-    Go To main page
+    Go To Starting page
     Title Should Be  Koti
 
 Go To new reference
@@ -25,12 +26,16 @@ Add a new book reference
     Set Address  testi4
     Set Year  2000
     Submit 
-    Go to main page
+    Go To Starting page
     Click Link  Viitelistaus
     Page Should Contain  text=testi4
 
 
 *** Keywords ***
+Reset Table And Go To Starting Page
+    Reset Table
+    Go To Starting page
+
 Submit
     Click Button  Tallenna
 
