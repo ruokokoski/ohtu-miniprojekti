@@ -14,8 +14,7 @@ def create_reference(data):
     columns = ', '.join(data.keys()) # (col1, col2...)
     placeholders = ', '.join(f":{key}" for key in data.keys()) # (:col1, :col2...)
 
-    sql_query = text(f"""INSERT INTO Books ({columns})
-                     VALUES ({placeholders})""")
+    sql_query = text(f"""INSERT INTO Books ({columns}) VALUES ({placeholders})""")
 
     db.session.execute(sql_query, data)
     db.session.commit()

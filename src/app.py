@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, flash, jsonify
 from db_helper import reset_db
 from config import app, test_env
 from repositories.reference_repository import list_references, create_reference
-from util import validate_reference
+from util import validate_reference, UserInputError
 
 
 @app.route("/")
@@ -39,7 +39,7 @@ def reference_creation():
         flash("Uusi viite luotu onnistuneesti")
         return redirect("/")
 
-    except KeyError as error:
+    except UserInputError as error:
         flash(str(error))
         return redirect("/new_reference")
 
