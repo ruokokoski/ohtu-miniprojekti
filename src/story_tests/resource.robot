@@ -24,9 +24,8 @@ Open And Configure Browser
     END
     Open Browser  browser=${BROWSER}  options=${options}
 
-Reset Table
+Reset Todos
     Go To  ${RESET_URL}
 
-Go To Starting page
+Go to main page
     Go To  ${HOME_URL}
-
