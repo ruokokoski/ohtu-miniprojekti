@@ -21,6 +21,10 @@
    TEST_ENV=true
    SECRET=<your_own_secret>
    ```
+4. **Tietokannan alustus**:
+   ```bash
+   poetry run python3 src/db_helper.py
+   ```
 
 ### Sovelluksen käynnistäminen
 
@@ -48,24 +52,26 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Burndown ja Daily Scrum-muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
-## Koodin laatutarkasten suoritus
+## Sovelluksen testaus
+
+### Koodin laatutarkasten suoritus
 ```bash
    poetry run pylint src
 ```
 
-## Yksikkötestien suoritus
+### Yksikkötestien suoritus
 ```bash
    poetry run pytest
 ```
 
-## Testikattavuus html-tiedostoksi
+### Testikattavuus html-tiedostoksi
 ```bash
    poetry shell
    coverage run --branch -m pytest
    coverage html
 ```
 
-## Robot-testien suoritus
+### Robot-testien suoritus
 ```bash
    bash run_robot_tests.sh
 ```
