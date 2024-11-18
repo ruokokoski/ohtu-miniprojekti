@@ -39,7 +39,7 @@ def reference_creation():
         flash("Uusi viite luotu onnistuneesti")
         return redirect("/")
 
-    except Exception as error:
+    except KeyError as error:
         flash(str(error))
         return redirect("/new_reference")
 
