@@ -1,6 +1,6 @@
-from flask import render_template, redirect, request, flash#, jsonify
-#from db_helper import reset_db
-from config import app#, test_env
+from flask import render_template, redirect, request, flash, jsonify
+from db_helper import reset_db
+from config import app, test_env
 from repositories.reference_repository import list_references, create_reference
 from util import validate_reference
 
@@ -43,8 +43,11 @@ def reference_creation():
         flash(str(error))
         return redirect("/new_reference")
 
-# need to create db/table first..
-#@app.route("/references")
-#def browse_references():
-    #references_list = list_references()
-    #return render_template("list_references.html", references=references_list)
+
+if test_env:
+    @app.route("/reset_db")
+    def reset_database():
+        reset_db()
+        return jsonify({ 'message': "db reset" })
+
+

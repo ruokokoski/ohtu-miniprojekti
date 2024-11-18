@@ -1,8 +1,7 @@
-'''
 from config import db, app
 from sqlalchemy import text
 
-table_name = "todos"
+table_name = "Books"
 
 def table_exists(name):
   sql_table_existence = text(
@@ -35,9 +34,13 @@ def setup_db():
   print(f"Creating table {table_name}")
   sql = text(
     f"CREATE TABLE {table_name} ("
-    "  id SERIAL PRIMARY KEY, "
-    "  content TEXT NOT NULL,"
-    "  done BOOLEAN DEFAULT FALSE"
+    "  id SERIAL PRIMARY KEY,  "
+    "  key TEXT NOT NULL,  "
+    "  author TEXT NOT NULL,  "
+    "  year INTEGER NOT NULL,  "
+    "  title TEXT NOT NULL,  "
+    "  publisher TEXT,  "
+    "  address TEXT"
     ")"
   )
 
@@ -47,4 +50,4 @@ def setup_db():
 if __name__ == "__main__":
     with app.app_context():
       setup_db()
-'''
+
