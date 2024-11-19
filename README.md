@@ -53,6 +53,8 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
+* [Käytetty tietokantapalvelu](https://aiven.io/)
+
 ## Sovelluksen testaus
 
 ### Koodin laatutarkasten suoritus
@@ -83,11 +85,13 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 ```
 
 ## Definition of Done:
- - Toteutus täyttää user storyn vaatimukset
+ - Toteutus täyttää User Storyn vaatimukset (manuaalinen testaus)
  - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
  - Koodi täyttää määritellyt PyLint-laatuvaatimukset
- - Robot-testit User Storylle
- - unittest-kattavuus >75%
+ - Robot-testit User Storylle (tarvittaessa)
+ - User Storyn unittest-kattavuus >75%
 
 ## Current sprint burndown chart
 ![Alt text](https://docs.google.com/spreadsheets/d/e/2PACX-1vSgmI9CcnHExwW76f3Iid2vBFtww8dJj3gGbKORF8bFOcxoj4qKHqvyHGiRsX7gq379fEPJEW54qcTe/pubchart?oid=1546569514&format=image)
+
+Lisenssi: MIT
