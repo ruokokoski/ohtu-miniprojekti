@@ -26,7 +26,6 @@ Add a new book reference
     Set Address  US
     Set Year  2022
     Submit 
-    Go To Starting page
     Click Link  Viitelistaus
     Page Should Contain  text=Murphy, Kevin P
 
