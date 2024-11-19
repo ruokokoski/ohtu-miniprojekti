@@ -19,16 +19,16 @@ Go To reference list
 
 Add a new book reference
     Click Link  Uusi viite
-    Set Citation key  test
-    Set Author  test1
-    Set Title  testi2
-    Set Publisher  testi3
-    Set Address  testi4
-    Set Year  2000
+    Set Citation key  murphy2022
+    Set Author  Murphy, Kevin P
+    Set Title  Probabilistic machine learning: an introduction
+    Set Publisher  MIT Press
+    Set Address  US
+    Set Year  2022
     Submit 
     Go To Starting page
     Click Link  Viitelistaus
-    Page Should Contain  text=testi4
+    Page Should Contain  text=Murphy, Kevin P
 
 
 *** Keywords ***
