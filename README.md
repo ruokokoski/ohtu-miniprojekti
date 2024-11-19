@@ -20,7 +20,7 @@
    DATABASE_URL=postgresql://<your_database_service>
    TEST_DATABASE_URL=postgresql://user:password@localhost:5432/test_db
    TEST_ENV=true
-   SECRET=<your_own_secret>
+   SECRET_KEY=<your_own_secret>
    ```
 4. **Tietokannan alustus**:
    ```bash
