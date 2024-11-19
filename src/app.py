@@ -1,9 +1,10 @@
+from io import BytesIO
 from flask import render_template, redirect, request, flash, jsonify, send_file
 from db_helper import reset_db
 from config import app, test_env
 from repositories.reference_repository import list_references, create_reference
 from util import validate_reference, UserInputError
-from io import BytesIO
+
 
 
 @app.route("/")
@@ -48,7 +49,9 @@ def reference_creation():
 @app.route("/download")
 def download_references():
     test_data = "esimerkki referenssi"
-    return send_file(BytesIO(bytes(test_data, "utf-8")), download_name="references.bib", as_attachment=True)
+    return send_file(BytesIO(bytes(test_data, "utf-8")),
+                     download_name="references.bib",
+                     as_attachment=True)
 
 
 if test_env:
