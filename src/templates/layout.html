@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>{% block title %}{% endblock %}</title>
-  </head>
-  <body>
-    <header class="header">
-      <h1>BibTeX-viitteidenhallinta</h1>
-    </header>
-    <div>
-      <a href="/">Koti</a> |
-      <a href="/references">Viitelistaus</a> |
-      <a href="/new_reference">Uusi viite</a>
-    </div>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <script src="../static/scripts.js"></script>
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <header class="header">
+        <h1>BibTeX-viitteidenhallinta</h1>
+        </header>
+        <div>
+        <a href="/">Koti</a> |
+        <a href="/references">Viitelistaus</a> |
+        <a href="/new_reference">Uusi viite</a>
+        </div>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    {% block body %}{% endblock %}
-    
-  </body>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+        {% block body %}
+        
+        {% endblock %}
+        
+    </body>
 </html>

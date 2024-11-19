@@ -32,12 +32,13 @@ Uusi viite
     <br>
 
     <label for="year" style="display: inline-block; width: 200px;">Year:</label>
-    <input type="number" name="year" required>
+    <input type="number" id="year" name="year" required min="1000">
     <br>
 
     <button type="submit">
       Tallenna
     </button>
 </form>
+<script>set_current_year("year")</script>
 
 {% endblock %}
