@@ -18,6 +18,7 @@
 3. **Luo .env-tiedosto**:
    ```bash
    DATABASE_URL=postgresql://<your_database_service>
+   TEST_DATABASE_URL=postgresql://user:password@localhost:5432/test_db
    TEST_ENV=true
    SECRET=<your_own_secret>
    ```
@@ -50,7 +51,7 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Sprint backlog viikko 1](https://github.com/users/ruokokoski/projects/5)
 
-* [Burndown ja Daily Scrum-muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
+* [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
 ## Sovelluksen testaus
 
@@ -74,6 +75,11 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 ### Robot-testien suoritus
 ```bash
    bash run_robot_tests.sh
+```
+
+### Testidatan lähettämien tietokantaan
+```bash
+   psql $DATABASE_URL -f test_data.sql
 ```
 
 ## Definition of Done:
