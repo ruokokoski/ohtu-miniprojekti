@@ -18,7 +18,7 @@ class TestReferences(unittest.TestCase):
         called_sql_query = mock_execute.call_args[0][0]
         self.assertEqual(str(called_sql_query), str(text('SELECT author, year, title, publisher, address, key '
                                                      ' FROM books '
-                                                     'ORDER BY author')))
+                                                     'ORDER BY key')))
         self.assertEqual(result, mock_data)
 
     @patch("repositories.reference_repository.db.session.execute")

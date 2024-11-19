@@ -5,7 +5,7 @@ from config import db
 def list_references():
     sql = text('SELECT author, year, title, publisher, address, key '
         ' FROM books '
-        'ORDER BY author')
+        'ORDER BY key')
     result = db.session.execute(sql).fetchall()
     return result
 
