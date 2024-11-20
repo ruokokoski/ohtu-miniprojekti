@@ -9,18 +9,6 @@ class UserInputError(Exception):
     pass
 
 def validate_reference(data):
-    if len(data["key"]) < 2:
-        raise UserInputError("Citation key must be at least 2 characters long")
-
-    if len(data["key"]) > 30:
-        raise UserInputError("Citation key must be under 30 characters long")
-
-    if len(data["author"]) < 2:
-        raise UserInputError("Author must be at least 2 characters long")
-
-    if len(data["author"]) > 100:
-        raise UserInputError("Author must be under 100 characters long")
-
     if len(data["title"]) < 2:
         raise UserInputError("Title must be at least 2 characters long")
 
@@ -35,9 +23,3 @@ def validate_reference(data):
 
     if len(data["publisher"]) > 100:
         raise UserInputError("Publisher must be under 100 characters long")
-
-    if len(data["address"]) < 2:
-        raise UserInputError("Address must be at least 2 characters long")
-
-    if len(data["address"]) > 100:
-        raise UserInputError("Address must be under 100 characters long")

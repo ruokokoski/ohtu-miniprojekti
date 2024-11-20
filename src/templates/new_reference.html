@@ -8,15 +8,22 @@ Uusi viite
 
 <h2>Uuden book-viitteen luominen</h2>
 
-<form action="/create_reference" method="post" style="display: inline-block;">
-    <!-- <label for="reference_type" style="display: inline-block; width: 200px;">Valitse viitteen tyyppi:</label> -->
+<form action="/create_reference" method="post" style="display: inline-block;" onsubmit="return validateForm()">
+  <!-- REQUIRED -->
 
-    <label for="citation_key" style="display: inline-block; width: 200px;">Viitteen tunniste (key):</label>
-    <input type="text" name="citation_key" required>
-    <br>
+  <!-- <label for="reference_type" style="display: inline-block; width: 200px;">Valitse viitteen tyyppi:</label> -->
+  <div id="required_fields">
 
-    <label for="author" style="display: inline-block; width: 200px;">Author:</label>
-    <input type="text" name="author" required>
+    Authors:
+    <ul id="author_list">
+      <!-- Authors will be added here dynamically -->
+    </ul>
+    
+    <input type="hidden" id="authors" name="authors">
+    <input type="text" id="first_name">
+    <input type="text" id="last_name">
+
+    <button type="button" id="add_author_button">Lisää author</button>
     <br>
 
     <label for="title" style="display: inline-block; width: 200px;">Title:</label>
@@ -27,18 +34,118 @@ Uusi viite
     <input type="text" name="publisher" required>
     <br>
 
-    <label for="address" style="display: inline-block; width: 200px;">Address:</label>
-    <input type="text" name="address" required>
-    <br>
-
     <label for="year" style="display: inline-block; width: 200px;">Year:</label>
     <input type="number" id="year" name="year" required min="1000">
     <br>
+  </div>
 
-    <button type="submit">
-      Tallenna
-    </button>
+  <!-- OPTIONAL -->
+
+  <div id="optional_fields" style="display: none">
+    <label for="address" style="display: inline-block; width: 200px;">Address:</label>
+    <input type="text" name="address">
+    <br>
+
+    <label for="volume" style="display: inline-block; width: 200px;">Volume/Number:</label>
+    <input type="text" name="volume">
+    <br>
+
+    <label for="series" style="display: inline-block; width: 200px;">Series:</label>
+    <input type="text" name="series">
+    <br>
+
+    <label for="edition" style="display: inline-block; width: 200px;">Edition:</label>
+    <input type="text" name="edition">
+    <br>
+
+    <label for="month" style="display: inline-block; width: 200px;">Month:</label>
+    <input type="text" name="month">
+    <br>
+
+    <label for="note" style="display: inline-block; width: 200px;">Note:</label>
+    <input type="text" name="note">
+    <br>
+
+    <label for="key" style="display: inline-block; width: 200px;">Key:</label>
+    <input type="text" name="key">
+    <br>
+
+    <label for="url" style="display: inline-block; width: 200px;">URL:</label>
+    <input type="url" name="url">
+    <br>
+  </div>
+
+  <button type="button" id="toggle_optionals_button">Näytä valinnaiset</button>
+
+  <button type="submit">
+    Tallenna
+  </button>
 </form>
 <script>set_current_year_as_max("year")</script>
+
+<script>
+  function validateForm() {
+    var authorList = document.getElementById("author_list");
+    var authors = document.getElementById("authors")
+
+    if (authorList.children.length === 0) {
+      alert("Lisää ainakin yksi author ennen lomakkeen lähettämistä.");
+      return false;
+    }
+    authors.value = JSON.stringify(Array.from(authorList.children).map(li => li.firstChild.textContent));
+
+    return true;
+  }
+</script>
+
+<script>
+  document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
+
+  function toggleOptionals() {
+  var opt = document.getElementById("optional_fields");
+  var btn = document.getElementById("toggle_optionals_button");
+
+  if (opt.style.display === "none") {
+    opt.style.display = "block";
+    btn.textContent = "Piilota valinnaiset";
+  }
+  else {
+    opt.style.display = "none";
+    btn.textContent = "Näytä valinnaiset";
+  }
+}
+</script>
+
+<script>
+  document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
+
+  function addNewAuthor() {
+    var firstNameInput = document.getElementById("first_name");
+    var lastNameInput = document.getElementById("last_name");
+    var authorList = document.getElementById("author_list");
+
+    var firstName = firstNameInput.value.trim();
+    var lastName = lastNameInput.value.trim();
+
+    if (firstName && lastName) {
+      var person = document.createElement("li");
+      person.textContent = firstName + " " + lastName;
+
+      var deletePerson = document.createElement("button");
+      deletePerson.textContent = "Poista"
+
+      person.appendChild(deletePerson);
+      authorList.appendChild(person);
+
+      deletePerson.addEventListener("click", () => deletePerson.parentElement.remove());
+
+      firstNameInput.value = "";
+      lastNameInput.value = "";
+    } 
+    else {
+      alert("Syötä etu- ja sukunimi");
+    }
+  }
+</script>
 
 {% endblock %}

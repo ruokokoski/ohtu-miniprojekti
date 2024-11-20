@@ -34,15 +34,19 @@ def browse_references():
 
 @app.route("/create_reference", methods=["POST"])
 def reference_creation():
-
     data = {
-        #"reference_type": request.form.get("reference_type"),
         "key": request.form.get("citation_key"),
-        "author": request.form.get("author"),
-        "year": request.form.get("year"),        
+        "authors": request.form.get("authors"),
+        "year": request.form.get("year"),
         "title": request.form.get("title"),
         "publisher": request.form.get("publisher"),
-        "address": request.form.get("address")
+        "address": request.form.get("address"),
+        "volume": request.form.get("volume"),
+        "series": request.form.get("series"),
+        "edition": request.form.get("edition"),
+        "month": request.form.get("month"),
+        "note": request.form.get("note"),
+        "url": request.form.get("url")
     }
 
     try:
