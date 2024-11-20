@@ -63,7 +63,7 @@ def list_references_as_bibtex():
     return bib_data.to_string('bibtex')
 
 
-#bibtex-haun testaus refs-taulusta:
+#resultista voi muodostaa APA-listauksen:
 def get_bibtex():
     sql = text('SELECT bibtex FROM refs;')
     result = db.session.execute(sql).fetchall()
