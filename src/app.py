@@ -49,7 +49,7 @@ def reference_creation():
         validate_reference(data)
         create_reference(data)
         flash("Uusi viite luotu onnistuneesti")
-        return redirect("/")
+        return redirect("/references")
 
     except UserInputError as error:
         flash(str(error))
