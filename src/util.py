@@ -1,3 +1,10 @@
+#bibtexien käsittelyyn:
+#from sqlalchemy import create_engine, Table, MetaData, Column, String
+#from pybtex.database import parse_string
+#from pybtex.plugin import find_plugin
+
+#funktiot bibtex_parser ja bibtex_writer puuttuvat
+
 class UserInputError(Exception):
     pass
 

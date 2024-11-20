@@ -1,7 +1,8 @@
 from sqlalchemy import text
 from config import db, app
 
-table_name = "Books"
+table_name = "books"
+table2_name = "refs"
 
 def table_exists(name):
     sql_table_existence = text(
@@ -45,6 +46,42 @@ def setup_db():
     db.session.execute(sql)
     db.session.commit()
 
+def references_table_exists():
+    sql_table_existence = text(
+        "SELECT EXISTS ( "
+        "  SELECT 1 "
+        "  FROM information_schema.tables "
+        f" WHERE table_name = '{table2_name}'"
+        ")"
+    )
+    print(f"Checking if table {table2_name} exists")
+    result = db.session.execute(sql_table_existence)
+    return result.fetchall()[0][0]
+
+def reset_references_table():
+    print(f"Clearing contents from table {table2_name}")
+    sql = text(f"DELETE FROM {table2_name}")
+    db.session.execute(sql)
+    db.session.commit()
+
+def setup_references_table():
+    if references_table_exists():
+        print(f"Table {table2_name} exists, dropping")
+        sql = text(f"DROP TABLE {table2_name}")
+        db.session.execute(sql)
+        db.session.commit()
+
+    print(f"Creating table {table2_name}")
+    sql = text(
+        f"CREATE TABLE {table2_name} ("
+        "  id SERIAL PRIMARY KEY, "
+        "  bibtex TEXT NOT NULL"
+        ")"
+    )
+    db.session.execute(sql)
+    db.session.commit()
+
 if __name__ == "__main__":
     with app.app_context():
         setup_db()
+        setup_references_table()

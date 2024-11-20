@@ -18,6 +18,7 @@ disable=raw-checker-failed,
         pointless-string-statement
 
 [FORMAT]
+indent-string='    '
 
 [REFACTORING]
 
