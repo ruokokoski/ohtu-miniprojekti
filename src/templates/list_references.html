@@ -50,8 +50,12 @@
     </tbody>
 </table>
 <div style="display: flex; justify-content: center; margin-top: 25px;">
-    <a href="/download" download="references.bib"><button class="btn btn-primary">Download</button></a>
+    <!-- Ei tarvitse download-attribuuttia, Flask send file hoitaa-->
+    <a href="/download">
+        <button class="btn btn-primary">Download</button>
+    </a>
 </div>
+
 
 
 {% endblock %}
