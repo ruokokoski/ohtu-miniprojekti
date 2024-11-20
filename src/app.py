@@ -7,7 +7,8 @@ from repositories.reference_repository import (
     list_references,
     create_reference,
     delete_reference,
-    get_bibtex
+    get_bibtex,
+    list_references_as_bibtex
 )
 from util import validate_reference, UserInputError
 
@@ -68,12 +69,20 @@ def reference_remove(key):
         flash(f"Virhe viitteen poistamisessa: {str(db_error)}")
     return redirect("/references")
 
+# Reitti, joka lähettää BibTeX-tiedoston ladattavaksi
 @app.route("/download")
 def download_references():
-    test_data = "esimerkki referenssi"
-    return send_file(BytesIO(bytes(test_data, "utf-8")),
-                     download_name="references.bib",
-                     as_attachment=True)
+    # Kerätään BibTeX-data SQL-tietokannasta
+    bibtex_data = list_references_as_bibtex()
+
+    # Muodostetaan tiedosto BytesIO-objektiksi, jotta se voidaan lähettää käyttäjälle
+    return send_file(
+        BytesIO(bytes(bibtex_data, "utf-8")),  # Muutetaan BibTeX-teksti byteiksi
+        download_name="references.bib",       # Lataustiedoston nimi
+        as_attachment=True                   # Varmistaa, että tiedosto ladataan
+    )
+
+
 
 
 if test_env:
