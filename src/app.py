@@ -2,7 +2,7 @@ from io import BytesIO
 from flask import render_template, redirect, request, flash, jsonify, send_file
 from db_helper import reset_db
 from config import app, test_env
-from repositories.reference_repository import list_references, create_reference
+from repositories.reference_repository import list_references, create_reference, get_bibtex
 from util import validate_reference, UserInputError
 
 
@@ -19,8 +19,12 @@ def new():
 
 @app.route("/references")
 def browse_references():
+    #testi bibtexin hakuun:
+    bibtex_data = get_bibtex()
     references_list = list_references()
-    return render_template("list_references.html", references=references_list)
+    return render_template("list_references.html",
+                           references=references_list,
+                           bibtex_data=bibtex_data)
 
 @app.route("/create_reference", methods=["POST"])
 def reference_creation():

@@ -4,6 +4,15 @@
 
 {% block body %}
 <h2>Viitteet</h2>
+
+<b>Bibtex-raakadatan testi:</b>
+{% for bibtex in bibtex_data %}
+    <p>{{ bibtex [0] }}<br></p>
+{% else %}
+    <p>Ei dataa...</p>
+{% endfor %}
+<p>--------</p>
+
 <table border="1">
     <thead>
     <tr>

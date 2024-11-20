@@ -1,6 +1,5 @@
 from sqlalchemy import text
 from config import db
-#from entities.reference import Reference
 
 def list_references():
     sql = text('SELECT author, year, title, publisher, address, key '
@@ -18,3 +17,9 @@ def create_reference(data):
 
     db.session.execute(sql_query, data)
     db.session.commit()
+
+#bibtex-haun testaus refs-taulusta:
+def get_bibtex():
+    sql = text('SELECT bibtex FROM refs;')
+    result = db.session.execute(sql).fetchall()
+    return result

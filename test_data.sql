@@ -13,3 +13,10 @@ INSERT INTO refs (bibtex) VALUES ('@book{box2015,
   year={2015},
   publisher={John Wiley \& Sons}
 }');
+
+INSERT INTO refs (bibtex) VALUES ('@book{huyen2022,
+  title={Designing machine learning systems},
+  author={Huyen, Chip},
+  year={2022},
+  publisher={OReilly Media, Inc.}
+}');
