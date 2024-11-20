@@ -92,7 +92,7 @@ Uusi viite
       alert("Lisää ainakin yksi author ennen lomakkeen lähettämistä.");
       return false;
     }
-    authors.value = JSON.stringify(Array.from(authorList.children).map(li => li.firstChild.textContent));
+    authors.value = Array.from(authorList.children).map(li => li.firstChild.textContent).join(", ");
 
     return true;
   }

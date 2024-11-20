@@ -10,7 +10,7 @@ from repositories.reference_repository import (
     get_bibtex,
     list_references_as_bibtex
 )
-from util import validate_reference, UserInputError
+from util import validate_reference, generate_key, UserInputError
 
 
 
@@ -36,20 +36,20 @@ def browse_references():
 @app.route("/create_reference", methods=["POST"])
 def reference_creation():
     data = {
-        "key": request.form.get("citation_key"),
-        "authors": request.form.get("authors"),
-        "year": request.form.get("year"),
-        "title": request.form.get("title"),
-        "publisher": request.form.get("publisher"),
-        "address": request.form.get("address"),
-        "volume": request.form.get("volume"),
-        "series": request.form.get("series"),
-        "edition": request.form.get("edition"),
-        "month": request.form.get("month"),
-        "note": request.form.get("note"),
-        "url": request.form.get("url")
+        "author": request.form.get("authors"),
+        "year": request.form.get("year", ""),
+        "title": request.form.get("title", ""),
+        "publisher": request.form.get("publisher", ""),
+        "address": request.form.get("address", ""),
+        "volume": request.form.get("volume", ""),
+        "series": request.form.get("series", ""),
+        "edition": request.form.get("edition", ""),
+        "month": request.form.get("month", ""),
+        "note": request.form.get("note", ""),
+        "url": request.form.get("url", "")
     }
 
+    data["key"] = generate_key(data["author"], data["year"])
     try:
         validate_reference(data)
         create_reference(data)

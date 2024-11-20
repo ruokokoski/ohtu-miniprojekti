@@ -23,3 +23,7 @@ def validate_reference(data):
 
     if len(data["publisher"]) > 100:
         raise UserInputError("Publisher must be under 100 characters long")
+
+def generate_key(author, year):
+    key = author + str(year)
+    return key.replace(" ", "")
