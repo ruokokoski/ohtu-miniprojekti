@@ -18,6 +18,11 @@ def create_reference(data):
     db.session.execute(sql_query, data)
     db.session.commit()
 
+def delete_reference(key):
+    sql = text("DELETE FROM books WHERE key = :key")
+    db.session.execute(sql, {"key": key})
+    db.session.commit()
+
 #bibtex-haun testaus refs-taulusta:
 def get_bibtex():
     sql = text('SELECT bibtex FROM refs;')

@@ -33,6 +33,14 @@
         <td>{{ reference[3] }}</td>  <!-- publisher -->
         <td>{{ reference[4] }}</td>  <!-- address -->
         <td>{{ reference[5] }}</td>  <!-- key -->
+
+        <td>
+            <form action="/delete_reference/{{ reference[5] }}" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
+            </form>
+        </td>
+
         </tr>
     {% else %}
         <tr>

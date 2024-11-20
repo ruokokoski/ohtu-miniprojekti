@@ -1,8 +1,14 @@
 from io import BytesIO
+from sqlalchemy.exc import SQLAlchemyError
 from flask import render_template, redirect, request, flash, jsonify, send_file
 from db_helper import reset_db
 from config import app, test_env
-from repositories.reference_repository import list_references, create_reference, get_bibtex
+from repositories.reference_repository import (
+    list_references,
+    create_reference,
+    delete_reference,
+    get_bibtex
+)
 from util import validate_reference, UserInputError
 
 
@@ -49,6 +55,14 @@ def reference_creation():
         flash(str(error))
         return redirect("/new_reference")
 
+@app.route("/delete_reference/<key>", methods=["POST"])
+def reference_remove(key):
+    try:
+        delete_reference(key)
+        flash("Viite poistettu onnistuneesti")
+    except SQLAlchemyError as db_error:
+        flash(f"Virhe viitteen poistamisessa: {str(db_error)}")
+    return redirect("/references")
 
 @app.route("/download")
 def download_references():
