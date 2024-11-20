@@ -1,6 +1,6 @@
 from sqlalchemy import text
-from config import db
 from pybtex.database import BibliographyData, Entry
+from config import db
 
 def list_references():
     sql = text('SELECT author, year, title, publisher, address, key '
