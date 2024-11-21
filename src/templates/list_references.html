@@ -5,12 +5,36 @@
 {% block body %}
 <h2>Viitteet</h2>
 
+<!--
 <b>Bibtex-raakadatan testi:</b>
 {% for bibtex in bibtex_data %}
     <p>{{ bibtex [0] }}<br></p>
 {% else %}
     <p>Ei dataa...</p>
 {% endfor %}
+-->
+
+<b>APA-testi:</b>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Citation</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entry in apa_bibliography %}
+        <tr>
+        <td>{{ entry[0] }}</td>
+        <td>{{ entry[1] }}</td>
+        </tr>
+    {% else %}
+        <tr>
+        <td colspan="2">Ei viitteitä saatavilla.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 <p>--------</p>
 
 <table border="1">

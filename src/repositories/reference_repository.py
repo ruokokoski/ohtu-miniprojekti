@@ -1,11 +1,12 @@
 from sqlalchemy import text
 from pybtex.database import BibliographyData, Entry
+from pybtex.database import parse_string
 from config import db
 
 def list_references():
-    sql = text('SELECT author, year, title, publisher, address, key '
-        ' FROM books '
-        'ORDER BY key')
+    sql = text("SELECT author, year, title, publisher, address, key "
+        " FROM books "
+        "ORDER BY key")
     result = db.session.execute(sql).fetchall()
     return result
 
@@ -61,8 +62,57 @@ def list_references_as_bibtex():
     return bib_data.to_string('bibtex')
 
 
-#resultista voi muodostaa APA-listauksen:
 def get_bibtex():
-    sql = text('SELECT bibtex FROM refs;')
+    sql = text("SELECT bibtex FROM refs;")
     result = db.session.execute(sql).fetchall()
     return result
+
+def format_apa_entry(entry):
+    citation_key = entry.key if hasattr(entry, 'key') else "Unknown"
+    authors = entry.persons.get('author', [])
+    author_names = " and ".join(
+        [" ".join(person.first() + person.last()) for person in authors]
+    ) if authors else "Unknown"
+    year = entry.fields.get('year', 'n.d.')
+    title = entry.fields.get('title', 'Untitled')
+    publisher = entry.fields.get('publisher', 'Unknown')
+    #optionaaliset kentät: address, volume, series, edition, month, note, url
+    address = entry.fields.get('address', '')
+    volume = entry.fields.get('volume', '')
+    series = entry.fields.get('series', '')
+    edition = entry.fields.get('edition', '')
+    month = entry.fields.get('month', '')
+    note = entry.fields.get('note', '')
+    url = entry.fields.get('url', '')
+
+    apa_entry = f"{author_names} ({year}). {title}."
+    if edition:
+        apa_entry += f" ({edition} ed.)."
+    if volume:
+        apa_entry += f" Vol. {volume}."
+    if series:
+        apa_entry += f" {series}."
+    if publisher:
+        apa_entry += f" {publisher}{', ' + address if address else ''}."
+    if month:
+        apa_entry += f" ({month})."
+    if note:
+        apa_entry += f" {note}."
+    if url:
+        apa_entry += f" Retrieved from {url}"
+    return citation_key, apa_entry
+
+def bibtex_to_apa():
+    bibtex_data = get_bibtex()
+    apa_bibliography = []
+    for entry in bibtex_data:
+        bibtex_entry = entry[0]
+        try:
+            parsed_data = parse_string(bibtex_entry, "bibtex")
+            for _, entry_data in parsed_data.entries.items():
+                print(f"Parsittu data: {entry_data.fields}")
+                formatted_entry = format_apa_entry(entry_data)
+                apa_bibliography.append(formatted_entry)
+        except KeyError as e:
+            print(f"Virhe bibtexin käsittelyssä: {bibtex_entry}\n{e}")
+    return apa_bibliography

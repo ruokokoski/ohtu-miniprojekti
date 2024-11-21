@@ -8,11 +8,10 @@ from repositories.reference_repository import (
     create_reference,
     delete_reference,
     get_bibtex,
-    list_references_as_bibtex
+    list_references_as_bibtex,
+    bibtex_to_apa
 )
 from util import validate_reference, generate_key, UserInputError
-
-
 
 @app.route("/")
 def index():
@@ -28,10 +27,12 @@ def new():
 def browse_references():
     #testi bibtexin hakuun:
     bibtex_data = get_bibtex()
+    apa_bibliography = bibtex_to_apa()
     references_list = list_references()
     return render_template("list_references.html",
                            references=references_list,
-                           bibtex_data=bibtex_data)
+                           bibtex_data=bibtex_data,
+                           apa_bibliography=apa_bibliography)
 
 @app.route("/create_reference", methods=["POST"])
 def reference_creation():
