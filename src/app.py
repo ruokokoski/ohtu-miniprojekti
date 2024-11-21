@@ -36,7 +36,7 @@ def browse_references():
 @app.route("/create_reference", methods=["POST"])
 def reference_creation():
     data = {
-        "author": request.form.get("authors"),
+        "author": request.form.get("author", ""),
         "year": request.form.get("year", ""),
         "title": request.form.get("title", ""),
         "publisher": request.form.get("publisher", ""),
@@ -50,6 +50,7 @@ def reference_creation():
     }
 
     data["key"] = generate_key(data["author"], data["year"])
+
     try:
         validate_reference(data)
         create_reference(data)

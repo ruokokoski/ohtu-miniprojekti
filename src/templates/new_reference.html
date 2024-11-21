@@ -19,7 +19,7 @@ Uusi viite
       <!-- Authors will be added here dynamically -->
     </ul>
     
-    <input type="hidden" id="authors" name="authors">
+    <input type="hidden" id="author" name="author">
     <input type="text" id="first_name">
     <input type="text" id="last_name">
 
@@ -66,10 +66,6 @@ Uusi viite
     <input type="text" name="note">
     <br>
 
-    <label for="key" style="display: inline-block; width: 200px;">Key:</label>
-    <input type="text" name="key">
-    <br>
-
     <label for="url" style="display: inline-block; width: 200px;">URL:</label>
     <input type="url" name="url">
     <br>
@@ -82,70 +78,6 @@ Uusi viite
   </button>
 </form>
 <script>set_current_year_as_max("year")</script>
-
-<script>
-  function validateForm() {
-    var authorList = document.getElementById("author_list");
-    var authors = document.getElementById("authors")
-
-    if (authorList.children.length === 0) {
-      alert("Lisää ainakin yksi author ennen lomakkeen lähettämistä.");
-      return false;
-    }
-    authors.value = Array.from(authorList.children).map(li => li.firstChild.textContent).join(", ");
-
-    return true;
-  }
-</script>
-
-<script>
-  document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
-
-  function toggleOptionals() {
-  var opt = document.getElementById("optional_fields");
-  var btn = document.getElementById("toggle_optionals_button");
-
-  if (opt.style.display === "none") {
-    opt.style.display = "block";
-    btn.textContent = "Piilota valinnaiset";
-  }
-  else {
-    opt.style.display = "none";
-    btn.textContent = "Näytä valinnaiset";
-  }
-}
-</script>
-
-<script>
-  document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
-
-  function addNewAuthor() {
-    var firstNameInput = document.getElementById("first_name");
-    var lastNameInput = document.getElementById("last_name");
-    var authorList = document.getElementById("author_list");
-
-    var firstName = firstNameInput.value.trim();
-    var lastName = lastNameInput.value.trim();
-
-    if (firstName && lastName) {
-      var person = document.createElement("li");
-      person.textContent = firstName + " " + lastName;
-
-      var deletePerson = document.createElement("button");
-      deletePerson.textContent = "Poista"
-
-      person.appendChild(deletePerson);
-      authorList.appendChild(person);
-
-      deletePerson.addEventListener("click", () => deletePerson.parentElement.remove());
-
-      firstNameInput.value = "";
-      lastNameInput.value = "";
-    } 
-    else {
-      alert("Syötä etu- ja sukunimi");
-    }
-  }
-</script>
+<script>createReferenceFormButtons()</script>
 
 {% endblock %}
