@@ -49,7 +49,7 @@ def reference_creation():
         "url": request.form.get("url", "")
     }
 
-    data["key"] = generate_key(data["author"], data["year"])
+    data["key"] = generate_key(data["author"], data["year"], data["title"])
 
     try:
         validate_reference(data)

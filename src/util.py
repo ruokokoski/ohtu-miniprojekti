@@ -1,9 +1,4 @@
-#bibtexien käsittelyyn:
-#from sqlalchemy import create_engine, Table, MetaData, Column, String
-#from pybtex.database import parse_string
-#from pybtex.plugin import find_plugin
-
-#funktiot bibtex_parser ja bibtex_writer puuttuvat
+import re
 
 class UserInputError(Exception):
     pass
@@ -24,6 +19,7 @@ def validate_reference(data):
     if len(data["publisher"]) > 100:
         raise UserInputError("Publisher must be under 100 characters long")
 
-def generate_key(author, year):
-    key = author + str(year)
-    return key.replace(" ", "")
+def generate_key(author, year, title):
+    surname = author.split(", ")[0]
+    first_word = re.sub(r'[^a-zA-Z]', '', title.split()[0])
+    return f"{surname}{year}{first_word}"

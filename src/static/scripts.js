@@ -41,7 +41,7 @@ function addNewAuthor() {
 
     if (firstName && lastName) {
         var person = document.createElement("li");
-        person.textContent = firstName.value + " " + lastName.value;
+        person.textContent = lastName.value + ", " + firstName.value;
 
         var deletePerson = document.createElement("button");
         deletePerson.textContent = "Poista"
