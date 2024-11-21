@@ -26,7 +26,7 @@ Add a new book reference
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
-    Page Should Contain  text=Kevin P Murphy
+    Page Should Contain  text=Murphy, Kevin P
 
 
 *** Keywords ***
