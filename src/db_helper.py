@@ -39,7 +39,7 @@ def setup_db():
 		"  year INTEGER NOT NULL,  "
 		"  title TEXT NOT NULL,  "
 		"  publisher TEXT,  "
-		"  address TEXT"
+		"  address TEXT",
         "  volume TEXT, "
         "  series TEXT, "
         "  edition TEXT, "
