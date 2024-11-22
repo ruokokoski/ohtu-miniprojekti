@@ -11,9 +11,11 @@ def list_references():
     return result
 
 def create_reference(data):
+    sql_query = text("""INSERT INTO books (author, year, title, publisher, address, volume, series,
+                                        edition, month, note, url, key)
+                    VALUES (:author, :year, :title, :publisher, :address, :volume, :series,
+                            :edition, :month, :note, :url, :key)""")
 
-    sql_query = text("""INSERT INTO books (author, year, title, publisher, address, key)
-                    VALUES (:author, :year, :title, :publisher, :address, :key)""")
 
     db.session.execute(sql_query, data)
     db.session.commit()
