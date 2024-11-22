@@ -5,79 +5,84 @@ Uusi viite
 {% endblock %}
 
 {% block body %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-4 align-self-center">
+            <h2>Uuden book-viitteen luominen</h2>
+            <form action="/create_reference" method="post" style="display: inline-block;" onsubmit="return validateForm()">
+                <!-- REQUIRED -->
 
-<h2>Uuden book-viitteen luominen</h2>
+                <!-- <label for="reference_type" style="display: inline-block; width: 200px;">Valitse viitteen tyyppi:</label> -->
+                <div id="required_fields">
+                    <b>Authors:</b>
+                    <ul id="author_list">
+                        <!-- Authors will be added here dynamically -->
+                    </ul>
+                    <div class="form-group">
+                        <div class="row">
+                            <input type="hidden" id="author" name="author">
+                            <div class="col">
+                                <input type="text" class="form-control" id="first_name" placeholder="Etunimi">
+                            </div>
+                            <div class="col">
+                                <input type="text" class="form-control" id="last_name" placeholder="Sukunimi">
+                            </div>
+                            <button type="button" class="btn btn-primary" id="add_author_button">Lisää author</button>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="title"><b>Title:</b></label>
+                        <input type="text" class="form-control" name="title" required>
+                    </div>      
+                    <div class="form-group">
+                        <label for="publisher"><b>Publisher:</b></label>
+                        <input type="text" class="form-control" name="publisher" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year"><b>Year:</b></label>
+                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" required min="1000">
+                    </div>
+                </div>
 
-<form action="/create_reference" method="post" style="display: inline-block;" onsubmit="return validateForm()">
-  <!-- REQUIRED -->
+                <!-- OPTIONAL -->
 
-  <!-- <label for="reference_type" style="display: inline-block; width: 200px;">Valitse viitteen tyyppi:</label> -->
-  <div id="required_fields">
+                <div id="optional_fields" style="display: none">
+                    <div class="form-group">
+                        <label for="address"><b>Address:</b></label>
+                        <input type="text" class="form-control" name="address" placeholder="Optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="volume"><b>Volume/Number:</b></label>
+                        <input type="text" class="form-control" name="volume" placeholder="Optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="series"><b>Series:</b></label>
+                        <input type="text" class="form-control" name="series" placeholder="Optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="edition"><b>Edition:</b></label>
+                        <input type="text" class="form-control" name="edition" placeholder="Optional">
+                    </div>
+                    <div>
+                        <label for="month"><b>Month:</b></label>
+                        <input type="text" class="form-control" name="month" placeholder="Optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="note"><b>Note:</b></label>
+                        <input type="text" class="form-control" name="note" placeholder="Optional">
+                    </div>
+                    <div class="form-group">
+                        <label for="url"><b>URL:</b></label>
+                        <input type="url" class="form-control" name="url" placeholder="Optional">
+                    </div>
+                </div>
 
-    Authors:
-    <ul id="author_list">
-      <!-- Authors will be added here dynamically -->
-    </ul>
-    
-    <input type="hidden" id="author" name="author">
-    <input type="text" id="first_name" placeholder="Etunimi" style="color: grey;">
-    <input type="text" id="last_name" placeholder="Sukunimi" style="color: grey;">
-
-    <button type="button" id="add_author_button">Lisää author</button>
-    <br>
-
-    <label for="title" style="display: inline-block; width: 200px;">Title:</label>
-    <input type="text" name="title" required>
-    <br>
-
-    <label for="publisher" style="display: inline-block; width: 200px;">Publisher:</label>
-    <input type="text" name="publisher" required>
-    <br>
-
-    <label for="year" style="display: inline-block; width: 200px;">Year:</label>
-    <input type="number" id="year" name="year" required min="1000">
-    <br>
-  </div>
-
-  <!-- OPTIONAL -->
-
-  <div id="optional_fields" style="display: none">
-    <label for="address" style="display: inline-block; width: 200px;">Address:</label>
-    <input type="text" name="address">
-    <br>
-
-    <label for="volume" style="display: inline-block; width: 200px;">Volume/Number:</label>
-    <input type="text" name="volume">
-    <br>
-
-    <label for="series" style="display: inline-block; width: 200px;">Series:</label>
-    <input type="text" name="series">
-    <br>
-
-    <label for="edition" style="display: inline-block; width: 200px;">Edition:</label>
-    <input type="text" name="edition">
-    <br>
-
-    <label for="month" style="display: inline-block; width: 200px;">Month:</label>
-    <input type="text" name="month">
-    <br>
-
-    <label for="note" style="display: inline-block; width: 200px;">Note:</label>
-    <input type="text" name="note">
-    <br>
-
-    <label for="url" style="display: inline-block; width: 200px;">URL:</label>
-    <input type="url" name="url">
-    <br>
-  </div>
-
-  <button type="button" id="toggle_optionals_button">Näytä valinnaiset</button>
-
-  <button type="submit">
-    Tallenna
-  </button>
-</form>
-<script>set_current_year_as_max("year")</script>
+                <button type="button" class="btn btn-primary" id="toggle_optionals_button">Näytä valinnaiset</button>
+                <button type="submit" class="btn btn-primary">Tallenna</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>setCurrentYearAsMax("year")</script>
 <script>createReferenceFormButtons()</script>
-
 {% endblock %}

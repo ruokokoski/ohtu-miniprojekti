@@ -1,4 +1,4 @@
-function set_current_year_as_max(id) {
+function setCurrentYearAsMax(id) {
     var year = new Date().getFullYear();
     document.getElementById(id).setAttribute("max", year)
 }
@@ -44,7 +44,9 @@ function addNewAuthor() {
         person.textContent = lastName.value + ", " + firstName.value;
 
         var deletePerson = document.createElement("button");
+        deletePerson.className = "btn btn-warning"
         deletePerson.textContent = "Poista"
+        
 
         person.appendChild(deletePerson);
         authorList.appendChild(person);

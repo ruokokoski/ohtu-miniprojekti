@@ -3,59 +3,52 @@
 {% block title %}Viitteet{% endblock %}
 
 {% block body %}
-<h2>Viitteet</h2>
-
-<b>Bibtex-raakadatan testi:</b>
-{% for bibtex in bibtex_data %}
-    <p>{{ bibtex [0] }}<br></p>
-{% else %}
-    <p>Ei dataa...</p>
-{% endfor %}
-<p>--------</p>
-
-<table border="1">
-    <thead>
-    <tr>
-        <th>Author</th>
-        <th>Year</th>
-        <th>Title</th>
-        <th>Publisher</th>
-        <th>Address</th>
-        <th>Key</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for reference in references %}
-        <tr>
-        <td>{{ reference[0] }}</td>  <!-- author -->
-        <td>{{ reference[1] }}</td>  <!-- year -->
-        <td>{{ reference[2] }}</td>  <!-- title -->
-        <td>{{ reference[3] }}</td>  <!-- publisher -->
-        <td>{{ reference[4] }}</td>  <!-- address -->
-        <td>{{ reference[5] }}</td>  <!-- key -->
-
-        <td>
-            <form action="/delete_reference/{{ reference[5] }}" method="POST" style="display:inline;">
-                <button type="submit" class="btn btn-danger"
-                        onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
-            </form>
-        </td>
-
-        </tr>
-    {% else %}
-        <tr>
-        <td colspan="2">Ei viitteitä saatavilla.</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<div style="display: flex; justify-content: center; margin-top: 25px;">
-    <!-- Ei tarvitse download-attribuuttia, Flask send file hoitaa-->
-    <a href="/download">
-        <button class="btn btn-primary">Download</button>
-    </a>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-6 align-self-center">
+            <h2>Viitteet</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Author</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Publisher</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Key</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for reference in references %}
+                    <tr>
+                        <td>{{ reference[0] }}</td>  <!-- author -->
+                        <td>{{ reference[1] }}</td>  <!-- year -->
+                        <td>{{ reference[2] }}</td>  <!-- title -->
+                        <td>{{ reference[3] }}</td>  <!-- publisher -->
+                        <td>{{ reference[4] }}</td>  <!-- address -->
+                        <td>{{ reference[5] }}</td>  <!-- key -->
+                        <td>
+                            <form action="/delete_reference/{{ reference[5] }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                    <td colspan="2">Ei viitteitä saatavilla.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div style="display: flex; justify-content: center; margin-top: 25px;">
+                <!-- Ei tarvitse download-attribuuttia, Flask send file hoitaa-->
+                <a href="/download">
+                    <button class="btn btn-primary">Download</button>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
 {% endblock %}
