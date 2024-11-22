@@ -10,6 +10,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th scope="col">Key</th>
                         <th scope="col">Author</th>
                         <th scope="col">Year</th>
                         <th scope="col">Title</th>
@@ -21,25 +22,24 @@
                         <th scope="col">Month</th>
                         <th scope="col">Note</th>
                         <th scope="col">URL</th>
-                        <th scope="col">Key</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                 {% for reference in references %}
                     <tr>
-                        <td>{{ reference[0] }}</td>  <!-- author -->
-                        <td>{{ reference[1] }}</td>  <!-- year -->
-                        <td>{{ reference[2] }}</td>  <!-- title -->
-                        <td>{{ reference[3] }}</td>  <!-- publisher -->
-                        <td>{{ reference[4] }}</td>  <!-- address -->
-                        <td>{{ reference[5] }}</td>  <!-- volume -->
-                        <td>{{ reference[7] }}</td>  <!-- series -->
-                        <td>{{ reference[8] }}</td>  <!-- edition -->
-                        <td>{{ reference[9] }}</td>  <!-- month -->
-                        <td>{{ reference[10] }}</td>  <!-- note -->
-                        <td>{{ reference[11] }}</td>  <!-- url -->
-                        <td>{{ reference[12] }}</td>  <!-- key -->
+                        <td>{{ reference[0] }}</td>  <!-- key -->
+                        <td>{{ reference[1] }}</td>  <!-- author -->
+                        <td>{{ reference[2] }}</td>  <!-- year -->
+                        <td>{{ reference[3] }}</td>  <!-- title -->
+                        <td>{{ reference[4] }}</td>  <!-- publisher -->
+                        <td>{{ reference[5] }}</td>  <!-- address -->
+                        <td>{{ reference[7] }}</td>  <!-- volume -->
+                        <td>{{ reference[8] }}</td>  <!-- series -->
+                        <td>{{ reference[9] }}</td>  <!-- edition -->
+                        <td>{{ reference[10] }}</td>  <!-- month -->
+                        <td>{{ reference[11] }}</td>  <!-- note -->
+                        <td>{{ reference[12] }}</td>  <!-- url -->
                         <td>
                             <form action="/delete_reference/{{ reference[0] }}" method="POST" style="display:inline;">
                                 <button type="submit" class="btn btn-danger"
