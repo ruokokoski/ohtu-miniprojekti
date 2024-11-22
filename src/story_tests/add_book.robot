@@ -147,7 +147,7 @@ Add a new partially filled book reference (title too short)
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
-    Title Should Be  Uusi viite
+    Page Should Contain  text=Title must be at least 2 characters long
 
 Add a new partially filled book reference (publisher too short)
     Click Link  Uusi viite
@@ -158,16 +158,16 @@ Add a new partially filled book reference (publisher too short)
     Set Publisher  a
     Set Year  2022
     Submit 
-    Title Should Be  Uusi viite
+    Page Should Contain  text=Publisher must be at least 2 characters long
 
-#Add a new partially filled book reference (blank author submited)
-#    Click Link  Uusi viite
-#    Click Button  Lisää author
-#    Set Title  Probabilistic machine learning: an introduction
-#    Set Publisher  MIT Press
-#    Set Year  2022
-#    Submit 
-#    Title Should Be  Uusi viite
+Add a new partially filled book reference (blank author submited)
+    Click Link  Uusi viite
+    Click Button  Lisää author
+    Set Title  Probabilistic machine learning: an introduction
+    Set Publisher  MIT Press
+    Set Year  2022
+    Submit 
+    Alert Should Be Present
 
 Add a new invalid book reference (year too large)
     Click Link  Uusi viite
