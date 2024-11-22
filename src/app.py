@@ -49,6 +49,11 @@ def reference_creation():
         "url": request.form.get("url", "")
     }
 
+    # Korvataan tyhjät kentät tyhjällä merkkijonolla
+    for key, value in data.items():
+        if value == "":
+            data[key] = ""  # Varmistetaan, että kenttä on tyhjä merkkijono
+
     data["key"] = generate_key(data["author"], data["year"], data["title"])
 
     try:
@@ -70,10 +75,8 @@ def reference_remove(key):
         flash(f"Virhe viitteen poistamisessa: {str(db_error)}")
     return redirect("/references")
 
-# Reitti, joka lähettää BibTeX-tiedoston ladattavaksi
 @app.route("/download")
 def download_references():
-    # Kerätään BibTeX-data SQL-tietokannasta
     bibtex_data = list_references_as_bibtex()
 
     # Muodostetaan tiedosto BytesIO-objektiksi, jotta se voidaan lähettää käyttäjälle
