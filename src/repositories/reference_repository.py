@@ -32,9 +32,9 @@ def create_reference(data):
     db.session.execute(sql_query, data)
     db.session.commit()
 
-def delete_reference(key):
-    sql = text("DELETE FROM books WHERE key = :key")
-    db.session.execute(sql, {"key": key})
+def delete_reference(citation_key):
+    sql = text('DELETE FROM books WHERE "key" = :key')
+    db.session.execute(sql, {"key": citation_key})
     db.session.commit()
 
 def create_entry_from_row(row):
