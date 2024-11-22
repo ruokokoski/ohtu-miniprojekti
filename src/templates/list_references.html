@@ -16,12 +16,12 @@
                         <th scope="col">Title</th>
                         <th scope="col">Publisher</th>
                         <th scope="col">Address</th>
+                        <th scope="col">Volume</th>
                         <th scope="col">Series</th>
                         <th scope="col">Edition</th>
                         <th scope="col">Month</th>
                         <th scope="col">Note</th>
                         <th scope="col">URL</th>
-                        <th scope="col">Volume</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -34,12 +34,12 @@
                         <td>{{ reference[3] }}</td>  <!-- title -->
                         <td>{{ reference[4] }}</td>  <!-- publisher -->
                         <td>{{ reference[5] }}</td>  <!-- address -->
+                        <td>{{ reference[6] }}</td>  <!-- volume -->
                         <td>{{ reference[7] }}</td>  <!-- series -->
                         <td>{{ reference[8] }}</td>  <!-- edition -->
                         <td>{{ reference[9] }}</td>  <!-- month -->
                         <td>{{ reference[10] }}</td>  <!-- note -->
                         <td>{{ reference[11] }}</td>  <!-- url -->
-                        <td>{{ reference[12] }}</td>  <!-- volume -->
                         <td>
                             <form action="/delete_reference/{{ reference[0] }}" method="POST" style="display:inline;">
                                 <button type="submit" class="btn btn-danger"
