@@ -40,6 +40,12 @@ def setup_db():
 		"  title TEXT NOT NULL,  "
 		"  publisher TEXT,  "
 		"  address TEXT"
+        "  volume TEXT, "
+        "  series TEXT, "
+        "  edition TEXT, "
+        "  month TEXT, "
+        "  note TEXT, "
+        "  url TEXT"
 		")"
 	)
 
