@@ -16,13 +16,7 @@ class TestReferences(unittest.TestCase):
 
         result = list_references()
         called_sql_query = mock_execute.call_args[0][0]
-<<<<<<< HEAD
-        self.assertEqual(str(called_sql_query), str(text('SELECT author, year, title, publisher, '
-                                                         'address, volume, series, '
-                                                        'edition, month, note, url, key '
-=======
         self.assertEqual(str(called_sql_query), str(text('SELECT key, author, year, title, publisher, address '
->>>>>>> acc106d (Start migration)
                                                      ' FROM books '
                                                      'ORDER BY key')))
         self.assertEqual(result, mock_data)
@@ -38,15 +32,8 @@ class TestReferences(unittest.TestCase):
             "year": "2023"
         }
 
-<<<<<<< HEAD
-        expected_sql_query = str(text("""INSERT INTO books (author, year, title, publisher, address, volume, series,
-                                        edition, month, note, url, key)
-                    VALUES (:author, :year, :title, :publisher, :address, :volume, :series,
-                            :edition, :month, :note, :url, :key)"""))
-=======
         expected_sql_query = str(text("""INSERT INTO books (key, author, year, title, publisher, address)
                     VALUES (:key, :author, :year, :title, :publisher, :address)"""))
->>>>>>> acc106d (Start migration)
 
         with app.app_context():
             create_reference(mock_data)

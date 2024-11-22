@@ -3,16 +3,31 @@ from pybtex.database import BibliographyData, Entry
 from config import db
 
 def list_references():
-    sql = text('SELECT author, year, title, publisher, address, key '
-        ' FROM books '
-        'ORDER BY key')
+    sql = text(
+        """
+        SELECT key, author, year, title, publisher, address, 
+               volume, series, edition, month, note, url
+        FROM books
+        ORDER BY key
+        """
+    )
     result = db.session.execute(sql).fetchall()
     return result
 
 def create_reference(data):
 
-    sql_query = text("""INSERT INTO books (author, year, title, publisher, address, key)
-                    VALUES (:author, :year, :title, :publisher, :address, :key)""")
+    sql_query = text(
+        """
+        INSERT INTO books (
+            key, author, year, title, publisher, address,
+            volume, series, edition, month, note, url
+        )
+        VALUES (
+            :key, :author, :year, :title, :publisher, :address,
+            :volume, :series, :edition, :month, :note, :url
+        )
+        """
+    )
 
     db.session.execute(sql_query, data)
     db.session.commit()

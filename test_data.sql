@@ -1,15 +1,15 @@
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
     key TEXT NOT NULL,
-    author VARCHAR(100) TEXT NOT NULL,
+    author VARCHAR(100) NOT NULL,
     year VARCHAR(4) NOT NULL,
     title TEXT NOT NULL,
     publisher TEXT NOT NULL,
     address TEXT,
-    volume VARCHAR(50),
+    volume TEXT,
     series TEXT,
-    edition VARCHAR(50),
-    month VARCHAR(20),
+    edition TEXT,
+    month TEXT,
     note TEXT,
     url TEXT
 );
