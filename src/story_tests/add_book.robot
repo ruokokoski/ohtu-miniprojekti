@@ -33,18 +33,18 @@ Add a new valid book reference with optional (address)
     Submit 
     Page Should Contain  text=address test
 
-#Add a new valid book reference with optional (volume)
-#    Click Link  Uusi viite
-#    Set First name  Kevin P
-#    Set Last name  Murphy
-#    Click Button  Lisää author
-#    Set Title  Probabilistic machine learning: an introduction
-#    Set Publisher  MIT Press
-#    Set Year  2022
-#    Click Button  Näytä valinnaiset
-#    Set Volume  volume test
-#    Submit 
-#    Page Should Contain  text=volume test
+Add a new valid book reference with optional (volume)
+    Click Link  Uusi viite
+    Set First name  Kevin P
+    Set Last name  Murphy
+    Click Button  Lisää author
+    Set Title  Probabilistic machine learning: an introduction
+    Set Publisher  MIT Press
+    Set Year  2022
+    Click Button  Näytä valinnaiset
+    Set Volume  volume test
+    Submit 
+    Page Should Contain  text=volume test
 
 Add a new valid book reference with optional (series)
     Click Link  Uusi viite
