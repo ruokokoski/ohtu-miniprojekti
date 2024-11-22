@@ -14,7 +14,7 @@ Go To new reference
     Title Should Be  Uusi viite
 
 Go To reference list
-    Click Link  Viitelistaus
+    Click Link  Viitteet
     Title Should Be  Viitteet
 
 Add a new book reference
