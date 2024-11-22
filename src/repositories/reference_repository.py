@@ -3,7 +3,8 @@ from pybtex.database import BibliographyData, Entry
 from config import db
 
 def list_references():
-    sql = text('SELECT author, year, title, publisher, address, key '
+    sql = text('SELECT author, year, title, publisher, address, volume, series, '
+        'edition, month, note, url, key '
         ' FROM books '
         'ORDER BY key')
     result = db.session.execute(sql).fetchall()
@@ -24,7 +25,8 @@ def delete_reference(key):
 
 def list_references_as_bibtex():
     # Suoritetaan SQL-kysely ja haetaan kaikki viitteet
-    sql = text('SELECT author, year, title, publisher, address, key '
+    sql = text('SELECT author, year, title, publisher, address, volume, series, '
+        'edition, month, note, url, key '
         ' FROM books '
         'ORDER BY key')
     result = db.session.execute(sql).fetchall()
@@ -43,15 +45,26 @@ def list_references_as_bibtex():
         year = str(row.year) if row.year is not None else ''
         publisher = str(row.publisher) if row.publisher else ''
         address = str(row.address) if row.address else ''
+        volume = str(row.volume) if row.volume else ''
+        series = str(row.series) if row.series else ''
+        edition = str(row.edition) if row.edition else ''
+        month = str(row.month) if row.month else ''
+        note = str(row.note) if row.note else ''
+        url = str(row.url) if row.url else ''
 
-
-        # Luo Pybtex Entry-objekti jokaiselle kirjalle
+        # Luo Pybtex Entry-objekti kirjalle, mukaan lukien uudet kentät
         entry = Entry('book', {
             'author': author,
             'title': title,
             'year': year,
             'publisher': publisher,
-            'address': address
+            'address': address,
+            'volume': volume,
+            'series': series,
+            'edition': edition,
+            'month': month,
+            'note': note,
+            'url': url
         })
 
         # Lisää viite BibTeX-tietokantaan käyttäen viitteen avainta ('key')
