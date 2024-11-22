@@ -1,3 +1,19 @@
+CREATE TABLE books (
+    id SERIAL PRIMARY KEY,
+    key TEXT NOT NULL,
+    author VARCHAR(100) TEXT NOT NULL,
+    year VARCHAR(4) NOT NULL,
+    title TEXT NOT NULL,
+    publisher TEXT NOT NULL,
+    address TEXT,
+    volume VARCHAR(50),
+    series TEXT,
+    edition VARCHAR(50),
+    month VARCHAR(20),
+    note TEXT,
+    url TEXT
+);
+
 CREATE TABLE IF NOT EXISTS refs (
     id SERIAL PRIMARY KEY,
     entry_type VARCHAR(50) NOT NULL,

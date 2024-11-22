@@ -3,19 +3,16 @@ from pybtex.database import BibliographyData, Entry
 from config import db
 
 def list_references():
-    sql = text('SELECT author, year, title, publisher, address, volume, series, '
-        'edition, month, note, url, key '
+    sql = text('SELECT author, year, title, publisher, address, key '
         ' FROM books '
         'ORDER BY key')
     result = db.session.execute(sql).fetchall()
     return result
 
 def create_reference(data):
-    sql_query = text("""INSERT INTO books (author, year, title, publisher, address, volume, series,
-                                        edition, month, note, url, key)
-                    VALUES (:author, :year, :title, :publisher, :address, :volume, :series,
-                            :edition, :month, :note, :url, :key)""")
 
+    sql_query = text("""INSERT INTO books (author, year, title, publisher, address, key)
+                    VALUES (:author, :year, :title, :publisher, :address, :key)""")
 
     db.session.execute(sql_query, data)
     db.session.commit()
@@ -57,10 +54,9 @@ def create_entry_from_row(row):
 
 def list_references_as_bibtex():
     # Suoritetaan SQL-kysely ja haetaan kaikki viitteet
-    sql = text('SELECT author, year, title, publisher, address, volume, series, '
-               'edition, month, note, url, key '
-               'FROM books '
-               'ORDER BY key')
+    sql = text('SELECT author, year, title, publisher, address, key '
+        ' FROM books '
+        'ORDER BY key')
     result = db.session.execute(sql).fetchall()
 
     # Luo BibliographyData-objekti, johon viitteet lisätään
