@@ -23,7 +23,9 @@ class TestReferences(unittest.TestCase):
             'series, edition, month, note, url FROM books ORDER BY key'
         )
 
-        called_sql_query = str(mock_execute.call_args[0][0])
+        called_sql_query = ' '.join(str(mock_execute.call_args[0][0]).split())
+        expected_query = ' '.join(expected_query.split())
+
         self.assertEqual(called_sql_query, expected_query)
         self.assertEqual(result, mock_data)
 
@@ -55,10 +57,17 @@ class TestReferences(unittest.TestCase):
 
         with app.app_context():
             create_reference(mock_data)
-            called_sql_query = mock_execute.call_args[0][0]
+
+            def normalize_query(query):
+                return ' '.join(query.replace('\n', '').replace('(', ' ( ').replace(')', ' ) ').split())
+
+            called_sql_query = normalize_query(str(mock_execute.call_args[0][0]))
+            expected_sql_query = normalize_query(expected_sql_query)
+
             print(expected_sql_query)
             print(called_sql_query)
-            self.assertEqual(str(called_sql_query), expected_sql_query)
+
+            self.assertEqual(called_sql_query, expected_sql_query)
 
 class TestReferenceValidation(unittest.TestCase):
     valid_data = {
