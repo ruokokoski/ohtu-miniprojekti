@@ -52,17 +52,15 @@ def list_references_as_bibtex():
 
     # Käydään läpi kaikki viitteet ja lisätään ne BibTeX-tietokantaan
     for row in result:
-        if row:
-            # Luo BibTeX-merkinnän kentät dynaamisesti
-            entry_data = {field: getattr(row, field, '') or '' for field in [
-                'author', 'title', 'year', 'publisher', 'address', 'volume',
-                'series', 'edition', 'month', 'note', 'url']}
+        entry_data = {field: getattr(row, field, '') or '' for field in [
+            'author', 'title', 'year', 'publisher', 'address', 'volume',
+            'series', 'edition', 'month', 'note', 'url']}
 
-            # Muunna vuosi merkkijonoksi
-            entry_data['year'] = str(entry_data['year'])
+        # Muunna vuosi merkkijonoksi
+        entry_data['year'] = str(entry_data['year'])
 
-            # Luo ja lisää viite BibTeX-tietokantaan
-            bib_data.add_entry(row.key, Entry('book', entry_data))
+        # Luo ja lisää viite BibTeX-tietokantaan
+        bib_data.add_entry(row.key, Entry('book', entry_data))
 
     # Palautetaan BibTeX-tiedot Pybtexin `to_string()`-metodilla
     return bib_data.to_string('bibtex')
