@@ -16,6 +16,7 @@ window.addEventListener("load", hideFlashMessage);
 function createReferenceFormButtons()  {
     document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
+    document.getElementById("new_reference").addEventListener("submit", validateForm);
 };
 
 function toggleOptionals() {
@@ -23,12 +24,12 @@ function toggleOptionals() {
     var btn = document.getElementById("toggle_optionals_button");
 
     if (opt.style.display === "none") {
-    opt.style.display = "block";
-    btn.textContent = "Piilota valinnaiset";
+        opt.style.display = "block";
+        btn.textContent = "Piilota valinnaiset";
     }
     else {
-    opt.style.display = "none";
-    btn.textContent = "Näytä valinnaiset";
+        opt.style.display = "none";
+        btn.textContent = "Näytä valinnaiset";
     }
 }
 
@@ -38,15 +39,13 @@ function addNewAuthor() {
     var authorList = document.getElementById("author_list");
 
 
-
-    if (firstName && lastName) {
+    if (firstName.value.trim() != "" && lastName.value.trim() != "") {
         var person = document.createElement("li");
         person.textContent = lastName.value + ", " + firstName.value;
 
         var deletePerson = document.createElement("button");
         deletePerson.className = "btn btn-warning"
         deletePerson.textContent = "Poista"
-        
 
         person.appendChild(deletePerson);
         authorList.appendChild(person);
@@ -61,15 +60,17 @@ function addNewAuthor() {
     }
 }
 
-function validateForm() {
+function validateForm(event) {
+    event.preventDefault();
+
     var authorList = document.getElementById("author_list");
     var author = document.getElementById("author")
 
     if (authorList.children.length === 0) {
         alert("Lisää ainakin yksi author ennen lomakkeen lähettämistä.");
-        return false;
+        return;
     }
-    author.value = Array.from(authorList.children).map(li => li.firstChild.textContent).join(", ");
+    author.value = Array.from(authorList.children).map(li => li.firstChild.textContent).join(" and ");
 
-    return true;
+    event.target.submit();
 }
