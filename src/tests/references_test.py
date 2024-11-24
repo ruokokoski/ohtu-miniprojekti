@@ -3,7 +3,7 @@ from unittest import mock
 from unittest.mock import patch
 from sqlalchemy import text
 from repositories.reference_repository import list_references, create_reference, delete_reference
-from util import validate_reference, UserInputError
+from util import validate_reference, UserInputError, generate_key
 from app import app
 
 class TestReferences(unittest.TestCase):
@@ -124,3 +124,57 @@ class TestReferenceValidation(unittest.TestCase):
 
         with self.assertRaises(UserInputError):
             validate_reference(data)
+
+class TestGenerateKey(unittest.TestCase):
+    def test_generate_key_valid_input(self):
+            author = "Testaaja, Tiina"
+            year = "2024"
+            title = "Testi otsikko"
+            expected_key = "Testaaja2024Testi"
+            self.assertEqual(generate_key(author, year, title), expected_key)
+
+    def test_generate_key_non_alphanumeric_title(self):
+        author = "Testaaja, Tiina"
+        year = "2024"
+        title = "Testi!@# otsikko"
+        expected_key = "Testaaja2024Testi"
+        self.assertEqual(generate_key(author, year, title), expected_key)
+
+class TestUserInputError(unittest.TestCase):
+    def test_short_title(self):
+        data = {"title": "A", "year": "2023", "publisher": "Publisher"}
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Title must be at least 2 characters long")
+
+    def test_invalid_year(self):
+        data = {"title": "Title", "year": "abcd", "publisher": "Publisher"}
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Year must be a valid 4-digit number between 1000 and 9999")
+
+    def test_title_exceeds_max_length(self):
+        data = {
+            "title": "A" * 101,
+            "year": "2024",
+            "publisher": "Publisher"
+        }
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Title must be under 100 characters long")
+
+    def test_publisher_exceeds_max_length(self):
+        data = {
+            "title": "Title",
+            "year": "2024",
+            "publisher": "A" * 101
+        }
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Publisher must be under 100 characters long")
+
+    def test_short_publisher(self):
+        data = {"title": "Title", "year": "2024", "publisher": "X"}
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Publisher must be at least 2 characters long")
