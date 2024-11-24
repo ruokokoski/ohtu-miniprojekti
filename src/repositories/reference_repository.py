@@ -65,8 +65,9 @@ def list_references_as_bibtex():
     # Palautetaan BibTeX-tiedot Pybtexin `to_string()`-metodilla
     return bib_data.to_string('bibtex')
 
-
+'''
 def get_bibtex():
     sql = text('SELECT bibtex FROM refs;')
     result = db.session.execute(sql).fetchall()
     return result
+'''

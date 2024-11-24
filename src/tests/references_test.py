@@ -1,7 +1,8 @@
 import unittest
+from unittest import mock
 from unittest.mock import patch
 from sqlalchemy import text
-from repositories.reference_repository import list_references, create_reference
+from repositories.reference_repository import list_references, create_reference, delete_reference
 from util import validate_reference, UserInputError
 from app import app
 
@@ -68,6 +69,20 @@ class TestReferences(unittest.TestCase):
             print(called_sql_query)
 
             self.assertEqual(called_sql_query, expected_sql_query)
+
+    @patch('repositories.reference_repository.db.session.execute')
+    @patch('repositories.reference_repository.db.session.commit')
+    def test_delete_reference(self, mock_commit, mock_execute):
+        key_to_delete = "bishop2024deep"
+        sql_query = "DELETE FROM books WHERE key = :key"
+
+        with app.app_context():
+            delete_reference(key_to_delete)
+
+            mock_execute.assert_called_once_with(mock.ANY, {"key": key_to_delete})
+            mock_commit.assert_called_once()
+            called_query = str(mock_execute.call_args[0][0])
+            self.assertEqual(called_query.strip(), str(text(sql_query)).strip())
 
 class TestReferenceValidation(unittest.TestCase):
     valid_data = {

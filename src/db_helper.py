@@ -81,12 +81,12 @@ def setup_references_table():
     sql = text(
         f" CREATE TABLE IF NOT EXISTS {table2_name} ( "
         "id SERIAL PRIMARY KEY, "
-        "entry_type VARCHAR(50) NOT NULL, "
-        "citation_key VARCHAR(100) UNIQUE NOT NULL, "
+        "entry_type TEXT NOT NULL, "
+        "citation_key TEXT UNIQUE NOT NULL, "
         "author TEXT NOT NULL, "
         "title TEXT NOT NULL, "
-        "year VARCHAR(4) NOT NULL, "
-        "tag VARCHAR(50), "
+        "year INTEGER NOT NULL, "
+        "tag TEXT, "
         "bibtex TEXT NOT NULL "
         ");"
     )
