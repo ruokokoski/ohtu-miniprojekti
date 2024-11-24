@@ -41,7 +41,7 @@ class TestRoutes(unittest.TestCase):
         mock_delete_reference.assert_called_once_with(key)
 
         mock_delete_reference.assert_called_once_with(key)
-        mock_flash.assert_called_once_with("Virhe viitteen poistamisessa: Tietokantavirhe")
+        mock_flash.assert_called_once_with("Virhe viitteen poistamisessa: Tietokantavirhe", "failure")
 
     @patch("app.delete_reference")
     @patch("app.flash")
@@ -52,7 +52,7 @@ class TestRoutes(unittest.TestCase):
         response = self.client.post(f"/delete_reference/{key}")
         mock_delete_reference.assert_called_once_with(key)
 
-        mock_flash.assert_called_once_with("Viite poistettu onnistuneesti")
+        mock_flash.assert_called_once_with("Viite poistettu onnistuneesti", "success")
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "/references")

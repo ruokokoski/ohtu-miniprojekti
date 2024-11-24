@@ -59,20 +59,20 @@ def reference_creation():
     try:
         validate_reference(data)
         create_reference(data)
-        flash("Uusi viite luotu onnistuneesti")
+        flash("Uusi viite luotu onnistuneesti", "success")
         return redirect("/references")
 
     except UserInputError as error:
-        flash(str(error))
+        flash(str(error), "failure")
         return redirect("/new_reference")
 
 @app.route("/delete_reference/<key>", methods=["POST"])
 def reference_remove(key):
     try:
         delete_reference(key)
-        flash("Viite poistettu onnistuneesti")
+        flash("Viite poistettu onnistuneesti", "success")
     except SQLAlchemyError as db_error:
-        flash(f"Virhe viitteen poistamisessa: {str(db_error)}")
+        flash(f"Virhe viitteen poistamisessa: {str(db_error)}", "failure")
     return redirect("/references")
 
 @app.route("/download")
