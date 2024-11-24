@@ -153,7 +153,6 @@ class TestUserInputError(unittest.TestCase):
             validate_reference(data)
         self.assertEqual(str(context.exception), "Year must be a valid 4-digit number between 1000 and 9999")
 
-    '''
     def test_title_exceeds_max_length(self):
         data = {
             "title": "A" * 101,
@@ -173,7 +172,6 @@ class TestUserInputError(unittest.TestCase):
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
         self.assertEqual(str(context.exception), "Publisher must be under 100 characters long")
-    '''
 
     def test_short_publisher(self):
         data = {"title": "Title", "year": "2024", "publisher": "X"}
