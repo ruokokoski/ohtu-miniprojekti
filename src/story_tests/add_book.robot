@@ -205,7 +205,7 @@ Add a new invalid book reference (title too long)
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
-    Title Should Be  Uusi viite
+    Page Should Contain  text=Title must be under 100 characters long
 
 Add a new invalid book reference (publisher too long)
     Click Link  Uusi viite
@@ -216,7 +216,7 @@ Add a new invalid book reference (publisher too long)
     Set Publisher  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     Set Year  2022
     Submit 
-    Title Should Be  Uusi viite
+    Page Should Contain  text=Publisher must be under 100 characters long
 
 *** Keywords ***
 Reset Table And Go To Starting Page
