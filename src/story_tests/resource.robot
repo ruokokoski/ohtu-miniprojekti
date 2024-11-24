@@ -1,5 +1,6 @@
 *** Settings ***
 Library  SeleniumLibrary
+Library  OperatingSystem
 
 *** Variables ***
 ${SERVER}     localhost:5001
