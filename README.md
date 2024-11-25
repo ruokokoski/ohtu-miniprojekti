@@ -51,6 +51,8 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Sprint backlog viikko 1](https://github.com/users/ruokokoski/projects/5)
 
+* [Sprint backlog viikko 2](https://github.com/users/ruokokoski/projects/6)
+
 * [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
 * [Käytetty tietokantapalvelu](https://aiven.io/)
