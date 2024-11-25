@@ -107,7 +107,7 @@ def update_reference_entry():
 
     except UserInputError as error:
         flash(str(error), "failure")
-        return redirect(f"/edit_reference/{data["key"]}")
+        return redirect(f"/edit_reference/{data['key']}")
 
 
 @app.route("/delete_reference/<key>", methods=["POST"])
