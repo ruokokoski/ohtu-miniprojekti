@@ -66,6 +66,18 @@ def reference_creation():
         flash(str(error), "failure")
         return redirect("/new_reference")
 
+@app.route('/edit_reference/<reference_key>', methods=['GET', 'POST'])
+def edit_reference(reference_key):
+    if request.method == 'POST':
+        # Process form data and update the reference
+        data = request.form.to_dict()
+        update_reference(reference_key, data)  # Implement this function to update the database
+        return redirect('/references')  # Redirect to the list of references
+    else:
+        # Fetch the reference details to pre-fill the form
+        reference = get_reference(reference_key)  # Implement this to fetch data from the database
+        return render_template('edit_reference.html', reference=reference)
+
 @app.route("/delete_reference/<key>", methods=["POST"])
 def reference_remove(key):
     try:
