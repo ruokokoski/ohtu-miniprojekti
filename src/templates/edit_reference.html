@@ -9,19 +9,16 @@ Muokkaa viitettä
     <div class="row justify-content-center">
         <div class="col-4 align-self-center">
             <h2>Muokkaa viitettä</h2>
-            <form action="/edit_reference/{{ reference['key'] }}" method="post" id="edit_reference" style="display: inline-block;">
+            <form action="/update_reference" method="post" id="new_reference" style="display: inline-block;">
                 <!-- REQUIRED -->
-
+                <input type="hidden" name="key" value="{{reference.key}}">
+                <input type="hidden" id="author" name="author">
                 <div id="required_fields">
                     <b>Authors:</b>
                     <ul id="author_list">
-                        {% for author in reference['authors'] %}
-                            <li>{{ author }}</li>
-                        {% endfor %}
                     </ul>
                     <div class="form-group">
                         <div class="row">
-                            <input type="hidden" id="author" name="author">
                             <div class="col">
                                 <input type="text" class="form-control" id="first_name" placeholder="Etunimi">
                             </div>
@@ -33,7 +30,7 @@ Muokkaa viitettä
                     </div>
                     <div class="form-group">
                         <label for="title"><b>Title:</b></label>
-                        <input type="text" class="form-control" name="title" value="{{ reference['title'] }}" required>
+                        <input type="text" class="form-control" name="title" value="{{ reference.title }}" required>
                     </div>
                     <div class="form-group">
                         <label for="publisher"><b>Publisher:</b></label>
@@ -84,6 +81,10 @@ Muokkaa viitettä
         </div>
     </div>
 </div>
+{% for author in authors %}
+<script>addAuthor("{{author.etunimi}}", "{{author.sukunimi}}")</script>
+{% endfor %}
+
 <script>setCurrentYearAsMax("year")</script>
 <script>createReferenceFormButtons()</script>
 {% endblock %}

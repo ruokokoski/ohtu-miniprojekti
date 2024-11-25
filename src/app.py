@@ -8,7 +8,9 @@ from repositories.reference_repository import (
     create_reference,
     delete_reference,
     #get_bibtex,
-    list_references_as_bibtex
+    list_references_as_bibtex,
+    get_reference_by_key,
+    update_reference
 )
 from util import validate_reference, generate_key, UserInputError
 
@@ -66,17 +68,47 @@ def reference_creation():
         flash(str(error), "failure")
         return redirect("/new_reference")
 
-@app.route('/edit_reference/<reference_key>', methods=['GET', 'POST'])
+@app.route('/edit_reference/<reference_key>')
 def edit_reference(reference_key):
-    if request.method == 'POST':
-        # Process form data and update the reference
-        data = request.form.to_dict()
-        update_reference(reference_key, data)  # Implement this function to update the database
-        return redirect('/references')  # Redirect to the list of references
-    else:
-        # Fetch the reference details to pre-fill the form
-        reference = get_reference(reference_key)  # Implement this to fetch data from the database
-        return render_template('edit_reference.html', reference=reference)
+    reference = get_reference_by_key(reference_key)
+    authors = reference.author.split(" and ")
+    authors = [{"sukunimi":nimi.split(", ")[0] ,
+                "etunimi":nimi.split(", ")[1] }
+                for nimi in authors]
+    return render_template('edit_reference.html', reference=reference, authors=authors)
+
+@app.route('/update_reference', methods=['POST'])
+def update_reference_entry():
+    data = {
+        "key": request.form.get("key", ""),
+        "author": request.form.get("author", ""),
+        "year": request.form.get("year", ""),
+        "title": request.form.get("title", ""),
+        "publisher": request.form.get("publisher", ""),
+        "address": request.form.get("address", ""),
+        "volume": request.form.get("volume", ""),
+        "series": request.form.get("series", ""),
+        "edition": request.form.get("edition", ""),
+        "month": request.form.get("month", ""),
+        "note": request.form.get("note", ""),
+        "url": request.form.get("url", "")
+    }
+    print(data)
+    # Korvataan tyhjät kentät tyhjällä merkkijonolla
+    for key, value in data.items():
+        if value == "":
+            data[key] = ""  # Varmistetaan, että kenttä on tyhjä merkkijono
+
+    try:
+        validate_reference(data)
+        update_reference(data)
+        flash("Viite päivitetty onnistuneesti", "success")
+        return redirect("/references")
+
+    except UserInputError as error:
+        flash(str(error), "failure")
+        return redirect(f"/edit_reference/{data["key"]}")
+
 
 @app.route("/delete_reference/<key>", methods=["POST"])
 def reference_remove(key):
@@ -97,8 +129,6 @@ def download_references():
         download_name="references.bib",       # Lataustiedoston nimi
         as_attachment=True                   # Varmistaa, että tiedosto ladataan
     )
-
-
 
 
 if test_env:

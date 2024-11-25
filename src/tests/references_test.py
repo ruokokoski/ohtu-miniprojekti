@@ -142,19 +142,20 @@ class TestGenerateKey(unittest.TestCase):
 
 class TestUserInputError(unittest.TestCase):
     def test_short_title(self):
-        data = {"title": "A", "year": "2023", "publisher": "Publisher"}
+        data = {"author": "asd", "title": "A", "year": "2023", "publisher": "Publisher"}
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
         self.assertEqual(str(context.exception), "Title must be at least 2 characters long")
 
     def test_invalid_year(self):
-        data = {"title": "Title", "year": "abcd", "publisher": "Publisher"}
+        data = {"author": "asd", "title": "Title", "year": "abcd", "publisher": "Publisher"}
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
         self.assertEqual(str(context.exception), "Year must be a valid 4-digit number between 1000 and 9999")
 
     def test_title_exceeds_max_length(self):
         data = {
+            "author": "asd",
             "title": "A" * 101,
             "year": "2024",
             "publisher": "Publisher"
@@ -165,6 +166,7 @@ class TestUserInputError(unittest.TestCase):
 
     def test_publisher_exceeds_max_length(self):
         data = {
+            "author": "asd",
             "title": "Title",
             "year": "2024",
             "publisher": "A" * 101
@@ -174,7 +176,7 @@ class TestUserInputError(unittest.TestCase):
         self.assertEqual(str(context.exception), "Publisher must be under 100 characters long")
 
     def test_short_publisher(self):
-        data = {"title": "Title", "year": "2024", "publisher": "X"}
+        data = {"author": "asd", "title": "Title", "year": "2024", "publisher": "X"}
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
         self.assertEqual(str(context.exception), "Publisher must be at least 2 characters long")
