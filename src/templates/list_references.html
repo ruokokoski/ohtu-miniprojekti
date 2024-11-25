@@ -45,17 +45,19 @@
                                 <button type="submit" class="btn btn-danger"
                                         onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
                             </form>
+                            <a href="/edit_reference/{{ reference[0] }}" style="display:inline;">
+                                <button type="button" class="btn btn-warning">Edit</button>
+                            </a>
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                    <td colspan="2">Ei viitteitä saatavilla.</td>
+                        <td colspan="2">Ei viitteitä saatavilla.</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
             <div style="display: flex; justify-content: center; margin-top: 25px;">
-                <!-- Ei tarvitse download-attribuuttia, Flask send file hoitaa-->
                 <a href="/download">
                     <button class="btn btn-primary">Download</button>
                 </a>
