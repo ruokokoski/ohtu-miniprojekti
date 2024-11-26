@@ -8,7 +8,7 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 Download references
     Click Link  Viitteet
     Click Button  Download
-    Wait For Condition  condition=return 2==2 ; timeout=2
+    Go To  url=chrome://downloads/
     File Should Exist  path=~/Downloads/references.bib
     Remove File  path=~/Downloads/references.bib
 
