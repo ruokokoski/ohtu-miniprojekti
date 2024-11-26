@@ -13,6 +13,12 @@ const hideFlashMessage = () => {
 }
 window.addEventListener("load", hideFlashMessage);
 
+window.addEventListener("load", () => {
+    document.getElementById('search_form').onsubmit = () => {
+        document.getElementById('loading_message').style.display = 'block';
+    };
+});
+
 function createReferenceFormButtons()  {
     document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);

@@ -1,17 +1,51 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Koti
+Etusivu
 {% endblock %}
 
 {% block body %}
 <script>document.getElementById("nav_koti").classList.toggle("active")</script>
 <div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-6 align-self-center">
-            <p>Tämä sovellus on tarkoitettu viitteiden hallintaan.</p>
-            <p>Sovellus on tehty Ohjelmistotuotanto-kurssin miniprojektina.</p>
+        <div class="col-10 align-self-center">
+            <div class="mt-4">
+                <label for="search_field">ACM-tietokantahaku:</label>
+            </div>
+            <form method="POST" action="/search" id="search_form">
+                <div class="d-flex">
+                    <input type="text" id="search_field" class="form-control mr-2" placeholder="Hae tietoja..." name="query" style="max-width: 50%;"/>
+                    <button class="btn btn-primary" type="submit" id="search_button">Hae</button>
+                </div>
+            </form>
         </div>
     </div>
+
+    <div id="loading_message" class="alert alert-info" style="display:none;">
+        Haku on käynnissä, odota hetki...
+    </div>
+
+    {% if results %}
+        <div class="row justify-content-center mt-4">
+            <div class="col-10">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Author(s)</th>
+                            <th>Year</th>
+                            <th>Title</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result_table">
+                        <tr>
+                            <td>{{ results.authors }}</td>
+                            <td>{{ results.year }}</td>
+                            <td><a href="{{ results.doi_link }}" target="_blank">{{ results.title }}</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

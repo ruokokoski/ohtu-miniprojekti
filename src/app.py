@@ -11,7 +11,7 @@ from repositories.reference_repository import (
     list_references_as_bibtex
 )
 from util import validate_reference, generate_key, UserInputError
-
+from repositories.acm_scraper import fetch_acm_search_results
 
 
 @app.route("/")
@@ -86,7 +86,22 @@ def download_references():
         as_attachment=True                   # Varmistaa, että tiedosto ladataan
     )
 
-
+@app.route("/search", methods=["GET", "POST"])
+def acm_search():
+    if request.method == "POST":
+        search_query = request.form.get("query", "")
+    else:
+        search_query = request.args.get("query", "")
+    
+    if search_query:
+        results = fetch_acm_search_results(search_query)
+        if results is None:
+            flash("Hakutuloksia ei löytynyt", "warning")
+            return redirect("/")
+        return render_template("index.html", results=results)
+    else:
+        flash("Hakusana puuttuu", "danger")
+        return redirect("/")
 
 
 if test_env:
