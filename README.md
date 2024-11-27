@@ -53,6 +53,8 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Sprint backlog viikko 2](https://github.com/users/ruokokoski/projects/6)
 
+* [Sprint backlog viikko 3](https://github.com/users/ruokokoski/projects/7)
+
 * [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
 * [Käytetty tietokantapalvelu](https://aiven.io/)
@@ -79,6 +81,11 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 ### Robot-testien suoritus
 ```bash
    bash run_robot_tests.sh
+```
+
+### Robot-testien, linttauksen ja yksikkötestien suoritus peräjälkeen:
+```bash
+   bash test.sh
 ```
 
 ### Testidatan lähettämien tietokantaan
