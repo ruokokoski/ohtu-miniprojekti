@@ -98,7 +98,7 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
  - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
  - Koodi täyttää määritellyt PyLint-laatuvaatimukset
  - Robot-testit User Storylle (tarvittaessa)
- - User Storyn unittest-kattavuus >75%
+ - User Storyn unittest-kattavuus >60%
 
 ## Current sprint burndown chart
 ![Alt text](https://docs.google.com/spreadsheets/d/e/2PACX-1vSgmI9CcnHExwW76f3Iid2vBFtww8dJj3gGbKORF8bFOcxoj4qKHqvyHGiRsX7gq379fEPJEW54qcTe/pubchart?oid=1546569514&format=image)
