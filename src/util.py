@@ -3,24 +3,18 @@ import re
 class UserInputError(Exception):
     pass
 
-def validate_reference(data):
-    if len(data["author"]) == 0:
+def validate_reference(reference):
+    if len(reference.author) == 0:
         raise UserInputError("Must have author.")
 
-    if len(data["title"]) < 2:
+    if len(reference.title) < 2:
         raise UserInputError("Title must be at least 2 characters long")
 
-    if len(data["title"]) > 100:
+    if len(reference.title) > 100:
         raise UserInputError("Title must be under 100 characters long")
 
-    if not data["year"].isdigit() or not 1000 <= int(data["year"]) <= 9999:
+    if not reference.year.isdigit() or not 1000 <= int(reference.year) <= 9999:
         raise UserInputError("Year must be a valid 4-digit number between 1000 and 9999")
-
-    if len(data["publisher"]) < 2:
-        raise UserInputError("Publisher must be at least 2 characters long")
-
-    if len(data["publisher"]) > 100:
-        raise UserInputError("Publisher must be under 100 characters long")
 
 def generate_key(author, year, title):
     surname = author.split(", ")[0]

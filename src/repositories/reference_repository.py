@@ -1,18 +1,9 @@
 from sqlalchemy import text
 from pybtex.database import BibliographyData, Entry
+from entities.reference import Reference
 from config import db
 
-def list_references():
-    sql = text(
-        """
-        SELECT key, author, year, title, publisher, address, 
-               volume, series, edition, month, note, url
-        FROM books
-        ORDER BY key
-        """
-    )
-    result = db.session.execute(sql).fetchall()
-    return result
+
 
 def get_reference_by_key(key):
     sql = text(
@@ -25,22 +16,6 @@ def get_reference_by_key(key):
     )
     result = db.session.execute(sql, {"key": key}).fetchone()
     return result
-
-def create_reference(data):
-    sql_query = text(
-        """
-        INSERT INTO books (
-            key, author, year, title, publisher, address,
-            volume, series, edition, month, note, url
-        )
-        VALUES (
-            :key, :author, :year, :title, :publisher, :address,
-            :volume, :series, :edition, :month, :note, :url
-        )
-        """
-    )
-    db.session.execute(sql_query, data)
-    db.session.commit()
 
 def update_reference(data):
     sql = text(
@@ -64,31 +39,35 @@ def delete_reference(key):
 
 
 def list_references_as_bibtex():
-    sql = text("""
-        SELECT key, author, year, title, publisher, address,
-               volume, series, edition, month, note, url
-        FROM books
-        ORDER BY key
-    """)
-    result = db.session.execute(sql).fetchall()
-
-    # Luo BibliographyData-objekti BibTeX-tietojen tallentamiseen
+    # Haetaan kaikki viitteet tietokannasta
+    references = Reference.query.all()
     bib_data = BibliographyData()
 
-    # Käydään läpi kaikki viitteet ja lisätään ne BibTeX-tietokantaan
-    for row in result:
-        entry_data = {field: getattr(row, field, '') or '' for field in [
-            'author', 'title', 'year', 'publisher', 'address', 'volume',
-            'series', 'edition', 'month', 'note', 'url']}
+    # Käydään läpi kaikki viitteet ja luodaan niistä BibTeX-kenttiä
+    for reference in references:
+        # Määritellään BibTeX-tiedot
+        bib_entry = Entry(
+            reference.entry_type,  # Entry type, esim. 'book' tai 'article'
+            fields={
+                'author': reference.author,
+                'title': reference.title,
+                'year': str(reference.year),
+            }
+        )
 
-        # Muunna vuosi merkkijonoksi
-        entry_data['year'] = str(entry_data['year'])
+        # Lisätään mahdolliset extra_fields
+        if reference.extra_fields:
+            for key, value in reference.extra_fields.items():
+                bib_entry.fields[key] = str(value)
 
-        # Luo ja lisää viite BibTeX-tietokantaan
-        bib_data.add_entry(row.key, Entry('book', entry_data))
+        # Lisätään BibTeX-tieto bib_data-objektiin käyttäen citation key:tä
+        bib_data.entries[reference.citation_key] = bib_entry
 
-    # Palautetaan BibTeX-tiedot Pybtexin `to_string()`-metodilla
-    return bib_data.to_string('bibtex')
+    # Muunnetaan BibTeX-objekti merkkijonoksi
+    bibtex_str = bib_data.to_string('bibtex')
+
+    return bibtex_str
+
 
 '''
 def get_bibtex():

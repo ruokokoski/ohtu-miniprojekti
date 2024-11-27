@@ -1,23 +1,30 @@
-class Reference:
-    def __init__(self,
-                 reference_id
-                 #reference_type,
-                 #citation_key,
-                 #author,
-                 #title,
-                 #publisher,
-                 #address,
-                 #year,
-                 ):
+from sqlalchemy import Column, Integer, String, JSON
+from config import db
 
-        self.id = reference_id
-        #self.reference_type = reference_type
-        #self.citation_key = citation_key
-        #self.author = author
-        #self.title = title
-        #self.publisher = publisher
-        #self.address = address
-        #self.year = year
+class Reference(db.Model):
+    __tablename__ = 'refs'
 
-    def __str__(self):
-        return f"{self.id}"
+    id = Column(Integer, primary_key=True)
+    entry_type = Column(String(50))
+    citation_key = Column(String(100), unique=True)
+    author = Column(String(255))
+    title = Column(String(255))
+    year = Column(Integer)
+    extra_fields = Column(JSON)  # Tallennetaan JSON-tyyppisenä
+
+    def to_dict(self):
+        data = {
+            "entry_type": self.entry_type,
+            "citation_key": self.citation_key,
+            "author": self.author,
+            "title": self.title,
+            "year": self.year,
+        }
+        # Palautetaan extra_fields tai tyhjä sanakirja, jos se on None
+        data["extra_fields"] = self.extra_fields if self.extra_fields else {}
+        return data
+
+    def save(self):
+        """Tallenna viite tietokantaan"""
+        db.session.add(self)
+        db.session.commit()
