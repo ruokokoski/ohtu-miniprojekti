@@ -87,7 +87,7 @@ def setup_references_table():
         "title TEXT NOT NULL, "
         "year INTEGER NOT NULL, "
         "tag TEXT, "
-        "extra_fields TEXT NOT NULL "
+        "extra_fields JSON NOT NULL "
         ");"
     )
     db.session.execute(sql)
