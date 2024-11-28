@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, JSON
+from sqlalchemy.exc import SQLAlchemyError
 from config import db
 
 class Reference(db.Model):
@@ -28,3 +29,17 @@ class Reference(db.Model):
         """Tallenna viite tietokantaan"""
         db.session.add(self)
         db.session.commit()
+
+    def update(self, data):
+        """Päivitä viite tiedot"""
+        try:
+            self.author = data["author"]
+            self.title = data["title"]
+            self.year = int(data["year"]) if data["year"] else None
+            self.extra_fields = data.get("extra_fields", {})
+
+            db.session.commit()
+            print("Päivitys onnistui!")
+        except SQLAlchemyError as e:
+            print(f"SQLAlchemy virhe päivityksessä: {e}")
+            db.session.rollback()

@@ -1,4 +1,3 @@
-from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from pybtex.database import BibliographyData, Entry
 from entities.reference import Reference
@@ -8,26 +7,7 @@ from config import db
 def get_reference_by_key(key):
     """Palauta viite citation_key:n perusteella"""
     reference = Reference.query.filter_by(citation_key=key).first()
-    if reference:
-        return reference
-    else:
-        return None
-
-
-def update_reference(data):
-    sql = text(
-        """
-        UPDATE books
-        SET
-        key = :key,  author = :author, year = :year,
-        title = :title, publisher = :publisher, address = :address,
-        volume = :volume, series = :series, edition = :edition,
-        month = :month, note = :note, url = :url
-        WHERE key = :key
-        """
-    )
-    db.session.execute(sql, data)
-    db.session.commit()
+    return reference
 
 def delete_reference(key):
     """Poista viite Key:n perusteella"""
@@ -38,17 +18,15 @@ def delete_reference(key):
             db.session.commit()
         except SQLAlchemyError as e:
             db.session.rollback()
-            raise Exception(f"Tietokantavirhe poistettaessa viitettä: {str(e)}")
+            raise SQLAlchemyError(f"Tietokantavirhe poistettaessa viitettä: {str(e)}") from e
     else:
         raise ValueError(f"Viite keyllä {key} ei löydy.")
-
 
 def list_references_as_dict():
     references = Reference.query.order_by(Reference.citation_key).all()
     # Muutetaan jokainen Reference-olio sanakirjaksi
     references_dict = [reference.to_dict() for reference in references]
     return references_dict
-
 
 def list_references_as_bibtex():
     # Haetaan kaikki viitteet tietokannasta

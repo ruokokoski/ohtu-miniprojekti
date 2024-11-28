@@ -39,12 +39,12 @@
                                 </ul>
                             </td>
                             <td>
-                                <a href="/edit_reference/{{ reference.id }}">
+                                <a href="/edit_reference/{{ reference.citation_key }}">
                                     <button type="button" class="btn btn-warning">Edit</button>
                                 </a>
                             </td>
                             <td>
-                                <form action="/delete_reference/{{ reference. citation_key }}" method="POST">
+                                <form action="/delete_reference/{{ reference.citation_key }}" method="POST">
                                     <button type="submit" class="btn btn-danger"
                                             onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
                                 </form>
