@@ -47,7 +47,7 @@ def list_references_as_dict():
     references = Reference.query.order_by(Reference.citation_key).all()
     # Muutetaan jokainen Reference-olio sanakirjaksi
     references_dict = [reference.to_dict() for reference in references]
-    return references_dict   
+    return references_dict
 
 
 def list_references_as_bibtex():
