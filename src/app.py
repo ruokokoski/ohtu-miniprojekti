@@ -117,20 +117,19 @@ def reference_remove(citation_key):
         flash(f"Virhe: {str(e)}", "failure")
     except SQLAlchemyError as db_error:
         flash(f"Virhe viitteen poistamisessa: {str(db_error)}", "failure")
-    return redirect("/references")  
-
+    return redirect("/references")
 
 @app.route("/download")
 def download_references():
     bibtex_data = list_references_as_bibtex()
-    
+
     flash("Lataus onnistui", "success")
 
     # Muodostetaan tiedosto BytesIO-objektiksi, jotta se voidaan lähettää käyttäjälle
     return send_file(
         BytesIO(bytes(bibtex_data, "utf-8")),
-        download_name="references.bib",       
-        as_attachment=True                   
+        download_name="references.bib",
+        as_attachment=True
     )
 
 
