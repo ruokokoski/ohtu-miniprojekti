@@ -17,9 +17,11 @@ function createReferenceFormButtons()  {
     document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
     document.getElementById("new_reference").addEventListener("submit", validateForm);
+    document.getElementById("type").addEventListener("change", toggleBook);
 };
 
 function toggleOptionals() {
+    toggleBook()
     var opt = document.getElementById("optional_fields");
     var btn = document.getElementById("toggle_optionals_button");
 
@@ -30,6 +32,20 @@ function toggleOptionals() {
     else {
         opt.style.display = "none";
         btn.textContent = "Näytä valinnaiset";
+    }
+}
+
+function toggleBook() {
+    let book = document.getElementById("book_fields");
+    let article = document.getElementById("article_fields");
+    let select = document.getElementById("type");
+    if (select.value === "book") {
+        book.style.display = "block";
+        article.style.display = "none";
+    }
+    else if (select.value === "article") {
+        book.style.display = "none";
+        article.style.display = "block";
     }
 }
 

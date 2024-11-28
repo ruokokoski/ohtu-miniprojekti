@@ -31,9 +31,10 @@ Uusi viite
                             <button type="button" class="btn btn-primary" id="add_author_button">Lisää author</button>
                         </div>  
                     </div>
+                    
                     <div class="form-group">
                         <label for="type"><b>Type:</b></label>
-                        <select name="type">
+                        <select name="type" id="type">
                             <option value="book" selected> book
                             <option value="article"> article
                             </select>
@@ -55,34 +56,55 @@ Uusi viite
                 <!-- OPTIONAL -->
 
                 <div id="optional_fields" style="display: none">
-                    <div class="form-group">
-                        <label for="address"><b>Address:</b></label>
-                        <input type="text" class="form-control" name="address" placeholder="Optional">
+                    <div id="book_fields">
+                        <div class="form-group">
+                            <label for="address"><b>Address:</b></label>
+                            <input type="text" class="form-control" name="address" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="volume"><b>Volume/Number:</b></label>
+                            <input type="text" class="form-control" name="volume" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="series"><b>Series:</b></label>
+                            <input type="text" class="form-control" name="series" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="edition"><b>Edition:</b></label>
+                            <input type="text" class="form-control" name="edition" placeholder="Optional">
+                        </div>
+                        <div>
+                            <label for="month"><b>Month:</b></label>
+                            <input type="text" class="form-control" name="month" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="note"><b>Note:</b></label>
+                            <input type="text" class="form-control" name="note" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="url"><b>URL:</b></label>
+                            <input type="text" class="form-control" name="url" placeholder="Optional">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="volume"><b>Volume/Number:</b></label>
-                        <input type="text" class="form-control" name="volume" placeholder="Optional">
-                    </div>
-                    <div class="form-group">
-                        <label for="series"><b>Series:</b></label>
-                        <input type="text" class="form-control" name="series" placeholder="Optional">
-                    </div>
-                    <div class="form-group">
-                        <label for="edition"><b>Edition:</b></label>
-                        <input type="text" class="form-control" name="edition" placeholder="Optional">
-                    </div>
-                    <div>
-                        <label for="month"><b>Month:</b></label>
-                        <input type="text" class="form-control" name="month" placeholder="Optional">
-                    </div>
-                    <div class="form-group">
-                        <label for="note"><b>Note:</b></label>
-                        <input type="text" class="form-control" name="note" placeholder="Optional">
-                    </div>
-                    <div class="form-group">
-                        <label for="url"><b>URL:</b></label>
-                        <input type="text" class="form-control" name="url" placeholder="Optional">
-                    </div>
+
+                    <div id="article_fields" style="display: none">
+                        <div class="form-group">
+                            <label for="address"><b>Address:</b></label>
+                            <input type="text" class="form-control" name="address" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="volume"><b>Artikkeli:</b></label>
+                            <input type="text" class="form-control" name="volume" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="series"><b>Series:</b></label>
+                            <input type="text" class="form-control" name="series" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="edition"><b>Edition:</b></label>
+                            <input type="text" class="form-control" name="edition" placeholder="Optional">
+                        </div>
+                    </div>           
                 </div>
 
                 <button type="button" class="btn btn-primary" id="toggle_optionals_button">Näytä valinnaiset</button>
