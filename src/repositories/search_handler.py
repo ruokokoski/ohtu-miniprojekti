@@ -1,9 +1,10 @@
 import time
+from urllib.parse import urlencode
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from urllib.parse import urlencode
+from selenium.common.exceptions import TimeoutException, WebDriverException
 from bs4 import BeautifulSoup
 
 def fetch_acm_search_results(search_variable):
@@ -15,25 +16,29 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    first_result = get_results(soup)
-    if not first_result:
+    time.sleep(3)
+    results = get_results(soup, 5)
+    if not results:
         driver.quit()
         return None
 
-    title, title_tag = get_title(first_result)
-    year = get_year(first_result)
-    doi_link = get_doi_link(title_tag)
-    authors = get_authors(first_result)
+    result_data_list = []
+    for result in results:
+        title, title_tag = get_title(result)
+        year = get_year(result)
+        doi_link = get_doi_link(title_tag)
+        authors = get_authors(result)
 
-    result_data = {
-        "title": title,
-        "authors": authors,
-        "year": year,
-        "doi_link": doi_link
-    }
+        result_data = {
+            "title": title,
+            "authors": authors,
+            "year": year,
+            "doi_link": doi_link
+        }
+        result_data_list.append(result_data)
 
     driver.quit()
-    return result_data
+    return result_data_list
 
 def initialize_webdriver():
     options = webdriver.ChromeOptions()
@@ -48,23 +53,32 @@ def build_search_url(search_variable):
 def load_page_and_get_soup(driver):
     wait = WebDriverWait(driver, 20)
     try:
+        # results_containeria tarvitaan myöhemmin bibtex-buttonin hakua varten
         # pylint: disable=unused-variable
-        results_container = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "search-result__xsl-body")))
+        results_container = wait.until(
+            EC.presence_of_element_located(
+                (By.CLASS_NAME, "search-result__xsl-body")
+            )
+        )
         html = driver.page_source
         return BeautifulSoup(html, 'html.parser')
-    except:
+    except (TimeoutException, WebDriverException):
         driver.quit()
         return None
-    
-def get_results(soup):
-    return soup.find('li', class_='search__item')
+
+def get_results(soup, count):
+    return soup.find_all('li', class_='search__item', limit=count)
 
 def get_authors(result):
-    time.sleep(2)
     author_list = result.find('ul', class_='rlist--inline loa truncate-list')
-    authors = ', '.join(
-        author.find('span').text.strip() for author in author_list.find_all('li') if author.find('span')
-    ) if author_list else "--"
+    if author_list:
+        authors = ', '.join(
+            author.find('span').text.strip()
+            for author in author_list.find_all('li')
+            if author.find('span')
+        )
+    else:
+        authors = "--"
     return authors
 
 def get_title(result):

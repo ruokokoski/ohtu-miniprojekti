@@ -37,11 +37,13 @@ Etusivu
                         </tr>
                     </thead>
                     <tbody id="result_table">
-                        <tr>
-                            <td>{{ results.authors }}</td>
-                            <td>{{ results.year }}</td>
-                            <td><a href="{{ results.doi_link }}" target="_blank">{{ results.title }}</a></td>
-                        </tr>
+                        {% for result in results %}
+                            <tr>
+                                <td>{{ result.authors }}</td>
+                                <td>{{ result.year }}</td>
+                                <td><a href="{{ result.doi_link }}" target="_blank">{{ result.title }}</a></td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

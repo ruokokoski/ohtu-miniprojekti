@@ -6,7 +6,7 @@ Test Setup  Reset Table And Go To Starting Page
 
 *** Test Cases ***
 At start main page works
-    Title Should Be  Koti
+    Title Should Be  Etusivu
 
 *** Keywords ***
 Reset Table And Go To Starting Page

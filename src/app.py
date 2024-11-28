@@ -1,6 +1,7 @@
 from io import BytesIO
 from sqlalchemy.exc import SQLAlchemyError
 from flask import render_template, redirect, request, flash, jsonify, send_file
+
 from db_helper import reset_db
 from config import app, test_env
 from repositories.reference_repository import (
@@ -10,8 +11,8 @@ from repositories.reference_repository import (
     #get_bibtex,
     list_references_as_bibtex
 )
-from util import validate_reference, generate_key, UserInputError
 from repositories.search_handler import fetch_acm_search_results
+from util import validate_reference, generate_key, UserInputError
 
 
 @app.route("/")
@@ -92,16 +93,16 @@ def acm_search():
         search_query = request.form.get("query", "")
     else:
         search_query = request.args.get("query", "")
-    
+
     if search_query:
         results = fetch_acm_search_results(search_query)
         if results is None:
             flash("Hakutuloksia ei löytynyt", "warning")
             return redirect("/")
         return render_template("index.html", results=results)
-    else:
-        flash("Hakusana puuttuu", "danger")
-        return redirect("/")
+
+    flash("Hakusana puuttuu", "danger")
+    return redirect("/")
 
 
 if test_env:
