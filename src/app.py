@@ -11,7 +11,7 @@ from repositories.reference_repository import (
     list_references_as_bibtex
 )
 from util import validate_reference, generate_key, UserInputError
-from repositories.acm_scraper import fetch_acm_search_results
+from repositories.search_handler import fetch_acm_search_results
 
 
 @app.route("/")
