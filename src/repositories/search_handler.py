@@ -17,7 +17,7 @@ def fetch_acm_search_results(search_variable):
         return None
 
     time.sleep(3)
-    results = get_results(soup, 5)
+    results = get_results(soup, 10)
     if not results:
         driver.quit()
         return None
@@ -67,7 +67,11 @@ def load_page_and_get_soup(driver):
         return None
 
 def get_results(soup, count):
-    return soup.find_all('li', class_='search__item', limit=count)
+    results = soup.find_all('li', class_='search__item')
+    if len(results) > 5:
+        results.pop(5)  # Poista 6., joka on mainos
+
+    return results[:count]
 
 def get_authors(result):
     author_list = result.find('ul', class_='rlist--inline loa truncate-list')
