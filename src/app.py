@@ -38,17 +38,21 @@ def browse_references():
 @app.route("/create_reference", methods=["POST"])
 def reference_creation():
     data = {
+        #required
         "author": request.form.get("author", ""),
         "year": request.form.get("year", ""),
         "title": request.form.get("title", ""),
         "publisher": request.form.get("publisher", ""),
+        "type": request.form.get("type", ""),
+        #optional
         "address": request.form.get("address", ""),
         "volume": request.form.get("volume", ""),
         "series": request.form.get("series", ""),
         "edition": request.form.get("edition", ""),
         "month": request.form.get("month", ""),
         "note": request.form.get("note", ""),
-        "url": request.form.get("url", "")
+        "url": request.form.get("url", ""),
+        "number": request.form.get("number", ""),
     }
 
     # Korvataan tyhjät kentät tyhjällä merkkijonolla
