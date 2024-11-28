@@ -44,7 +44,7 @@
                                 </a>
                             </td>
                             <td>
-                                <form action="/delete_reference/{{ reference.id }}" method="POST">
+                                <form action="/delete_reference/{{ reference. citation_key }}" method="POST">
                                     <button type="submit" class="btn btn-danger"
                                             onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
                                 </form>
@@ -67,4 +67,3 @@
     </div>
 </div>
 {% endblock %}
-

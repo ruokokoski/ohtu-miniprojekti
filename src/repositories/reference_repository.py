@@ -1,21 +1,18 @@
 from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 from pybtex.database import BibliographyData, Entry
 from entities.reference import Reference
 from config import db
 
 
-
 def get_reference_by_key(key):
-    sql = text(
-        """
-        SELECT key, author, year, title, publisher, address, 
-               volume, series, edition, month, note, url
-        FROM books
-        WHERE key = :key
-        """
-    )
-    result = db.session.execute(sql, {"key": key}).fetchone()
-    return result
+    """Palauta viite citation_key:n perusteella"""
+    reference = Reference.query.filter_by(citation_key=key).first()
+    if reference:
+        return reference
+    else:
+        return None
+
 
 def update_reference(data):
     sql = text(
@@ -33,14 +30,29 @@ def update_reference(data):
     db.session.commit()
 
 def delete_reference(key):
-    sql = text("DELETE FROM books WHERE key = :key")
-    db.session.execute(sql, {"key": key})
-    db.session.commit()
+    """Poista viite Key:n perusteella"""
+    reference = get_reference_by_key(key)
+    if reference:
+        try:
+            db.session.delete(reference)
+            db.session.commit()
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            raise Exception(f"Tietokantavirhe poistettaessa viitettä: {str(e)}")
+    else:
+        raise ValueError(f"Viite keyllä {key} ei löydy.")
+
+
+def list_references_as_dict():
+    references = Reference.query.order_by(Reference.citation_key).all()
+    # Muutetaan jokainen Reference-olio sanakirjaksi
+    references_dict = [reference.to_dict() for reference in references]
+    return references_dict   
 
 
 def list_references_as_bibtex():
     # Haetaan kaikki viitteet tietokannasta
-    references = Reference.query.all()
+    references = Reference.query.order_by(Reference.citation_key).all()
     bib_data = BibliographyData()
 
     # Käydään läpi kaikki viitteet ja luodaan niistä BibTeX-kenttiä
