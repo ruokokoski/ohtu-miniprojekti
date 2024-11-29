@@ -37,7 +37,7 @@ def edit_reference(citation_key):
     authors = [{"sukunimi":nimi.split(", ")[0] ,
                 "etunimi":nimi.split(", ")[1] }
                 for nimi in authors]
-    return render_template('edit_reference.html', reference=reference, authors=authors)
+    return render_template('edit_reference.html', reference=reference, authors=authors,extra_fields=reference.extra_fields)
 
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
