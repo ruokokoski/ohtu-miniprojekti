@@ -1,6 +1,6 @@
 function setCurrentYearAsMax(id) {
     var year = new Date().getFullYear();
-    document.getElementById(id).setAttribute("max", year)
+    document.getElementById(id).setAttribute("max", year);
 }
 
 const hideFlashMessage = () => {
@@ -13,7 +13,7 @@ const hideFlashMessage = () => {
 }
 window.addEventListener("load", hideFlashMessage);
 
-function createReferenceFormButtons()  {
+function createReferenceFormButtons() {
     document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
     document.getElementById("new_reference").addEventListener("submit", validateForm);
@@ -21,7 +21,7 @@ function createReferenceFormButtons()  {
 };
 
 function toggleOptionals() {
-    toggleBook()
+    toggleBook();
     var opt = document.getElementById("optional_fields");
     var btn = document.getElementById("toggle_optionals_button");
 
@@ -50,11 +50,9 @@ function toggleBook() {
 }
 
 function addNewAuthor() {
-
     var firstName = document.getElementById("first_name");
     var lastName = document.getElementById("last_name");
     var authorList = document.getElementById("author_list");
-
 
     if (firstName.value.trim() != "" && lastName.value.trim() != "") {
         var person = document.createElement("li");
@@ -78,22 +76,28 @@ function addNewAuthor() {
 }
 
 function validateForm(event) {
-
     var authorList = document.getElementById("author_list");
-    var author = document.getElementById("author")
+    var author = document.getElementById("author");
 
     if (authorList.children.length === 0) {
         alert("Lisää ainakin yksi author ennen lomakkeen lähettämistä.");
-        return;
+        event.preventDefault();
+                return;
     }
 
     author.value = Array.from(authorList.children).map(li => li.firstChild.textContent).join(" and ");
 
+    var form = document.getElementById("new_reference");
+    var inputs = form.querySelectorAll("input[type='text'], input[type='number']");
+
+    inputs.forEach(function(input) {
+        if (!input.value.trim()) {
+            input.disabled = true;
+        }
+    });
 }
 
 function addAuthor(firstName, lastName) {
-
-    
     var authorList = document.getElementById("author_list");
     var person = document.createElement("li");
 
@@ -107,5 +111,4 @@ function addAuthor(firstName, lastName) {
     authorList.appendChild(person);
 
     deletePerson.addEventListener("click", () => deletePerson.parentElement.remove());
-
 }

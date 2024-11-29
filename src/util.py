@@ -50,26 +50,17 @@ def process_reference_form(is_creation, citation_key=None):
         )
         return redirect(redirect_url)
 
-
 def create_extra_fields(entry_type):
     """Palauttaa dynaamiset extra_fields-kentät viitetyypin mukaan"""
     extra_fields = {}
     if entry_type == "book":
-        extra_fields["publisher"] = request.form.get('publisher', '')
-        extra_fields["address"] = request.form.get('address', '')
-        extra_fields["volume"] = request.form.get('volume', '')
-        extra_fields["series"] = request.form.get('series', '')
-        extra_fields["edition"] = request.form.get('edition', '')
-        extra_fields["month"] = request.form.get('month', '')
-        extra_fields["note"] = request.form.get('note', '')
-        extra_fields["url"] = request.form.get('url', '')
-        extra_fields["isbn"] = request.form.get('isbn', '')
+        book_fields = ['publisher', 'address', 'volume', 'series', 'edition', 'month', 'note', 'url', 'isbn']
+        for field in book_fields:
+            extra_fields[field] = request.form.get(field, '')
     elif entry_type == "article":
-        extra_fields["journal"] = request.form.get('journal', '')
-        extra_fields["number"] = request.form.get('number', '')
-        extra_fields["volume"] = request.form.get('volume', '')
-        extra_fields["month"] = request.form.get('month', '')
-        extra_fields["note"] = request.form.get('note', '')
+        article_fields = ['journal', 'number', 'volume', 'month', 'note']
+        for field in article_fields:
+            extra_fields[field] = request.form.get(field, '')
     return extra_fields
 
 
