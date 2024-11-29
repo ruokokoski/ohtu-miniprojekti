@@ -8,7 +8,7 @@ from exceptions import UserInputError
 def process_reference_form(is_creation, citation_key=None):
     """Käsittelee lomakkeen tiedot ja suorittaa validoinnin."""
     # Haetaan formista lähetetyt tiedot
-    entry_type = request.form.get('entry_type', 'book')
+    entry_type = request.form.get('entry_type', '')
     author = request.form.get('author', '')
     title = request.form.get('title', '')
     year = request.form.get('year', '')
@@ -101,6 +101,7 @@ def validate_reference(reference):
     # Viitetyypin tarkastukset
     if reference['entry_type'] == "book":
         validate_book(reference)
+    if reference['entry_type'] == "article":
         validate_article(reference)
 
 
@@ -128,8 +129,8 @@ def validate_book(reference):
 
 def validate_article(reference):
     """Tarkastuksia 'article' viitetyypille"""
-    #if not reference['extra_fields'].get("journal"):
-    #   raise UserInputError("Journal is required for articles.")
+    if not reference['extra_fields'].get("journal"):
+       raise UserInputError("Journal is required for articles.")
 
 
 def generate_key(author, year, title):
