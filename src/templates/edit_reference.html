@@ -11,7 +11,7 @@ Muokkaa viitettä
             <h2>Muokkaa viitettä</h2>
             <form action="/update_reference" method="post" id="new_reference" style="display: inline-block;">
                 <!-- REQUIRED -->
-                <input type="hidden" name="key" value="{{reference.key}}">
+                <input type="hidden" name="citation_key" value="{{reference.citation_key}}">
                 <input type="hidden" id="author" name="author">
                 <div id="required_fields">
                     <b>Authors:</b>
@@ -33,12 +33,12 @@ Muokkaa viitettä
                         <input type="text" class="form-control" name="title" value="{{ reference.title }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="publisher"><b>Publisher:</b></label>
-                        <input type="text" class="form-control" name="publisher" value="{{ reference['publisher'] }}" required>
+                        <label for="publisher"><b>entry_type:</b></label>
+                        <input type="text" class="form-control" name="entry_type" value="{{ reference.entry_type }}" required>
                     </div>
                     <div class="form-group">
                         <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference['year'] }}" required min="1000">
+                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference.year }}" required min="1000">
                     </div>
                 </div>
 
