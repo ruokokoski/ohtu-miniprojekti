@@ -8,10 +8,10 @@ from exceptions import UserInputError
 def process_reference_form(is_creation, citation_key=None):
     """Käsittelee lomakkeen tiedot ja suorittaa validoinnin."""
     # Haetaan formista lähetetyt tiedot
-    entry_type = request.form['entry_type']
-    author = request.form['author']
-    title = request.form['title']
-    year = request.form['year']
+    entry_type = request.form.get('entry_type', 'book')
+    author = request.form.get('author', '')
+    title = request.form.get('title', '')
+    year = request.form.get('year', '')
 
     # Luodaan extra_fields dynaamisesti
     extra_fields = create_extra_fields(entry_type)
