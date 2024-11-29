@@ -54,7 +54,10 @@ def create_extra_fields(entry_type):
     """Palauttaa dynaamiset extra_fields-kentät viitetyypin mukaan"""
     extra_fields = {}
     if entry_type == "book":
-        book_fields = ['publisher', 'address', 'volume', 'series', 'edition', 'month', 'note', 'url', 'isbn']
+        book_fields = [
+            'publisher', 'address', 'volume', 'series', 'edition',
+            'month', 'note', 'url', 'isbn'
+        ]
         for field in book_fields:
             extra_fields[field] = request.form.get(field, '')
     elif entry_type == "article":
@@ -74,13 +77,13 @@ def create_reference(data):
         year=data['year'],
         extra_fields=data['extra_fields']
     )
-    reference.save()  # Tallenna uusi viite
+    reference.save()
 
 
 def update_reference(citation_key, data):
     """Päivitä olemassa oleva viite"""
-    reference = get_reference_by_key(citation_key)  # Hakee viitteen tietokannasta
-    reference.update(data)  # Päivittää viitteen
+    reference = get_reference_by_key(citation_key)
+    reference.update(data)
 
 
 def validate_reference(reference):
@@ -107,7 +110,6 @@ def validate_title(reference):
     if len(reference['title']) > 100:
         raise UserInputError("Title must be under 100 characters long.")
 
-
 def validate_year(reference):
     if not reference['year'].isdigit() or not 1000 <= int(reference['year']) <= 9999:
         raise UserInputError("Year must be a valid 4-digit number between 1000 and 9999.")
@@ -121,7 +123,7 @@ def validate_book(reference):
 def validate_article(reference):
     """Tarkastuksia 'article' viitetyypille"""
     if not reference['extra_fields'].get("journal"):
-       raise UserInputError("Journal is required for articles.")
+        raise UserInputError("Journal is required for articles.")
 
 
 def generate_key(author, year, title):
