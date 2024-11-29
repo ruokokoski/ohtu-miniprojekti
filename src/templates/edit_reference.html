@@ -29,6 +29,13 @@ Muokkaa viitettä
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="entry_type"><b>Type:</b></label>
+                        <select name="entry_type" id="entry_type">
+                            <option value="book" selected> book
+                            <option value="article"> article
+                            </select>
+                    </div>
+                    <div class="form-group">
                         <label for="title"><b>Title:</b></label>
                         <input type="text" class="form-control" name="title" value="{{ reference.title }}" required>
                     </div>
