@@ -65,7 +65,11 @@ def create_extra_fields(entry_type):
         extra_fields["url"] = request.form.get('url', '')
         extra_fields["isbn"] = request.form.get('isbn', '')
     elif entry_type == "article":
-        pass  # Lisää kentät artikkeleille, jos tarpeen
+        extra_fields["journal"] = request.form.get('journal', '')
+        extra_fields["number"] = request.form.get('number', '')
+        extra_fields["volume"] = request.form.get('volume', '')
+        extra_fields["month"] = request.form.get('month', '')
+        extra_fields["note"] = request.form.get('note', '')
     return extra_fields
 
 
@@ -97,6 +101,7 @@ def validate_reference(reference):
     # Viitetyypin tarkastukset
     if reference['entry_type'] == "book":
         validate_book(reference)
+        validate_article(reference)
 
 
 def validate_author(reference):
@@ -118,15 +123,13 @@ def validate_year(reference):
 
 def validate_book(reference):
     """Tarkastuksia 'book' viitetyypille"""
-    #if not reference['extra_fields'].get("publisher"):
-    #    raise UserInputError("Publisher is required for books.")
+    if not reference['extra_fields'].get("publisher"):
+        raise UserInputError("Publisher is required for books.")
 
-    #if not reference['extra_fields'].get("isbn"):
-    #    raise UserInputError("ISBN is required for books.")
-
-    # Voit tarkistaa muita kenttiä, kuten address, edition, jne.
-    #if len(reference['extra_fields'].get("isbn", "")) < 10:
-    #    raise UserInputError("ISBN must be at least 10 characters long.")
+def validate_article(reference):
+    """Tarkastuksia 'article' viitetyypille"""
+    #if not reference['extra_fields'].get("journal"):
+    #   raise UserInputError("Journal is required for articles.")
 
 
 def generate_key(author, year, title):
