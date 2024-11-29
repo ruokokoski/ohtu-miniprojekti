@@ -33,6 +33,7 @@ class Reference(db.Model):
     def update(self, data):
         """Päivitä viite tiedot"""
         try:
+            self.entry_type = data["entry_type"]
             self.author = data["author"]
             self.title = data["title"]
             self.year = int(data["year"]) if data["year"] else None
