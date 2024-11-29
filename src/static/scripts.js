@@ -17,7 +17,7 @@ function createReferenceFormButtons()  {
     document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
     document.getElementById("new_reference").addEventListener("submit", validateForm);
-    document.getElementById("type").addEventListener("change", toggleBook);
+    document.getElementById("entry_type").addEventListener("change", toggleBook);
 };
 
 function toggleOptionals() {
@@ -38,7 +38,7 @@ function toggleOptionals() {
 function toggleBook() {
     let book = document.getElementById("book_fields");
     let article = document.getElementById("article_fields");
-    let select = document.getElementById("type");
+    let select = document.getElementById("entry_type");
     if (select.value === "book") {
         book.style.display = "block";
         article.style.display = "none";
