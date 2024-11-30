@@ -21,3 +21,12 @@
 - selkeä visio on olemassa
 
 - README:ssä on testit hyvin näkyvissä
+
+
+## Kehitystoimenpiteet
+
+- parannetaan kommunikaatiota Discordissa
+
+- luodaan skripti, joka suorittaa kaikki eri testit
+
+- kiinnitetään tärkeät viestit Discordissa
