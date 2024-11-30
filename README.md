@@ -58,6 +58,8 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
+* [Testikattavuusraportti](https://app.codecov.io/gh/ruokokoski/ohtu-miniprojekti)
+
 * [Käytetty tietokantapalvelu](https://aiven.io/)
 
 ## Sovelluksen testaus
