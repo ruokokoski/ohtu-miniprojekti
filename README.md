@@ -1,6 +1,7 @@
 # Ohjelmistotuotanto - Miniprojekti
 
 [![GHA_workflow_badge](https://github.com/ruokokoski/ohtu-miniprojekti/workflows/CI/badge.svg)](https://github.com/ruokokoski/ohtu-miniprojekti/actions)
+[![codecov](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti/graph/badge.svg?token=HF7SFV0DV0)](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti)
 
 ## Projektin käyttöönotto
 
@@ -98,7 +99,7 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
  - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
  - Koodi täyttää määritellyt PyLint-laatuvaatimukset
  - Robot-testit User Storylle (tarvittaessa)
- - User Storyn unittest-kattavuus >60%
+ - Unittest-kattavuus >60% funktioille, joita Robot-testit eivät testaa
 
 ## Current sprint burndown chart
 ![Alt text](https://docs.google.com/spreadsheets/d/e/2PACX-1vSgmI9CcnHExwW76f3Iid2vBFtww8dJj3gGbKORF8bFOcxoj4qKHqvyHGiRsX7gq379fEPJEW54qcTe/pubchart?oid=1546569514&format=image)

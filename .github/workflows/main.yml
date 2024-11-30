@@ -42,7 +42,13 @@ jobs:
       - name: Run Python linting with Pylint
         run: poetry run pylint src
       - name: Run unit tests
-        run: poetry run pytest src/tests
+        run: poetry run coverage run --branch -m pytest
+      - name: Coverage report
+        run: poetry run coverage xml
+      - name: Coverage report to Codecov
+        uses: codecov/codecov-action@v4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       #- name: Setup chromedriver
       #  uses: nanasess/setup-chromedriver@master
       #- run: |
