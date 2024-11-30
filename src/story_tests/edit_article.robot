@@ -26,13 +26,13 @@ Edit A Reference (Edit Title)
     Page Should Contain  text=edited title
     Page Should Not Contain  text=Probabilistic machine learning: an introduction
 
-Edit A Reference (Edit Publisher)
+Edit A Reference (Edit Journal)
     Click Link  Viitteet
     Click Button  Edit
-    Set Publisher  edited publisher
+    Set Journal  edited journal
     Click Button  Tallenna muutokset
     Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=edited publisher
+    Page Should Contain  text=edited journal
     Page Should Not Contain  text=MIT Press
 
 Edit A Reference (Edit Year)
@@ -44,14 +44,14 @@ Edit A Reference (Edit Year)
     Page Should Contain  text=2000
     Page Should Not Contain  text=1234
 
-Edit A Reference (Edit Address)
+Edit A Reference (Edit Number)
     Click Link  Viitteet
     Click Button  Edit
     Click Button  Näytä valinnaiset
-    Set Address  edited address
+    Set Number  edited number
     Click Button  Tallenna muutokset
     Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=edited address
+    Page Should Contain  text=edited number
 
 Edit A Reference (Edit Volume)
     Click Link  Viitteet
@@ -61,24 +61,6 @@ Edit A Reference (Edit Volume)
     Click Button  Tallenna muutokset
     Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited volume
-
-Edit A Reference (Edit Series)
-    Click Link  Viitteet
-    Click Button  Edit
-    Click Button  Näytä valinnaiset
-    Set Series  edited series
-    Click Button  Tallenna muutokset
-    Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=edited series
-
-Edit A Reference (Edit Edition)
-    Click Link  Viitteet
-    Click Button  Edit
-    Click Button  Näytä valinnaiset
-    Set Edition  edited edition
-    Click Button  Tallenna muutokset
-    Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=edited edition
 
 Edit A Reference (Edit Month)
     Click Link  Viitteet
@@ -98,24 +80,6 @@ Edit A Reference (Edit Note)
     Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited note
 
-Edit A Reference (Edit URL)
-    Click Link  Viitteet
-    Click Button  Edit
-    Click Button  Näytä valinnaiset
-    Set URL  http://localhost:5001/
-    Click Button  Tallenna muutokset
-    Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=http://localhost:5001/
-
-Edit A Reference (Edit ISBN)
-    Click Link  Viitteet
-    Click Button  Edit
-    Click Button  Näytä valinnaiset
-    Set ISBN  edited ISBN
-    Click Button  Tallenna muutokset
-    Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=edited ISBN
-
 *** Keywords ***
 Reset Table Add A Reference And Go To Starting Page
     Reset Table
@@ -125,7 +89,8 @@ Reset Table Add A Reference And Go To Starting Page
     Set Last name  Murphy
     Click Button  Lisää author
     Set Title  Probabilistic machine learning: an introduction
-    Set Publisher  MIT Press
+    Select Reference Type  article
+    Set Journal  MIT Press
     Set Year  2022
     Submit 
     Go To Starting page
@@ -141,33 +106,29 @@ Set Last name
     [Arguments]  ${last_name}
     Input Text  last_name  ${last_name}
 
+Select Reference Type
+    [Arguments]  ${reference_type}
+    Select From List By Label  entry_type  ${reference_type}
+
 Set Title
     [Arguments]  ${title}
     Input Text  title  ${title}
 
-Set Publisher
-    [Arguments]  ${publisher}
-    Input Text  publisher  ${publisher}
+Set Journal
+    [Arguments]  ${journal}
+    Input Text  journal  ${journal}
 
 Set Year
     [Arguments]  ${year}
     Input Text  year  ${year}
 
-Set Address
-    [Arguments]  ${address}
-    Input Text  address  ${address}
+Set Number
+    [Arguments]  ${number}
+    Input Text  number  ${number}
 
 Set Volume
     [Arguments]  ${volume}
     Input Text  volume  ${volume}
-
-Set Series
-    [Arguments]  ${series}
-    Input Text  series  ${series}
-
-Set Edition
-    [Arguments]  ${edition}
-    Input Text  edition  ${edition}
 
 Set Month
     [Arguments]  ${month}
@@ -176,11 +137,3 @@ Set Month
 Set Note
     [Arguments]  ${note}
     Input Text  note  ${note}
-
-Set URL
-    [Arguments]  ${url}
-    Input Text  url  ${url}
-
-Set ISBN
-    [Arguments]  ${isbn}
-    Input Text  isbn  ${isbn}
