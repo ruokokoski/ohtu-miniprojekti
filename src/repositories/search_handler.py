@@ -7,6 +7,75 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from bs4 import BeautifulSoup
 
+def fetch_search_results(database, search_variable):
+    if database == "ACM":
+        return fetch_acm_search_results(search_variable)
+    if database == "Google Scholar":
+        return fetch_google_scholar_results(search_variable)
+    raise ValueError(f"Tietokantaa {database} ei tueta.")
+
+def fetch_google_scholar_results(search_variable):
+    driver = initialize_webdriver()
+    search_url = "https://scholar.google.com/"
+    driver.get(search_url)
+
+    try:
+        search_box = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.NAME, "q"))
+        )
+        search_box.send_keys(search_variable)
+        search_box.submit()
+
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
+        )
+        html = driver.page_source
+        soup = BeautifulSoup(html, 'html.parser')
+
+        results = []
+        for item in soup.find_all('div', class_='gs_r gs_or gs_scl'):
+            title_tag = item.find('h3', class_='gs_rt')
+            title = title_tag.text.strip() if title_tag else "-"
+            if title_tag and title_tag.find('a'):
+                link = title_tag.find('a')['href']
+            else:
+                link = "Linkkiä ei löytynyt"
+            title = title.replace("[HTML]", "")
+            title = title.replace("[PDF]", "")
+            title = title.replace("[CITATION]", "")
+            title = title.strip()
+
+            author_year_tag = item.find('div', class_='gs_a')
+            #author_year_text = author_year_tag.text.strip() if author_year_tag else "-"
+            authors, year = parse_author_year(
+                author_year_tag.text.strip() if item.find('div', class_='gs_a') else "-"
+            )
+
+            result = {
+                "title": title,
+                "authors": authors,
+                "year": year,
+                "doi_link": link,
+                "pdf_url": "Ei saatavilla"
+            }
+            results.append(result)
+
+    except (TimeoutException, WebDriverException):
+        results = None
+    finally:
+        driver.quit()
+
+    return results
+
+def parse_author_year(author_year_text):
+    if author_year_text == "-":
+        return "n.d.", "-"
+
+    parts = author_year_text.split('-')
+    authors = parts[0].strip() if len(parts) > 0 else "n.d."
+    year = parts[-2].strip()[-4:] if len(parts) > 1 and parts[-2].strip()[-4:].isdigit() else "-"
+    return authors, year
+
 def fetch_acm_search_results(search_variable):
     driver = initialize_webdriver()
     search_url = build_search_url(search_variable)
@@ -52,7 +121,7 @@ def build_search_url(search_variable):
     return f"{base_url}{urlencode(query_params)}"
 
 def load_page_and_get_soup(driver):
-    wait = WebDriverWait(driver, 20)
+    wait = WebDriverWait(driver, 15)
     try:
         # results_containeria tarvitaan myöhemmin bibtex-buttonin hakua varten
         # pylint: disable=unused-variable

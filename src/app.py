@@ -11,7 +11,8 @@ from repositories.reference_repository import (
     #get_bibtex,
     list_references_as_bibtex
 )
-from repositories.search_handler import fetch_acm_search_results
+from repositories.search_handler import (
+    fetch_search_results)
 from util import validate_reference, generate_key, UserInputError
 
 
@@ -88,21 +89,38 @@ def download_references():
     )
 
 @app.route("/search", methods=["GET", "POST"])
-def acm_search():
+def search():
     if request.method == "POST":
         search_query = request.form.get("query", "")
+        database = request.form.get("database", "ACM")
     else:
         search_query = request.args.get("query", "")
+        database = request.args.get("database", "ACM")
 
-    if search_query:
+    if not search_query:
+        flash("Hakusana puuttuu", "danger")
+        return redirect("/")
+
+    try:
+        results = fetch_search_results(database, search_query)
+    except ValueError as e:
+        flash(str(e), "danger")
+        return redirect("/")
+    '''
+    if database == "ACM":
         results = fetch_acm_search_results(search_query)
-        if results is None:
-            flash("Hakutuloksia ei löytynyt", "warning")
-            return redirect("/")
-        return render_template("index.html", results=results)
+    elif database == "Google Scholar":
+        results = fetch_google_scholar_results(search_query)
+    else:
+        flash(f"Tuntematon tietokanta: {database}", "danger")
+        return redirect("/")
+    '''
+    if results is None or len(results) == 0:
+        flash("Hakutuloksia ei löytynyt", "warning")
+        return redirect("/")
 
-    flash("Hakusana puuttuu", "danger")
-    return redirect("/")
+    return render_template("index.html", results=results, database=database)
+
 
 
 if test_env:
