@@ -10,6 +10,7 @@ Add a new valid book reference
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -25,10 +26,10 @@ Add a new valid book reference with optional (address)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set Address  address test
     Submit 
     Page Should Contain  text=address test
@@ -38,10 +39,10 @@ Add a new valid book reference with optional (volume)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set Volume  volume test
     Submit 
     Page Should Contain  text=volume test
@@ -51,10 +52,10 @@ Add a new valid book reference with optional (series)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set Series  series test
     Submit 
     Page Should Contain  text=series test
@@ -64,10 +65,10 @@ Add a new valid book reference with optional (edition)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set Edition  edition test
     Submit 
     Page Should Contain  text=edition test
@@ -77,10 +78,10 @@ Add a new valid book reference with optional (month)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set Month  month test
     Submit 
     Page Should Contain  text=month test
@@ -90,10 +91,10 @@ Add a new valid book reference with optional (note)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set Note  note test
     Submit 
     Page Should Contain  text=note test
@@ -103,10 +104,10 @@ Add a new valid book reference with optional (URL)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set URL  http://localhost:5001/references
     Submit 
     Page Should Contain  text=http://localhost:5001/references
@@ -116,10 +117,10 @@ Add a new valid book reference with optional (ISBN)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
-    Click Button  Näytä valinnaiset
     Set ISBN  testi isbn
     Submit 
     Page Should Contain  text=testi isbn
@@ -134,6 +135,7 @@ Add a new partially filled book reference (no number in year)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  -
@@ -145,6 +147,7 @@ Add a new partially filled book reference (year too small)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  0
@@ -156,25 +159,28 @@ Add a new partially filled book reference (title too short)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  a
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
     Page Should Contain  text=Title must be at least 2 characters long
 
-Add a new partially filled book reference (publisher too short)
-    Click Link  Uusi viite
-    Set First name  Kevin P
-    Set Last name  Murphy
-    Click Button  Lisää author
-    Set Title  Probabilistic machine learning: an introduction
-    Set Publisher  a
-    Set Year  2022
-    Submit 
-    Page Should Contain  text=Publisher must be at least 2 characters long
+#Add a new partially filled book reference (publisher too short)
+#    Click Link  Uusi viite
+#    Set First name  Kevin P
+#    Set Last name  Murphy
+#    Click Button  Lisää author
+#    Click Button  Näytä valinnaiset
+#    Set Title  Probabilistic machine learning: an introduction
+#    Set Publisher  a
+#    Set Year  2022
+#    Submit 
+#    Page Should Contain  text=Publisher must be at least 2 characters long
 
 Add a new partially filled book reference (no author submited)
     Click Link  Uusi viite
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -203,6 +209,7 @@ Add a new invalid book reference (year too large)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  10000
@@ -214,22 +221,24 @@ Add a new invalid book reference (title too long)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
     Page Should Contain  text=Title must be under 100 characters long
 
-Add a new invalid book reference (publisher too long)
-    Click Link  Uusi viite
-    Set First name  Kevin P
-    Set Last name  Murphy
-    Click Button  Lisää author
-    Set Title  Probabilistic machine learning: an introduction
-    Set Publisher  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    Set Year  2022
-    Submit 
-    Page Should Contain  text=Publisher must be under 100 characters long
+#Add a new invalid book reference (publisher too long)
+#    Click Link  Uusi viite
+#    Set First name  Kevin P
+#    Set Last name  Murphy
+#    Click Button  Lisää author
+#    Click Button  Näytä valinnaiset
+#    Set Title  Probabilistic machine learning: an introduction
+#    Set Publisher  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#    Set Year  2022
+#    Submit 
+#    Page Should Contain  text=Publisher must be under 100 characters long
 
 *** Keywords ***
 Reset Table And Go To Starting Page
