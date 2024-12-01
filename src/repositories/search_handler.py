@@ -26,14 +26,15 @@ def fetch_acm_search_results(search_variable):
     for result in results:
         title, title_tag = get_title(result)
         year = get_year(result)
-        doi_link = get_doi_link(title_tag)
+        doi_link, pdf_url = get_doi_link(title_tag)
         authors = get_authors(result)
 
         result_data = {
             "title": title,
             "authors": authors,
             "year": year,
-            "doi_link": doi_link
+            "doi_link": doi_link,
+            "pdf_url": pdf_url
         }
         result_data_list.append(result_data)
 
@@ -82,12 +83,12 @@ def get_authors(result):
             if author.find('span')
         )
     else:
-        authors = "--"
+        authors = "n.d."
     return authors
 
 def get_title(result):
     title_tag = result.find('h5', class_='issue-item__title')
-    title = title_tag.text.strip() if title_tag else "--"
+    title = title_tag.text.strip() if title_tag else "-"
     return title, title_tag
 
 def get_year(result):
@@ -95,14 +96,18 @@ def get_year(result):
     year = None
     if year_tag:
         year = year_tag.text.strip().split()[-1]
-    year = year if year else "Vuotta ei löytynyt"
+    year = year if year else "-"
     return year
 
 def get_doi_link(title_tag):
     doi_link = None
+    pdf_url = None
     if title_tag:
         link_tag = title_tag.find('a')
         if link_tag and 'href' in link_tag.attrs:
-            doi_link = f"https://dl.acm.org{link_tag['href']}"
+            doi_path = link_tag['href']
+            doi_link = f"https://dl.acm.org{doi_path}"
+            pdf_url = f"https://dl.acm.org/doi/pdf{doi_path.split('/doi')[-1]}"
     doi_link = doi_link if doi_link else "DOI-linkkiä ei löytynyt"
-    return doi_link
+    pdf_url = pdf_url if pdf_url else "PDF-linkkiä ei löytynyt"
+    return doi_link, pdf_url
