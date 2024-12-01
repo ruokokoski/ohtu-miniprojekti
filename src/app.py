@@ -1,6 +1,7 @@
 from io import BytesIO
 from sqlalchemy.exc import SQLAlchemyError
 from flask import render_template, redirect, request, flash, jsonify, send_file
+
 from db_helper import reset_db
 from config import app, test_env
 from repositories.reference_repository import (
@@ -12,8 +13,9 @@ from repositories.reference_repository import (
     get_reference_by_key,
     update_reference
 )
+from repositories.search_handler import (
+    fetch_search_results)
 from util import validate_reference, generate_key, UserInputError
-
 
 
 @app.route("/")
@@ -130,6 +132,38 @@ def download_references():
         as_attachment=True                   # Varmistaa, että tiedosto ladataan
     )
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        search_query = request.form.get("query", "")
+        database = request.form.get("database", "ACM")
+    else:
+        search_query = request.args.get("query", "")
+        database = request.args.get("database", "ACM")
+
+    if not search_query:
+        flash("Hakusana puuttuu", "danger")
+        return redirect("/")
+
+    try:
+        results = fetch_search_results(database, search_query)
+    except ValueError as e:
+        flash(str(e), "danger")
+        return redirect("/")
+    '''
+    if database == "ACM":
+        results = fetch_acm_search_results(search_query)
+    elif database == "Google Scholar":
+        results = fetch_google_scholar_results(search_query)
+    else:
+        flash(f"Tuntematon tietokanta: {database}", "danger")
+        return redirect("/")
+    '''
+    if results is None or len(results) == 0:
+        flash("Hakutuloksia ei löytynyt", "warning")
+        return redirect("/")
+
+    return render_template("index.html", results=results, database=database)
 
 if test_env:
     @app.route("/reset_db")

@@ -15,8 +15,8 @@ Go To reference list
 
 Go back To main page
     Click Link  Viitteet
-    Click Link  Koti
-    Title Should Be  Koti
+    Click Link  Etusivu
+    Title Should Be  Etusivu
 
 *** Keywords ***
 Reset Table And Go To Starting Page
