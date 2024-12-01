@@ -19,3 +19,6 @@ else:
     app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 
 db = SQLAlchemy(app)
+
+def create_app():
+    return app

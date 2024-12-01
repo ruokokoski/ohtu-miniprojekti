@@ -2,10 +2,10 @@ import unittest
 from unittest import mock
 from unittest.mock import patch, Mock
 from sqlalchemy import text
-from repositories.reference_repository import list_references_as_dict, delete_reference
 from entities.reference import Reference
 from util import validate_reference, process_reference_form, create_reference, generate_key
 from exceptions import UserInputError
+from config import create_app, db
 from app import app
 
 
@@ -15,16 +15,13 @@ class TestProcessReferenceForm(unittest.TestCase):
     @patch('util.flash')
     @patch('util.redirect')
     def test_process_reference_form_creation_failure(self, mock_redirect, mock_flash, mock_validate_reference, mock_create_reference):
-        # Simulate validation failure
         mock_validate_reference.side_effect = UserInputError("Invalid input")
 
-        # Create a mock response object
         mock_response = mock.Mock()
         mock_response.status_code = 302
-        mock_response.location = '/new_reference'  # Set the location explicitly
+        mock_response.location = '/new_reference'
         mock_redirect.return_value = mock_response
 
-        # Simulate the test request context
         with app.test_request_context('/new_reference', method='POST', data={
             'entry_type': 'book',
             'author': 'Test Author',
@@ -33,12 +30,10 @@ class TestProcessReferenceForm(unittest.TestCase):
             'publisher': 'Test Publisher',
             'address': 'Test Address'
         }):
-            # Call the function under test
             result = process_reference_form(is_creation=True)
 
-            # Assertions
-            self.assertEqual(result.status_code, 302)  # Check that the status code is 302 (Redirect)
-            self.assertEqual(mock_response.location, '/new_reference')  # Check that the location is '/new_reference'
+            self.assertEqual(result.status_code, 302)
+            self.assertEqual(mock_response.location, '/new_reference')
 
 
 
@@ -56,7 +51,6 @@ class TestReferenceValidation(unittest.TestCase):
 
     def test_valid_reference_does_not_raise_error(self):
         validate_reference(self.valid_data)
-
 
     def test_invalid_year_raises_error(self):
         data = self.valid_data.copy()
@@ -106,3 +100,123 @@ class TestUserInputError(unittest.TestCase):
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
         self.assertEqual(str(context.exception), "Title must be under 100 characters long.")
+
+
+class TestReferenceModel(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        """Testisovelluksen ja testikannan alustaminen"""
+        cls.app = create_app()
+        cls.client = cls.app.test_client()
+
+        with cls.app.app_context():
+            cls.client.get('/reset_db')
+            db.create_all()
+
+    def setUp(self):
+        """Suoritetaan ennen jokaista testiä"""
+        with app.app_context():
+            self.reference = Reference(
+                entry_type="book",
+                citation_key="Test2024",
+                author="John Smith",
+                title="My Test Book",
+                year=2024,
+                extra_fields={"publisher": "Test Publisher"}
+            )
+            db.session.add(self.reference)
+            db.session.commit()
+
+    def tearDown(self):
+        """Poistaa vain tiedot tauluista testin jälkeen"""
+        with self.app.app_context():
+            db.session.execute(text("TRUNCATE TABLE refs RESTART IDENTITY CASCADE"))
+            db.session.commit()
+
+    def test_to_dict(self):
+        """Testaa to_dict-metodia"""
+        reference = Reference(
+            entry_type='book',
+            citation_key='Smith2024My',
+            author='Smith, John',
+            title='My Book',
+            year=2024,
+            extra_fields={"publisher": "ABC Press"}
+        )
+        reference_dict = reference.to_dict()
+
+        self.assertEqual(reference_dict["entry_type"], 'book')
+        self.assertEqual(reference_dict["citation_key"], 'Smith2024My')
+        self.assertEqual(reference_dict["author"], 'Smith, John')
+        self.assertEqual(reference_dict["title"], 'My Book')
+        self.assertEqual(reference_dict["year"], 2024)
+        self.assertEqual(reference_dict["extra_fields"], {"publisher": "ABC Press"})
+
+    def test_save(self):
+        """Testaa save-metodia"""
+        reference = Reference(
+            entry_type='Article',
+            citation_key='Doe2024An',
+            author='Doe, Jane',
+            title='An Interesting Paper',
+            year=2024,
+            extra_fields={"journal": "Science"}
+        )
+
+        with self.app.app_context():
+            reference.save()
+
+        with self.app.app_context():
+            saved_reference = Reference.query.filter_by(citation_key='Doe2024An').first()
+
+        self.assertIsNotNone(saved_reference)
+        self.assertEqual(saved_reference.citation_key, 'Doe2024An')
+        self.assertEqual(saved_reference.author, 'Doe, Jane')
+        self.assertEqual(saved_reference.title, 'An Interesting Paper')
+        self.assertEqual(saved_reference.year, 2024)
+        self.assertEqual(saved_reference.extra_fields, {"journal": "Science"})
+
+
+    def test_update_success(self):
+        """Testaa, että update-metodi päivittää viitteen tiedot oikein"""
+        # Luodaan uusi viite
+        reference = Reference(
+            entry_type='book',
+            citation_key='Smith2024My',
+            author='Smith, John',
+            title='My Book',
+            year=2024,
+            extra_fields={"publisher": "ABC Press"}
+        )
+
+        with app.app_context():
+            db.session.add(reference)
+            db.session.commit()
+
+        updated_data = {
+            "entry_type": "book",
+            "author": "Doe, Jane",
+            "title": "Updated Paper",
+            "year": 2025,
+            "extra_fields": {"publisher": "ABC Press"}
+        }
+
+        with app.app_context():
+            reference_to_update = Reference.query.filter_by(citation_key='Smith2024My').first()
+
+            if reference_to_update:
+                reference_to_update.update(updated_data)
+                db.session.commit()
+
+        with app.app_context():
+            reference.update(updated_data)
+            db.session.commit()
+
+        with app.app_context():
+            updated_reference = Reference.query.filter_by(citation_key='Smith2024My').first()
+
+        self.assertEqual(updated_reference.entry_type, "book")
+        self.assertEqual(updated_reference.author, "Doe, Jane")
+        self.assertEqual(updated_reference.title, "Updated Paper")
+        self.assertEqual(updated_reference.year, 2025)
+        self.assertEqual(updated_reference.extra_fields, {"publisher": "ABC Press"})
