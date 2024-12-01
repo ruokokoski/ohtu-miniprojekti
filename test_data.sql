@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS refs (
     title TEXT NOT NULL,
     year INTEGER NOT NULL,
     tag TEXT,
-    bibtex TEXT NOT NULL
+    extra_fields JSON NOT NULL
 );
 
 INSERT INTO refs (entry_type, citation_key, author, title, year, tag, bibtex) VALUES (

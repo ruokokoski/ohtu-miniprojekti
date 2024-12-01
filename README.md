@@ -1,6 +1,7 @@
 # Ohjelmistotuotanto - Miniprojekti
 
 [![GHA_workflow_badge](https://github.com/ruokokoski/ohtu-miniprojekti/workflows/CI/badge.svg)](https://github.com/ruokokoski/ohtu-miniprojekti/actions)
+[![codecov](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti/graph/badge.svg?token=HF7SFV0DV0)](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti)
 
 ## Projektin käyttöönotto
 
@@ -53,7 +54,11 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Sprint backlog viikko 2](https://github.com/users/ruokokoski/projects/6)
 
+* [Sprint backlog viikko 3](https://github.com/users/ruokokoski/projects/7)
+
 * [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
+
+* [Testikattavuusraportti](https://app.codecov.io/gh/ruokokoski/ohtu-miniprojekti)
 
 * [Käytetty tietokantapalvelu](https://aiven.io/)
 
@@ -81,6 +86,11 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
    bash run_robot_tests.sh
 ```
 
+### Robot-testien, linttauksen ja yksikkötestien suoritus peräjälkeen:
+```bash
+   bash test.sh
+```
+
 ### Testidatan lähettämien tietokantaan
 ```bash
    psql $DATABASE_URL -f test_data.sql
@@ -91,7 +101,7 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
  - Luokat, metodit ja muuttujat nimetty kuvaavasti englanniksi
  - Koodi täyttää määritellyt PyLint-laatuvaatimukset
  - Robot-testit User Storylle (tarvittaessa)
- - User Storyn unittest-kattavuus >75%
+ - Unittest-kattavuus >60% funktioille, joita Robot-testit eivät testaa
 
 ## Current sprint burndown chart
 ![Alt text](https://docs.google.com/spreadsheets/d/e/2PACX-1vSgmI9CcnHExwW76f3Iid2vBFtww8dJj3gGbKORF8bFOcxoj4qKHqvyHGiRsX7gq379fEPJEW54qcTe/pubchart?oid=1546569514&format=image)

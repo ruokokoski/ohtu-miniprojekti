@@ -242,13 +242,13 @@ Set Publisher
     [Arguments]  ${publisher}
     Input Text  publisher  ${publisher}
 
-Set Address
-    [Arguments]  ${address}
-    Input Text  address  ${address}
-
 Set Year
     [Arguments]  ${year}
     Input Text  year  ${year}
+
+Set Address
+    [Arguments]  ${address}
+    Input Text  address  ${address}
 
 Set Volume
     [Arguments]  ${volume}

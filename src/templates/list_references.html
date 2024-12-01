@@ -6,57 +6,64 @@
 <script>document.getElementById("nav_references").classList.toggle("active")</script>
 <div class="container-fluid text-center">
     <div class="row justify-content-center">
-        <div class="col align-self-around">
+        <div class="col">
             <h2>Viitteet</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Key</th>
-                        <th scope="col">Author</th>
-                        <th scope="col">Year</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Publisher</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Volume</th>
-                        <th scope="col">Series</th>
-                        <th scope="col">Edition</th>
-                        <th scope="col">Month</th>
-                        <th scope="col">Note</th>
-                        <th scope="col">URL</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for reference in references %}
-                    <tr>
-                        <td>{{ reference[0] }}</td>  <!-- key -->
-                        <td>{{ reference[1] }}</td>  <!-- author -->
-                        <td>{{ reference[2] }}</td>  <!-- year -->
-                        <td>{{ reference[3] }}</td>  <!-- title -->
-                        <td>{{ reference[4] }}</td>  <!-- publisher -->
-                        <td>{{ reference[5] }}</td>  <!-- address -->
-                        <td>{{ reference[6] }}</td>  <!-- volume -->
-                        <td>{{ reference[7] }}</td>  <!-- series -->
-                        <td>{{ reference[8] }}</td>  <!-- edition -->
-                        <td>{{ reference[9] }}</td>  <!-- month -->
-                        <td>{{ reference[10] }}</td>  <!-- note -->
-                        <td>{{ reference[11] }}</td>  <!-- url -->
-                        <td>
-                            <form action="/delete_reference/{{ reference[0] }}" method="POST" style="display:inline;">
-                                <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                    <td colspan="2">Ei viitteitä saatavilla.</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            <div>
+                <table class="table" style="font-size: 80%;">
+                    <thead>
+                        <tr>
+                            <th scope="col">Key</th>
+                            <th scope="col">Author</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Publisher</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Volume</th>
+                            <th scope="col">Series</th>
+                            <th scope="col">Edition</th>
+                            <th scope="col">Month</th>
+                            <th scope="col">Note</th>
+                            <th scope="col">URL</th>
+                            <th></th>
+                            <th></th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for reference in references %}
+                        <tr>
+                            <td>{{ reference[0] }}</td>  <!-- key -->
+                            <td>{{ reference[1] }}</td>  <!-- author -->
+                            <td>{{ reference[2] }}</td>  <!-- year -->
+                            <td>{{ reference[3] }}</td>  <!-- title -->
+                            <td>{{ reference[4] }}</td>  <!-- publisher -->
+                            <td>{{ reference[5] }}</td>  <!-- address -->
+                            <td>{{ reference[6] }}</td>  <!-- volume -->
+                            <td>{{ reference[7] }}</td>  <!-- series -->
+                            <td>{{ reference[8] }}</td>  <!-- edition -->
+                            <td>{{ reference[9] }}</td>  <!-- month -->
+                            <td>{{ reference[10] }}</td>  <!-- note -->
+                            <td>{{ reference[11] }}</td>  <!-- url -->
+                            <td>
+                                <a href="/edit_reference/{{ reference[0] }}">
+                                    <button type="button" class="btn btn-warning">Edit</button>
+                                </a>
+                            </td>
+                            <td>
+                                <form action="/delete_reference/{{ reference[0] }}" method="POST">
+                                    <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="2">Ei viitteitä saatavilla.</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <div style="display: flex; justify-content: center; margin-top: 25px;">
-                <!-- Ei tarvitse download-attribuuttia, Flask send file hoitaa-->
                 <a href="/download">
                     <button class="btn btn-primary">Download</button>
                 </a>

@@ -4,6 +4,9 @@ class UserInputError(Exception):
     pass
 
 def validate_reference(data):
+    if len(data["author"]) == 0:
+        raise UserInputError("Must have author.")
+
     if len(data["title"]) < 2:
         raise UserInputError("Title must be at least 2 characters long")
 

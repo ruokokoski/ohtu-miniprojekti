@@ -1,27 +1,24 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Uusi viite
+Muokkaa viitettä
 {% endblock %}
 
 {% block body %}
-<script>document.getElementById("nav_new_reference").classList.toggle("active")</script>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-4 align-self-center">
-            <h2>Uuden book-viitteen luominen</h2>
-            <form action="/create_reference" id="new_reference" method="post" style="display: inline-block;">
+            <h2>Muokkaa viitettä</h2>
+            <form action="/update_reference" method="post" id="new_reference" style="display: inline-block;">
                 <!-- REQUIRED -->
-
-                <!-- <label for="reference_type" style="display: inline-block; width: 200px;">Valitse viitteen tyyppi:</label> -->
+                <input type="hidden" name="key" value="{{reference.key}}">
+                <input type="hidden" id="author" name="author">
                 <div id="required_fields">
                     <b>Authors:</b>
                     <ul id="author_list">
-                        <!-- Authors will be added here dynamically -->
                     </ul>
                     <div class="form-group">
                         <div class="row">
-                            <input type="hidden" id="author" name="author">
                             <div class="col">
                                 <input type="text" class="form-control" id="first_name" placeholder="Etunimi">
                             </div>
@@ -29,19 +26,19 @@ Uusi viite
                                 <input type="text" class="form-control" id="last_name" placeholder="Sukunimi">
                             </div>
                             <button type="button" class="btn btn-primary" id="add_author_button">Lisää author</button>
-                        </div>  
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="title"><b>Title:</b></label>
-                        <input type="text" class="form-control" name="title" required>
-                    </div>      
+                        <input type="text" class="form-control" name="title" value="{{ reference.title }}" required>
+                    </div>
                     <div class="form-group">
                         <label for="publisher"><b>Publisher:</b></label>
-                        <input type="text" class="form-control" name="publisher" required>
+                        <input type="text" class="form-control" name="publisher" value="{{ reference['publisher'] }}" required>
                     </div>
                     <div class="form-group">
                         <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" required min="1000">
+                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference['year'] }}" required min="1000">
                     </div>
                 </div>
 
@@ -50,40 +47,44 @@ Uusi viite
                 <div id="optional_fields" style="display: none">
                     <div class="form-group">
                         <label for="address"><b>Address:</b></label>
-                        <input type="text" class="form-control" name="address" placeholder="Optional">
+                        <input type="text" class="form-control" name="address" value="{{ reference['address'] }}">
                     </div>
                     <div class="form-group">
                         <label for="volume"><b>Volume/Number:</b></label>
-                        <input type="text" class="form-control" name="volume" placeholder="Optional">
+                        <input type="text" class="form-control" name="volume" value="{{ reference['volume'] }}">
                     </div>
                     <div class="form-group">
                         <label for="series"><b>Series:</b></label>
-                        <input type="text" class="form-control" name="series" placeholder="Optional">
+                        <input type="text" class="form-control" name="series" value="{{ reference['series'] }}">
                     </div>
                     <div class="form-group">
                         <label for="edition"><b>Edition:</b></label>
-                        <input type="text" class="form-control" name="edition" placeholder="Optional">
+                        <input type="text" class="form-control" name="edition" value="{{ reference['edition'] }}">
                     </div>
-                    <div>
+                    <div class="form-group">
                         <label for="month"><b>Month:</b></label>
-                        <input type="text" class="form-control" name="month" placeholder="Optional">
+                        <input type="text" class="form-control" name="month" value="{{ reference['month'] }}">
                     </div>
                     <div class="form-group">
                         <label for="note"><b>Note:</b></label>
-                        <input type="text" class="form-control" name="note" placeholder="Optional">
+                        <input type="text" class="form-control" name="note" value="{{ reference['note'] }}">
                     </div>
                     <div class="form-group">
                         <label for="url"><b>URL:</b></label>
-                        <input type="text" class="form-control" name="url" placeholder="Optional">
+                        <input type="text" class="form-control" name="url" value="{{ reference['url'] }}">
                     </div>
                 </div>
 
                 <button type="button" class="btn btn-primary" id="toggle_optionals_button">Näytä valinnaiset</button>
-                <button type="submit" class="btn btn-primary">Tallenna</button>
+                <button type="submit" class="btn btn-primary">Tallenna muutokset</button>
             </form>
         </div>
     </div>
 </div>
+{% for author in authors %}
+<script>addAuthor("{{author.etunimi}}", "{{author.sukunimi}}")</script>
+{% endfor %}
+
 <script>setCurrentYearAsMax("year")</script>
 <script>createReferenceFormButtons()</script>
 {% endblock %}

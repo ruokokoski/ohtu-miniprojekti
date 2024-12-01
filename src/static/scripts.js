@@ -40,6 +40,7 @@ function toggleOptionals() {
 }
 
 function addNewAuthor() {
+
     var firstName = document.getElementById("first_name");
     var lastName = document.getElementById("last_name");
     var authorList = document.getElementById("author_list");
@@ -67,7 +68,6 @@ function addNewAuthor() {
 }
 
 function validateForm(event) {
-    event.preventDefault();
 
     var authorList = document.getElementById("author_list");
     var author = document.getElementById("author")
@@ -76,7 +76,26 @@ function validateForm(event) {
         alert("Lisää ainakin yksi author ennen lomakkeen lähettämistä.");
         return;
     }
+
     author.value = Array.from(authorList.children).map(li => li.firstChild.textContent).join(" and ");
 
-    event.target.submit();
+}
+
+function addAuthor(firstName, lastName) {
+
+    
+    var authorList = document.getElementById("author_list");
+    var person = document.createElement("li");
+
+    person.textContent = lastName + ", " + firstName;
+
+    var deletePerson = document.createElement("button");
+    deletePerson.className = "btn btn-warning"
+    deletePerson.textContent = "Poista"
+
+    person.appendChild(deletePerson);
+    authorList.appendChild(person);
+
+    deletePerson.addEventListener("click", () => deletePerson.parentElement.remove());
+
 }

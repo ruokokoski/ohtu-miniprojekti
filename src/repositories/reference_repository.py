@@ -14,6 +14,17 @@ def list_references():
     result = db.session.execute(sql).fetchall()
     return result
 
+def get_reference_by_key(key):
+    sql = text(
+        """
+        SELECT key, author, year, title, publisher, address, 
+               volume, series, edition, month, note, url
+        FROM books
+        WHERE key = :key
+        """
+    )
+    result = db.session.execute(sql, {"key": key}).fetchone()
+    return result
 
 def create_reference(data):
     sql_query = text(
@@ -31,6 +42,20 @@ def create_reference(data):
     db.session.execute(sql_query, data)
     db.session.commit()
 
+def update_reference(data):
+    sql = text(
+        """
+        UPDATE books
+        SET
+        key = :key,  author = :author, year = :year,
+        title = :title, publisher = :publisher, address = :address,
+        volume = :volume, series = :series, edition = :edition,
+        month = :month, note = :note, url = :url
+        WHERE key = :key
+        """
+    )
+    db.session.execute(sql, data)
+    db.session.commit()
 
 def delete_reference(key):
     sql = text("DELETE FROM books WHERE key = :key")
