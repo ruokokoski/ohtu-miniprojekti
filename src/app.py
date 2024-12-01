@@ -5,18 +5,13 @@ from flask import render_template, redirect, request, flash, jsonify, send_file
 from db_helper import reset_db
 from config import app, test_env
 from repositories.reference_repository import (
-    list_references,
-    create_reference,
     delete_reference,
-    #get_bibtex,
     list_references_as_bibtex,
-    get_reference_by_key,
-    update_reference
+    list_references_as_dict,
+    #get_bibtex,
+    get_reference_by_key
 )
-from repositories.search_handler import (
-    fetch_search_results)
-from util import validate_reference, generate_key, UserInputError
-
+from util import process_reference_form
 
 @app.route("/")
 def index():
@@ -27,96 +22,45 @@ def index():
 def new():
     return render_template("new_reference.html")
 
-
-@app.route("/references")
-def browse_references():
-    #testi bibtexin hakuun:
-    #bibtex_data = get_bibtex()
-    references_list = list_references()
-    return render_template("list_references.html",
-                           references=references_list,
-    )
-
-@app.route("/create_reference", methods=["POST"])
+@app.route('/create_reference', methods=['POST'])
 def reference_creation():
-    data = {
-        "author": request.form.get("author", ""),
-        "year": request.form.get("year", ""),
-        "title": request.form.get("title", ""),
-        "publisher": request.form.get("publisher", ""),
-        "address": request.form.get("address", ""),
-        "volume": request.form.get("volume", ""),
-        "series": request.form.get("series", ""),
-        "edition": request.form.get("edition", ""),
-        "month": request.form.get("month", ""),
-        "note": request.form.get("note", ""),
-        "url": request.form.get("url", "")
-    }
+    return process_reference_form(is_creation=True)
 
-    # Korvataan tyhjät kentät tyhjällä merkkijonolla
-    for key, value in data.items():
-        if value == "":
-            data[key] = ""  # Varmistetaan, että kenttä on tyhjä merkkijono
+@app.route('/references')
+def browse_references():
+    references_dict = list_references_as_dict()
+    return render_template('list_references.html', references=references_dict)
 
-    data["key"] = generate_key(data["author"], data["year"], data["title"])
-
-    try:
-        validate_reference(data)
-        create_reference(data)
-        flash("Uusi viite luotu onnistuneesti", "success")
-        return redirect("/references")
-
-    except UserInputError as error:
-        flash(str(error), "failure")
-        return redirect("/new_reference")
-
-@app.route('/edit_reference/<reference_key>')
-def edit_reference(reference_key):
-    reference = get_reference_by_key(reference_key)
+@app.route('/edit_reference/<citation_key>')
+def edit_reference(citation_key):
+    reference = get_reference_by_key(citation_key)
     authors = reference.author.split(" and ")
     authors = [{"sukunimi":nimi.split(", ")[0] ,
                 "etunimi":nimi.split(", ")[1] }
                 for nimi in authors]
-    return render_template('edit_reference.html', reference=reference, authors=authors)
+    return render_template(
+        'edit_reference.html',
+        reference=reference,
+        authors=authors,
+        extra_fields=reference.extra_fields
+        )
+
 
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
-    data = {
-        "key": request.form.get("key", ""),
-        "author": request.form.get("author", ""),
-        "year": request.form.get("year", ""),
-        "title": request.form.get("title", ""),
-        "publisher": request.form.get("publisher", ""),
-        "address": request.form.get("address", ""),
-        "volume": request.form.get("volume", ""),
-        "series": request.form.get("series", ""),
-        "edition": request.form.get("edition", ""),
-        "month": request.form.get("month", ""),
-        "note": request.form.get("note", ""),
-        "url": request.form.get("url", "")
-    }
-    print(data)
-    # Korvataan tyhjät kentät tyhjällä merkkijonolla
-    for key, value in data.items():
-        if value == "":
-            data[key] = ""  # Varmistetaan, että kenttä on tyhjä merkkijono
-
-    try:
-        validate_reference(data)
-        update_reference(data)
-        flash("Viite päivitetty onnistuneesti", "success")
+    citation_key = request.form.get('citation_key')
+    if not citation_key:
+        flash("Citation key is missing", "error")
         return redirect("/references")
+    return process_reference_form(is_creation=False, citation_key=citation_key)
 
-    except UserInputError as error:
-        flash(str(error), "failure")
-        return redirect(f"/edit_reference/{data['key']}")
-
-
-@app.route("/delete_reference/<key>", methods=["POST"])
-def reference_remove(key):
+@app.route("/delete_reference/<citation_key>", methods=["POST"])
+def reference_remove(citation_key):
     try:
-        delete_reference(key)
+        delete_reference(citation_key)
         flash("Viite poistettu onnistuneesti", "success")
+    except ValueError as e:
+        flash(f"Virhe: {str(e)}", "failure")
     except SQLAlchemyError as db_error:
         flash(f"Virhe viitteen poistamisessa: {str(db_error)}", "failure")
     return redirect("/references")
@@ -125,11 +69,13 @@ def reference_remove(key):
 def download_references():
     bibtex_data = list_references_as_bibtex()
 
+    flash("Lataus onnistui", "success")
+
     # Muodostetaan tiedosto BytesIO-objektiksi, jotta se voidaan lähettää käyttäjälle
     return send_file(
-        BytesIO(bytes(bibtex_data, "utf-8")),  # Muutetaan BibTeX-teksti byteiksi
-        download_name="references.bib",       # Lataustiedoston nimi
-        as_attachment=True                   # Varmistaa, että tiedosto ladataan
+        BytesIO(bytes(bibtex_data, "utf-8")),
+        download_name="references.bib",
+        as_attachment=True
     )
 
 @app.route("/search", methods=["GET", "POST"])

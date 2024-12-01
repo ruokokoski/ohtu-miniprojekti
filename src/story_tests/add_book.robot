@@ -111,6 +111,19 @@ Add a new valid book reference with optional (URL)
     Submit 
     Page Should Contain  text=http://localhost:5001/references
 
+Add a new valid book reference with optional (ISBN)
+    Click Link  Uusi viite
+    Set First name  Kevin P
+    Set Last name  Murphy
+    Click Button  Lisää author
+    Set Title  Probabilistic machine learning: an introduction
+    Set Publisher  MIT Press
+    Set Year  2022
+    Click Button  Näytä valinnaiset
+    Set ISBN  testi isbn
+    Submit 
+    Page Should Contain  text=testi isbn
+
 Add a new blank book reference
     Click Link  Uusi viite
     Submit 
@@ -273,3 +286,7 @@ Set Note
 Set URL
     [Arguments]  ${url}
     Input Text  url  ${url}
+
+Set ISBN
+    [Arguments]  ${isbn}
+    Input Text  isbn  ${isbn}

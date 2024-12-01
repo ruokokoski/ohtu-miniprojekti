@@ -11,7 +11,7 @@ Muokkaa viitettä
             <h2>Muokkaa viitettä</h2>
             <form action="/update_reference" method="post" id="new_reference" style="display: inline-block;">
                 <!-- REQUIRED -->
-                <input type="hidden" name="key" value="{{reference.key}}">
+                <input type="hidden" name="citation_key" value="{{reference.citation_key}}">
                 <input type="hidden" id="author" name="author">
                 <div id="required_fields">
                     <b>Authors:</b>
@@ -29,49 +29,84 @@ Muokkaa viitettä
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="entry_type"><b>Type:</b></label>
+                        <select name="entry_type" id="entry_type">
+                            <option value="book" selected> book
+                            <option value="article"> article
+                            </select>
+                    </div>
+                    <div class="form-group">
                         <label for="title"><b>Title:</b></label>
                         <input type="text" class="form-control" name="title" value="{{ reference.title }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="publisher"><b>Publisher:</b></label>
-                        <input type="text" class="form-control" name="publisher" value="{{ reference['publisher'] }}" required>
-                    </div>
-                    <div class="form-group">
                         <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference['year'] }}" required min="1000">
+                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference.year }}" required min="1000">
                     </div>
                 </div>
 
                 <!-- OPTIONAL -->
 
                 <div id="optional_fields" style="display: none">
+                    <div id="book_fields">
+                        <div class="form-group">
+                            <label for="publisher"><b>Publisher:</b></label>
+                            <input type="text" class="form-control" name="publisher" value="{{ extra_fields['publisher'] }}">
+                    </div>
                     <div class="form-group">
                         <label for="address"><b>Address:</b></label>
-                        <input type="text" class="form-control" name="address" value="{{ reference['address'] }}">
+                        <input type="text" class="form-control" name="address" value="{{ extra_fields['address'] }}">
                     </div>
                     <div class="form-group">
                         <label for="volume"><b>Volume/Number:</b></label>
-                        <input type="text" class="form-control" name="volume" value="{{ reference['volume'] }}">
+                        <input type="text" class="form-control" name="volume" value="{{ extra_fields['volume'] }}">
                     </div>
                     <div class="form-group">
                         <label for="series"><b>Series:</b></label>
-                        <input type="text" class="form-control" name="series" value="{{ reference['series'] }}">
+                        <input type="text" class="form-control" name="series" value="{{ extra_fields['series'] }}">
                     </div>
                     <div class="form-group">
                         <label for="edition"><b>Edition:</b></label>
-                        <input type="text" class="form-control" name="edition" value="{{ reference['edition'] }}">
+                        <input type="text" class="form-control" name="edition" value="{{ extra_fields['edition'] }}">
                     </div>
                     <div class="form-group">
                         <label for="month"><b>Month:</b></label>
-                        <input type="text" class="form-control" name="month" value="{{ reference['month'] }}">
+                        <input type="text" class="form-control" name="month" value="{{ extra_fields['month'] }}">
                     </div>
                     <div class="form-group">
                         <label for="note"><b>Note:</b></label>
-                        <input type="text" class="form-control" name="note" value="{{ reference['note'] }}">
+                        <input type="text" class="form-control" name="note" value="{{ extra_fields['note'] }}">
                     </div>
                     <div class="form-group">
                         <label for="url"><b>URL:</b></label>
-                        <input type="text" class="form-control" name="url" value="{{ reference['url'] }}">
+                        <input type="text" class="form-control" name="url" value="{{ extra_fields['url'] }}">
+                        </div>
+                    <div class="form-group">
+                        <label for="isbn"><b>ISBN:</b></label>
+                        <input type="text" class="form-control" name="isbn" value="{{ extra_fields['isbn'] }}">
+                        </div>
+                    </div>
+                    <div id="article_fields" style="display: none">
+                        <div class="form-group">
+                            <label for="journal"><b>Journal:</b></label>
+                            <input type="text" class="form-control" name="journal" value="{{ extra_fields['journal'] }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="number"><b>Number:</b></label>
+                            <input type="text" class="form-control" name="number" value="{{ extra_fields['number'] }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="volume"><b>Volume: </b></label>
+                            <input type="text" class="form-control" name="volume" value="{{ extra_fields['volume'] }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="month"><b>Month:</b></label>
+                            <input type="text" class="form-control" name="month" value="{{ extra_fields['month'] }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="note"><b>Note:</b></label>
+                            <input type="text" class="form-control" name="note" value="{{ extra_fields['note'] }}">
+                        </div>
                     </div>
                 </div>
 

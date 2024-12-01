@@ -12,54 +12,49 @@
                 <table class="table" style="font-size: 80%;">
                     <thead>
                         <tr>
-                            <th scope="col">Key</th>
+                            <th scope="col">Entry Type</th>
+                            <th scope="col">Citation Key</th>
                             <th scope="col">Author</th>
-                            <th scope="col">Year</th>
                             <th scope="col">Title</th>
-                            <th scope="col">Publisher</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Volume</th>
-                            <th scope="col">Series</th>
-                            <th scope="col">Edition</th>
-                            <th scope="col">Month</th>
-                            <th scope="col">Note</th>
-                            <th scope="col">URL</th>
+                            <th scope="col">Year</th>
+                            <th scope="col">Extra Fields</th>
                             <th></th>
                             <th></th> 
                         </tr>
                     </thead>
                     <tbody>
-                    {% for reference in references %}
+                        {% for reference in references %}
                         <tr>
-                            <td>{{ reference[0] }}</td>  <!-- key -->
-                            <td>{{ reference[1] }}</td>  <!-- author -->
-                            <td>{{ reference[2] }}</td>  <!-- year -->
-                            <td>{{ reference[3] }}</td>  <!-- title -->
-                            <td>{{ reference[4] }}</td>  <!-- publisher -->
-                            <td>{{ reference[5] }}</td>  <!-- address -->
-                            <td>{{ reference[6] }}</td>  <!-- volume -->
-                            <td>{{ reference[7] }}</td>  <!-- series -->
-                            <td>{{ reference[8] }}</td>  <!-- edition -->
-                            <td>{{ reference[9] }}</td>  <!-- month -->
-                            <td>{{ reference[10] }}</td>  <!-- note -->
-                            <td>{{ reference[11] }}</td>  <!-- url -->
+                            <td>{{ reference.entry_type }}</td>
+                            <td>{{ reference.citation_key }}</td>
+                            <td>{{ reference.author }}</td>
+                            <td>{{ reference.title }}</td>
+                            <td>{{ reference.year }}</td>
                             <td>
-                                <a href="/edit_reference/{{ reference[0] }}">
+                                <b>Extra Fields:</b>
+                                <ul>
+                                    {% for key, value in reference.extra_fields.items() %}
+                                        <li><b>{{ key }}:</b> {{ value }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>
+                                <a href="/edit_reference/{{ reference.citation_key }}">
                                     <button type="button" class="btn btn-warning">Edit</button>
                                 </a>
                             </td>
                             <td>
-                                <form action="/delete_reference/{{ reference[0] }}" method="POST">
+                                <form action="/delete_reference/{{ reference.citation_key }}" method="POST">
                                     <button type="submit" class="btn btn-danger"
                                             onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Poista</button>
                                 </form>
                             </td>
                         </tr>
-                    {% else %}
+                        {% else %}
                         <tr>
-                            <td colspan="2">Ei viitteitä saatavilla.</td>
+                            <td colspan="7">Ei viitteitä saatavilla.</td>
                         </tr>
-                    {% endfor %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
