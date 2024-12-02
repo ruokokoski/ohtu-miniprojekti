@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, JSON
-from sqlalchemy.exc import SQLAlchemyError
 from config import db
 
 class Reference(db.Model):
