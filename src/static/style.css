@@ -10,6 +10,10 @@
 
 .extrafields {
     display: none;
+    border-style: solid;
+    border-radius: 15px;
+    border-color: #0d6efd;
+    overflow: hidden;
 }
 
 .reflist:hover + .extrafields{
@@ -19,4 +23,6 @@
 .reflist:hover{
     background-color: #0d6efd;
     color: #fff;
+    border-style: solid;
+    border-color: #0d6efd;
 }
