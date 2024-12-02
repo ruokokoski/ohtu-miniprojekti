@@ -43,6 +43,7 @@ def fetch_google_scholar_results(search_variable):
             title = title.replace("[HTML]", "")
             title = title.replace("[PDF]", "")
             title = title.replace("[CITATION]", "")
+            title = title.replace("[BOOK]", "").replace("[B]", "")
             title = title.strip()
 
             author_year_tag = item.find('div', class_='gs_a')
