@@ -1,5 +1,7 @@
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import Column, Integer, String, JSON
 from config import db
+
 
 class Reference(db.Model):
     __tablename__ = 'refs'
