@@ -32,15 +32,9 @@ class Reference(db.Model):
 
     def update(self, data):
         """Päivitä viite tiedot"""
-        try:
-            self.entry_type = data["entry_type"]
-            self.author = data["author"]
-            self.title = data["title"]
-            self.year = int(data["year"]) if data["year"] else None
-            self.extra_fields = data.get("extra_fields", {})
-
-            db.session.commit()
-            print("Päivitys onnistui!")
-        except SQLAlchemyError as e:
-            print(f"SQLAlchemy virhe päivityksessä: {e}")
-            db.session.rollback()
+        self.entry_type = data["entry_type"]
+        self.author = data["author"]
+        self.title = data["title"]
+        self.year = int(data["year"]) if data["year"] else None
+        self.extra_fields = data.get("extra_fields", {})
+        db.session.commit()
