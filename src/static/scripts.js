@@ -61,15 +61,19 @@ function addNewAuthor() {
     var authorList = document.getElementById("author_list");
 
     if (firstName.value.trim() != "" && lastName.value.trim() != "") {
+
+        var container = document.createElement("div");
+        container.className = "row justify-content-between"
         var person = document.createElement("li");
         person.textContent = lastName.value + ", " + firstName.value;
 
         var deletePerson = document.createElement("button");
-        deletePerson.className = "btn btn-warning"
-        deletePerson.textContent = "Poista"
+        deletePerson.className = "btn btn-danger";
+        deletePerson.textContent = "Poista";
 
-        person.appendChild(deletePerson);
-        authorList.appendChild(person);
+        container.appendChild(person)
+        container.appendChild(deletePerson);
+        authorList.appendChild(container);
 
         deletePerson.addEventListener("click", () => deletePerson.parentElement.remove());
 
@@ -105,16 +109,20 @@ function validateForm(event) {
 
 function addAuthor(firstName, lastName) {
     var authorList = document.getElementById("author_list");
-    var person = document.createElement("li");
 
-    person.textContent = lastName + ", " + firstName;
+    var container = document.createElement("div");
+    container.className = "row justify-content-between"
+
+    var person = document.createElement("li");
+    person.textContent = lastName.value + ", " + firstName.value;
 
     var deletePerson = document.createElement("button");
-    deletePerson.className = "btn btn-warning"
-    deletePerson.textContent = "Poista"
+    deletePerson.className = "btn btn-danger";
+    deletePerson.textContent = "Poista";
 
-    person.appendChild(deletePerson);
-    authorList.appendChild(person);
+    container.appendChild(person)
+    container.appendChild(deletePerson);
+    authorList.appendChild(container);
 
     deletePerson.addEventListener("click", () => deletePerson.parentElement.remove());
 }

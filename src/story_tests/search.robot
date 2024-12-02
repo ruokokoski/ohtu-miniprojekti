@@ -11,9 +11,8 @@ Search Google Scholar
     Set Search Query  syöpä
     Submit
     Page Should Contain  text=Haku on käynnissä, odota hetki...
-    Page Should Contain  text=T-solut ja syöpä-miksi tappajat uupuvat
-    Page Should Contain  text=O Brück, M Keränen, O Dufva, A Kreutzman, S Mustjoki
-
+    Page Should Contain  text=Miten syöpä syntyy
+    Page Should Contain  text=M Laiho
 Search AMC Library
     Click Link  Etusivu
     Select Radio Button  database  ACM

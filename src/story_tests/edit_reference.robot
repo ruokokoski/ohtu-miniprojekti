@@ -23,7 +23,7 @@ Edit A Reference (Edit Title)
     Set Title  edited title
     Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=edited title
+    Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Not Contain  text=Probabilistic machine learning: an introduction
 
 Edit A Reference (Edit Publisher)
