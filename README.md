@@ -47,7 +47,7 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
    psql <DATABASE_URL>
 ```
 
-## Dokumentit
+## Backlogit
 * [Product backlog](https://github.com/users/ruokokoski/projects/3)
 
 * [Sprint backlog viikko 1](https://github.com/users/ruokokoski/projects/5)
@@ -55,6 +55,8 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 * [Sprint backlog viikko 2](https://github.com/users/ruokokoski/projects/6)
 
 * [Sprint backlog viikko 3](https://github.com/users/ruokokoski/projects/7)
+
+## Dokumentit
 
 * [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
