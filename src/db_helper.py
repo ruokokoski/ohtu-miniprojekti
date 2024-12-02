@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from config import db, app
 
-table_name = "books"
+table_name = "refs"
 table2_name = "refs"
 
 def table_exists(name):

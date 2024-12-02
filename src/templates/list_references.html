@@ -9,7 +9,7 @@
         <div class="col">
             <h2>References</h2>
             <div>
-                <table class="table" style="font-size: 80%;">
+                <table class="table">
                     <thead>
                         <tr>
                             <th>Entry Type</th>
@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                         {% for reference in references %}
-                        <tr class="reflist">
+                        <tr class="mainfields">
                             <td>{{ reference.entry_type }}</td>
                             <td>{{ reference.citation_key }}</td>
                             <td>{{ reference.author }}</td>
@@ -43,7 +43,7 @@
                         </tr>
                         <tr class="extrafields">
                             <td colspan="7">
-                                <table class="table" style="font-size: 80%;">
+                                <table class="table" style="color: #fff;">
                                     <tr>
                                         {% for key, value in reference.extra_fields.items() %}
                                             <th>{{key}}</th>

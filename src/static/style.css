@@ -4,25 +4,22 @@
     margin-bottom: 25px;
 }
 
-.reflist {
-
-}
-
 .extrafields {
     display: none;
+    background-color: #0d6efd;
     border-style: solid;
-    border-radius: 15px;
+    color: #fff;
     border-color: #0d6efd;
-    overflow: hidden;
 }
 
-.reflist:hover + .extrafields{
+.mainfields:hover + .extrafields{
     display: table-row;
 }
 
-.reflist:hover{
+.mainfields:hover{
     background-color: #0d6efd;
     color: #fff;
     border-style: solid;
     border-color: #0d6efd;
 }
+
