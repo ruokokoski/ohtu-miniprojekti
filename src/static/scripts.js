@@ -73,7 +73,7 @@ function addNewAuthor() {
     if (firstName.value.trim() != "" && lastName.value.trim() != "") {
 
         var container = document.createElement("div");
-        container.className = "row justify-content-between"
+        container.className = "row justify-content-between";
         var person = document.createElement("li");
         person.textContent = lastName.value + ", " + firstName.value;
 
@@ -81,7 +81,7 @@ function addNewAuthor() {
         deletePerson.className = "btn btn-danger";
         deletePerson.textContent = "Delete";
 
-        container.appendChild(person)
+        container.appendChild(person);
         container.appendChild(deletePerson);
         authorList.appendChild(container);
 
@@ -121,7 +121,7 @@ function addAuthor(firstName, lastName) {
     var authorList = document.getElementById("author_list");
 
     var container = document.createElement("div");
-    container.className = "row justify-content-between"
+    container.className = "row justify-content-between";
 
     var person = document.createElement("li");
     person.textContent = lastName + ", " + firstName;
