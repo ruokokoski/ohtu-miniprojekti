@@ -1,8 +1,10 @@
 import re
 from flask import redirect, request, flash
+from sqlalchemy.exc import IntegrityError
 from entities.reference import Reference
 from repositories.reference_repository import get_reference_by_key
 from exceptions import UserInputError
+
 
 
 def process_reference_form(is_creation, citation_key=None):
@@ -69,15 +71,36 @@ def create_extra_fields(entry_type):
 
 def create_reference(data):
     """Luo uusi viite ja tallenna se tietokantaan"""
-    reference = Reference(
-        entry_type=data['entry_type'],
-        citation_key=generate_key(data['author'], data['year'], data['title']),
-        author=data['author'],
-        title=data['title'],
-        year=data['year'],
-        extra_fields=data['extra_fields']
-    )
-    reference.save()
+    citation_key = generate_key(data['author'], data['year'], data['title'])
+
+    try:
+        # Tarkista, onko citation_key jo olemassa tietokannassa
+        existing_reference = get_reference_by_key(citation_key)
+
+        if existing_reference:
+            raise UserInputError(
+                f"A reference with the citation key '{citation_key}' already exists."
+            )
+
+        # Luo uusi viite ja tallenna se tietokantaan
+        reference = Reference(
+            entry_type=data['entry_type'],
+            citation_key=citation_key,
+            author=data['author'],
+            title=data['title'],
+            year=data['year'],
+            extra_fields=data['extra_fields']
+        )
+        reference.save()
+
+    except IntegrityError as e:
+        if 'UniqueViolation' in str(e):
+            raise UserInputError(
+                f"A reference with the citation key '{citation_key}' already exists in the system."
+            ) from e
+        raise UserInputError(
+            "An error occurred while saving the reference. Please try again."
+        ) from e
 
 
 def update_reference(citation_key, data):

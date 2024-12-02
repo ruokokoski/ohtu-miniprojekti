@@ -165,5 +165,5 @@ function showFlashMessage(message) {
 
     setTimeout(() => {
         flashMessage.remove();
-    }, 3000);
+    }, 15000);
 }
