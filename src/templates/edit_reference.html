@@ -117,9 +117,8 @@ Muokkaa viitettä
     </div>
 </div>
 {% for author in authors %}
-<script>addAuthor("{{author.etunimi}}", "{{author.sukunimi}}")</script>
+<script>addAuthor("{{author.firstnames}}", "{{author.lastname}}")</script>
 {% endfor %}
-
 <script>setCurrentYearAsMax("year")</script>
 <script>createReferenceFormButtons()</script>
 {% endblock %}

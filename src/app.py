@@ -34,10 +34,12 @@ def browse_references():
 @app.route('/edit_reference/<citation_key>')
 def edit_reference(citation_key):
     reference = get_reference_by_key(citation_key)
+    print(reference)
     authors = reference.author.split(" and ")
-    authors = [{"sukunimi":nimi.split(", ")[0] ,
-                "etunimi":nimi.split(", ")[1] }
+    authors = [{"lastname":nimi.split(", ")[0] ,
+                "firstnames":nimi.split(", ")[1] }
                 for nimi in authors]
+    print(authors)
     return render_template(
         'edit_reference.html',
         reference=reference,

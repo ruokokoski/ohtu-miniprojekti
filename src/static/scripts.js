@@ -124,13 +124,13 @@ function addAuthor(firstName, lastName) {
     container.className = "row justify-content-between"
 
     var person = document.createElement("li");
-    person.textContent = lastName.value + ", " + firstName.value;
+    person.textContent = lastName + ", " + firstName;
 
     var deletePerson = document.createElement("button");
     deletePerson.className = "btn btn-danger";
     deletePerson.textContent = "Delete";
 
-    container.appendChild(person)
+    container.appendChild(person);
     container.appendChild(deletePerson);
     authorList.appendChild(container);
 
