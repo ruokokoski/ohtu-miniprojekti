@@ -67,18 +67,21 @@ def reference_remove(citation_key):
         flash(f"Error when deleting reference: {str(db_error)}", "failure")
     return redirect("/references")
 
-@app.route("/download")
-def download_references():
+@app.route("/download", methods=["GET"])
+def download_file():
     bibtex_data = list_references_as_bibtex()
-
-    flash("Done", "success")
-
-    # Muodostetaan tiedosto BytesIO-objektiksi, jotta se voidaan lähettää käyttäjälle
     return send_file(
         BytesIO(bytes(bibtex_data, "utf-8")),
         download_name="references.bib",
         as_attachment=True
     )
+
+@app.route("/download", methods=["POST"])
+def download_references():
+    return jsonify({
+        "message": "Your BibTeX references file is ready for download.",
+        "status": "success"
+    })
 
 @app.route("/search", methods=["GET", "POST"])
 def search():

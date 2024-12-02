@@ -136,3 +136,34 @@ function addAuthor(firstName, lastName) {
 
     deletePerson.addEventListener("click", () => deletePerson.parentElement.remove());
 }
+
+function downloadReferences() {
+    fetch('/download', {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            showFlashMessage(data.message);
+
+            let link = document.createElement('a');
+            link.href = '/download';
+            link.download = 'references.bib';
+            link.click();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function showFlashMessage(message) {
+    let flashMessage = document.createElement('div');
+    flashMessage.className = 'alert alert-success';
+    flashMessage.textContent = message;
+    document.body.appendChild(flashMessage);
+
+    setTimeout(() => {
+        flashMessage.remove();
+    }, 3000);
+}
