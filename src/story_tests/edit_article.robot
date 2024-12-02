@@ -7,6 +7,7 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 *** Test Cases ***
 Edit A Reference (Edit Author)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Delete
     Set First name  edited first name
@@ -20,6 +21,7 @@ Edit A Reference (Edit Author)
 
 Edit A Reference (Edit Title)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Set Title  edited title
     Select Reference Type  article
@@ -30,6 +32,7 @@ Edit A Reference (Edit Title)
 
 Edit A Reference (Edit Journal)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Select Reference Type  article
     Click Button  Optional fields
@@ -41,6 +44,7 @@ Edit A Reference (Edit Journal)
 
 Edit A Reference (Edit Year)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Set Year  2000
     Select Reference Type  article
@@ -51,6 +55,7 @@ Edit A Reference (Edit Year)
 
 Edit A Reference (Edit Number)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Select Reference Type  article
     Click Button  Optional fields
@@ -61,6 +66,7 @@ Edit A Reference (Edit Number)
 
 Edit A Reference (Edit Volume)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Volume  edited volume
@@ -71,6 +77,7 @@ Edit A Reference (Edit Volume)
 
 Edit A Reference (Edit Month)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Month  edited month
@@ -81,6 +88,7 @@ Edit A Reference (Edit Month)
 
 Edit A Reference (Edit Note)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Note  edited note

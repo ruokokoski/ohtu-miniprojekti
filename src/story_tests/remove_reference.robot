@@ -7,6 +7,7 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 *** Test Cases ***
 Delete a reference
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Delete
     Handle Alert
     Page Should Not Contain  text=Murphy

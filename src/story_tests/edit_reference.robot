@@ -7,6 +7,7 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 *** Test Cases ***
 Edit A Reference (Edit Author)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Delete
     Set First name  edited first name
@@ -19,6 +20,7 @@ Edit A Reference (Edit Author)
 
 Edit A Reference (Edit Title)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Set Title  edited title
     Click Button  Save
@@ -28,6 +30,7 @@ Edit A Reference (Edit Title)
 
 Edit A Reference (Edit Publisher)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Publisher  edited publisher
@@ -38,6 +41,7 @@ Edit A Reference (Edit Publisher)
 
 Edit A Reference (Edit Year)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Set Year  2000
     Click Button  Save
@@ -47,6 +51,7 @@ Edit A Reference (Edit Year)
 
 Edit A Reference (Edit Address)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Address  edited address
@@ -56,6 +61,7 @@ Edit A Reference (Edit Address)
 
 Edit A Reference (Edit Volume)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Volume  edited volume
@@ -65,6 +71,7 @@ Edit A Reference (Edit Volume)
 
 Edit A Reference (Edit Series)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Series  edited series
@@ -74,6 +81,7 @@ Edit A Reference (Edit Series)
 
 Edit A Reference (Edit Edition)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Edition  edited edition
@@ -83,6 +91,7 @@ Edit A Reference (Edit Edition)
 
 Edit A Reference (Edit Month)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Month  edited month
@@ -92,6 +101,7 @@ Edit A Reference (Edit Month)
 
 Edit A Reference (Edit Note)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set Note  edited note
@@ -101,6 +111,7 @@ Edit A Reference (Edit Note)
 
 Edit A Reference (Edit URL)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set URL  http://localhost:5001/
@@ -110,6 +121,7 @@ Edit A Reference (Edit URL)
 
 Edit A Reference (Edit ISBN)
     Click Link  References
+    Mouse Over  editbutton 
     Click Button  Edit
     Click Button  Optional fields
     Set ISBN  edited ISBN

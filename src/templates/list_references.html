@@ -31,30 +31,25 @@
                             <td>{{ reference.year }}</td>
                             <td>
                                 <a href="/edit_reference/{{ reference.citation_key }}">
-                                    <button type="button" class="btn btn-warning">Edit</button>
+                                    <button type="button" name="editbutton" class="btn btn-warning">Edit</button>
                                 </a>
                             </td>
                             <td>
                                 <form action="/delete_reference/{{ reference.citation_key }}" method="POST">
                                     <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Haluatko varmasti poistaa viitteen?')">Delete</button>
+                                            onclick="return confirm('Are you sure you want to delete reference?')">Delete</button>
                                 </form>
                             </td>
                         </tr>
                         <tr class="extrafields">
                             <td colspan="7">
-                                <table class="table" style="color: #fff;">
-                                    <tr>
+                                <div style="display: flex; justify-content: center;">
+                                    <ul style="column-count: 7; text-align: left;">
                                         {% for key, value in reference.extra_fields.items() %}
-                                            <th>{{key}}</th>
+                                            <li style="margin-right: 100px;">{{key}}: {{value}}</li>
                                         {% endfor %}
-                                    </tr>
-                                    <tr>
-                                        {% for key, value in reference.extra_fields.items() %}
-                                            <td>{{value}}</td>
-                                        {% endfor %}
-                                    </tr>
-                                </table>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                         {% else %}
