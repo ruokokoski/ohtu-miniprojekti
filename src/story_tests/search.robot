@@ -6,19 +6,19 @@ Test Setup  Go To Starting Page
 
 *** Test Cases ***
 Search Google Scholar
-    Click Link  Etusivu
+    Click Link  Home
     Select Radio Button  database  Google Scholar
     Set Search Query  syöpä
     Submit
-    Page Should Contain  text=Haku on käynnissä, odota hetki...
+    Page Should Contain  text=Searching...
     Page Should Contain  text=Miten syöpä syntyy
     Page Should Contain  text=M Laiho
 Search AMC Library
-    Click Link  Etusivu
+    Click Link  Home
     Select Radio Button  database  ACM
     Set Search Query  testi
     Submit
-    Page Should Contain  text=Haku on käynnissä, odota hetki...
+    Page Should Contain  text=Searching...
     Page Should Contain  text=Machine Learning-Based Jamming Detection and Classification in Wireless Networks
     Page Should Contain  text=Enrico Testi, Luca Arcangeloni
 
@@ -28,4 +28,4 @@ Set Search Query
     Input Text  query  ${query}
 
 Submit
-    Click Button  Hae
+    Click Button  Search

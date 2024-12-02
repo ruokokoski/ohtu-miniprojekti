@@ -6,126 +6,126 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 
 *** Test Cases ***
 Edit A Reference (Edit Author)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Poista
+    Click Button  Delete
     Set First name  edited first name
     Set Last name  edited last name
-    Click Button  Lisää author
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Add author
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited last name, edited first name
     Page Should Not Contain  text=Murphy, Kevin P
 
 Edit A Reference (Edit Title)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
     Set Title  edited title
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
-    Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
+    Page Should Contain  text=Reference updated
     Page Should Not Contain  text=Probabilistic machine learning: an introduction
 
 Edit A Reference (Edit Publisher)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Publisher  edited publisher
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited publisher
     Page Should Not Contain  text=MIT Press
 
 Edit A Reference (Edit Year)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
     Set Year  2000
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=2000
     #Page Should Not Contain  text=1234
 
 Edit A Reference (Edit Address)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Address  edited address
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited address
 
 Edit A Reference (Edit Volume)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Volume  edited volume
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited volume
 
 Edit A Reference (Edit Series)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Series  edited series
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited series
 
 Edit A Reference (Edit Edition)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Edition  edited edition
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited edition
 
 Edit A Reference (Edit Month)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Month  edited month
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited month
 
 Edit A Reference (Edit Note)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Note  edited note
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited note
 
 Edit A Reference (Edit URL)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set URL  http://localhost:5001/
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=http://localhost:5001/
 
 Edit A Reference (Edit ISBN)
-    Click Link  Viitteet
+    Click Link  References
     Click Button  Edit
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set ISBN  edited ISBN
-    Click Button  Tallenna muutokset
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Click Button  Save
+    #Page Should Contain  text=Reference updated
     Page Should Contain  text=edited ISBN
 
 *** Keywords ***
 Reset Table Add A Reference And Go To Starting Page
     Reset Table
     Go To Starting page
-    Click Link  Uusi viite
+    Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Click Button  Lisää author
-    Click Button  Näytä valinnaiset
+    Click Button  Add author
+    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -133,7 +133,7 @@ Reset Table Add A Reference And Go To Starting Page
     Go To Starting page
 
 Submit
-    Click Button  Tallenna
+    Click Button  Save
 
 Set First name
     [Arguments]  ${first_name}

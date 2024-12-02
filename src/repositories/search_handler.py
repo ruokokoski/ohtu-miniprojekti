@@ -12,7 +12,7 @@ def fetch_search_results(database, search_variable):
         return fetch_acm_search_results(search_variable)
     if database == "Google Scholar":
         return fetch_google_scholar_results(search_variable)
-    raise ValueError(f"Tietokantaa {database} ei tueta.")
+    raise ValueError(f"Database {database} not supported.")
 
 def fetch_google_scholar_results(search_variable):
     driver = initialize_webdriver()
@@ -39,7 +39,7 @@ def fetch_google_scholar_results(search_variable):
             if title_tag and title_tag.find('a'):
                 link = title_tag.find('a')['href']
             else:
-                link = "Linkkiä ei löytynyt"
+                link = "Link not available"
             title = title.replace("[HTML]", "")
             title = title.replace("[PDF]", "")
             title = title.replace("[CITATION]", "")
@@ -56,7 +56,7 @@ def fetch_google_scholar_results(search_variable):
                 "authors": authors,
                 "year": year,
                 "doi_link": link,
-                "pdf_url": "Ei saatavilla"
+                "pdf_url": "Not available"
             }
             results.append(result)
 
@@ -177,6 +177,6 @@ def get_doi_link(title_tag):
             doi_path = link_tag['href']
             doi_link = f"https://dl.acm.org{doi_path}"
             pdf_url = f"https://dl.acm.org/doi/pdf{doi_path.split('/doi')[-1]}"
-    doi_link = doi_link if doi_link else "DOI-linkkiä ei löytynyt"
-    pdf_url = pdf_url if pdf_url else "PDF-linkkiä ei löytynyt"
+    doi_link = doi_link if doi_link else "DOI-link not found"
+    pdf_url = pdf_url if pdf_url else "PDF-link not found"
     return doi_link, pdf_url

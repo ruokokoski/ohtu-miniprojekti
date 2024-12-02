@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Uusi viite
+New reference
 {% endblock %}
 
 {% block body %}
@@ -9,7 +9,7 @@ Uusi viite
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-4 align-self-center">
-            <h2>Uuden book-viitteen luominen</h2>
+            <h2>Create new reference</h2>
             <form action="/create_reference" id="new_reference" method="post" style="display: inline-block;">
                 <!-- REQUIRED -->
 
@@ -23,12 +23,12 @@ Uusi viite
                         <div class="row">
                             <input type="hidden" id="author" name="author">
                             <div class="col">
-                                <input type="text" class="form-control" id="first_name" placeholder="Etunimi">
+                                <input type="text" class="form-control" id="first_name" placeholder="Firstnames">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" id="last_name" placeholder="Sukunimi">
+                                <input type="text" class="form-control" id="last_name" placeholder="Lastname">
                             </div>
-                            <button type="button" class="btn btn-primary" id="add_author_button">Lisää author</button>
+                            <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
                         </div>  
                     </div>
                     
@@ -114,9 +114,10 @@ Uusi viite
                         </div>
                     </div>           
                 </div>
-
-                <button type="button" class="btn btn-primary" id="toggle_optionals_button">Näytä valinnaiset</button>
-                <button type="submit" class="btn btn-primary">Tallenna</button>
+                <div>
+                    <button type="button" class="btn btn-primary" id="toggle_optionals_button">Optional fields</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
             </form>
         </div>
     </div>

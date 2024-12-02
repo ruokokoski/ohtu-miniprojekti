@@ -40,7 +40,7 @@ class Reference(db.Model):
             self.extra_fields = data.get("extra_fields", {})
 
             db.session.commit()
-            print("Päivitys onnistui!")
+            print("Update successful!")
         except SQLAlchemyError as e:
-            print(f"SQLAlchemy virhe päivityksessä: {e}")
+            print(f"SQLAlchemy error: {e}")
             db.session.rollback()

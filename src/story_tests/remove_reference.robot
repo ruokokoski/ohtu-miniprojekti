@@ -6,8 +6,8 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 
 *** Test Cases ***
 Delete a reference
-    Click Link  Viitteet
-    Click Button  Poista
+    Click Link  References
+    Click Button  Delete
     Handle Alert
     Page Should Not Contain  text=Murphy
 
@@ -15,11 +15,11 @@ Delete a reference
 Reset Table Add A Reference And Go To Starting Page
     Reset Table
     Go To Starting page
-    Click Link  Uusi viite
+    Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Click Button  Lisää author
-    Click Button  Näytä valinnaiset
+    Click Button  Add author
+    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -27,7 +27,7 @@ Reset Table Add A Reference And Go To Starting Page
     Go To Starting page
 
 Submit
-    Click Button  Tallenna
+    Click Button  Save
 
 Set First name
     [Arguments]  ${first_name}

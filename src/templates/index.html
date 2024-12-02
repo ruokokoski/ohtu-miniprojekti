@@ -1,20 +1,20 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Etusivu
+Home
 {% endblock %}
 
 {% block body %}
 <script>document.getElementById("nav_koti").classList.toggle("active")</script>
 <div class="container-fluid">
     <div id="loading_message" class="alert alert-info" style="display:none;">
-        Haku on käynnissä, odota hetki...
+        Searching...
     </div>
     
     <div class="row justify-content-center">
         <div class="col-10 align-self-center">
             <div class="mt-4">
-                <label for="search_field">Tietokantahaku:</label>
+                <label for="search_field">Database search:</label>
             </div>
             <form method="POST" action="/search" id="search_form">
                 <div class="d-flex mb-3">
@@ -29,7 +29,7 @@ Etusivu
                 </div>
                 <div class="d-flex">
                     <input type="text" id="search_field" class="form-control mr-2" placeholder="Hae tietoja..." name="query" style="max-width: 50%;"/>
-                    <button class="btn btn-primary" type="submit" id="search_button">Hae</button>
+                    <button class="btn btn-primary" type="submit" id="search_button">Search</button>
                 </div>
             </form>
         </div>
@@ -38,7 +38,7 @@ Etusivu
     {% if results %}
         <div class="row justify-content-center mt-4">
             <div class="col-10">
-                <h5 class="text-left">Top 10 hakutulokset tietokannasta: {{ database }}</h5>
+                <h5 class="text-left">Top 10 results from database: {{ database }}</h5>
                 <table class="table table-bordered">
                 <table class="table table-bordered">
                     <thead>

@@ -18,9 +18,9 @@ def delete_reference(key):
             db.session.commit()
         except SQLAlchemyError as e:
             db.session.rollback()
-            raise SQLAlchemyError(f"Tietokantavirhe poistettaessa viitettä: {str(e)}") from e
+            raise SQLAlchemyError(f"Database error: {str(e)}") from e
     else:
-        raise ValueError(f"Viite keyllä {key} ei löydy.")
+        raise ValueError(f"Reference {key} not found.")
 
 def list_references_as_dict():
     references = Reference.query.order_by(Reference.citation_key).all()

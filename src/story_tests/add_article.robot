@@ -6,12 +6,12 @@ Test Setup  Reset Table And Go To Starting Page
 
 *** Test Cases ***
 Add A New Valid Article Reference
-    Click Link  Uusi viite
+    Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Click Button  Lisää author
+    Click Button  Add author
     Select Reference Type  article
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Journal  MIT Press
     Set Year  2022
@@ -23,13 +23,13 @@ Add A New Valid Article Reference
     Page Should Contain  text=Murphy2022Probabilistic
 
 Add A New Valid Article Reference With Optional (Number)
-    Click Link  Uusi viite
+    Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Click Button  Lisää author
+    Click Button  Add author
     Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction
-    Click Button  Näytä valinnaiset
+    Click Button  Optional fields
     Set Journal  MIT Press
     Set Year  2022
     Set Number  number test
@@ -37,11 +37,11 @@ Add A New Valid Article Reference With Optional (Number)
     Page Should Contain  text=number test
 
 Add A New Valid Article Reference With Optional (Volume)
-    Click Link  Uusi viite
+    Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Click Button  Lisää author
-    Click Button  Näytä valinnaiset
+    Click Button  Add author
+    Click Button  Optional fields
     Set Volume  volume test
     Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction
@@ -52,11 +52,11 @@ Add A New Valid Article Reference With Optional (Volume)
     Page Should Contain  text=volume test
 
 Add A New Valid Article Reference With Optional (Month)
-    Click Link  Uusi viite
+    Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Click Button  Lisää author
-    Click Button  Näytä valinnaiset
+    Click Button  Add author
+    Click Button  Optional fields
     Set Month  month test
     Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction
@@ -66,11 +66,11 @@ Add A New Valid Article Reference With Optional (Month)
     Page Should Contain  text=month test
 
 Add A New Valid Article Reference With Optional (Note)
-    Click Link  Uusi viite
+    Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Click Button  Lisää author
-    Click Button  Näytä valinnaiset
+    Click Button  Add author
+    Click Button  Optional fields
     Set Note  note test
     Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction
@@ -85,7 +85,7 @@ Reset Table And Go To Starting Page
     Go To Starting page
 
 Submit
-    Click Button  Tallenna
+    Click Button  Save
 
 Set First name
     [Arguments]  ${first_name}

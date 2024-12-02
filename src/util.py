@@ -35,10 +35,10 @@ def process_reference_form(is_creation, citation_key=None):
         # Luo uusi viite tai päivitä olemassa oleva
         if is_creation:
             create_reference(data)
-            flash("Uusi viite luotu onnistuneesti", "success")
+            flash("New reference created", "success")
         else:
             update_reference(citation_key, data)
-            flash("Viite päivitetty onnistuneesti", "success")
+            flash("Reference updated", "success")
 
         return redirect("/references")
 

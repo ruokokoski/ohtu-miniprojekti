@@ -3,6 +3,16 @@ function setCurrentYearAsMax(id) {
     document.getElementById(id).setAttribute("max", year);
 }
 
+
+function show(id) {
+    var element = document.getElementById(id);
+    if (element.style.display === "none") {
+        element.style.display = "block";
+    } else {
+        element.style.display = "none";
+    }
+  }
+
 const hideFlashMessage = () => {
     const flashMessages = document.getElementById("flash-messages");
     if (flashMessages) {
@@ -33,11 +43,11 @@ function toggleOptionals() {
 
     if (opt.style.display === "none") {
         opt.style.display = "block";
-        btn.textContent = "Piilota valinnaiset";
+        btn.textContent = "Hide optionals";
     }
     else {
         opt.style.display = "none";
-        btn.textContent = "Näytä valinnaiset";
+        btn.textContent = "Show optionals";
     }
 }
 
@@ -69,7 +79,7 @@ function addNewAuthor() {
 
         var deletePerson = document.createElement("button");
         deletePerson.className = "btn btn-danger";
-        deletePerson.textContent = "Poista";
+        deletePerson.textContent = "Delete";
 
         container.appendChild(person)
         container.appendChild(deletePerson);
@@ -81,7 +91,7 @@ function addNewAuthor() {
         lastName.value = "";
     } 
     else {
-        alert("Syötä etu- ja sukunimi");
+        alert("Add firstname and lastname");
     }
 }
 
@@ -90,7 +100,7 @@ function validateForm(event) {
     var author = document.getElementById("author");
 
     if (authorList.children.length === 0) {
-        alert("Lisää ainakin yksi author ennen lomakkeen lähettämistä.");
+        alert("Add atleast one author before submitting.");
         event.preventDefault();
                 return;
     }
@@ -118,7 +128,7 @@ function addAuthor(firstName, lastName) {
 
     var deletePerson = document.createElement("button");
     deletePerson.className = "btn btn-danger";
-    deletePerson.textContent = "Poista";
+    deletePerson.textContent = "Delete";
 
     container.appendChild(person)
     container.appendChild(deletePerson);

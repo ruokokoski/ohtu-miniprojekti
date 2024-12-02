@@ -58,18 +58,18 @@ def update_reference_entry():
 def reference_remove(citation_key):
     try:
         delete_reference(citation_key)
-        flash("Viite poistettu onnistuneesti", "success")
+        flash("Reference deleted", "success")
     except ValueError as e:
-        flash(f"Virhe: {str(e)}", "failure")
+        flash(f"Error: {str(e)}", "failure")
     except SQLAlchemyError as db_error:
-        flash(f"Virhe viitteen poistamisessa: {str(db_error)}", "failure")
+        flash(f"Error when deleting reference: {str(db_error)}", "failure")
     return redirect("/references")
 
 @app.route("/download")
 def download_references():
     bibtex_data = list_references_as_bibtex()
 
-    flash("Lataus onnistui", "success")
+    flash("Done", "success")
 
     # Muodostetaan tiedosto BytesIO-objektiksi, jotta se voidaan lähettää käyttäjälle
     return send_file(
@@ -88,7 +88,7 @@ def search():
         database = request.args.get("database", "ACM")
 
     if not search_query:
-        flash("Hakusana puuttuu", "danger")
+        flash("Searchfield empty", "danger")
         return redirect("/")
 
     try:
@@ -106,7 +106,7 @@ def search():
         return redirect("/")
     '''
     if results is None or len(results) == 0:
-        flash("Hakutuloksia ei löytynyt", "warning")
+        flash("Search didn't find anything", "warning")
         return redirect("/")
 
     return render_template("index.html", results=results, database=database)
