@@ -30,10 +30,10 @@ Muokkaa viitettä
                     </div>
                     <div class="form-group">
                         <label for="entry_type"><b>Type:</b></label>
-                        <select name="entry_type" id="entry_type">
-                            <option value="book" selected> book
-                            <option value="article"> article
-                            </select>
+                        <select name="entry_type" id="entry_type" onchange="updateFields()">
+                            <option value="book" {% if reference.entry_type == 'book' %}selected{% endif %}>Book</option>
+                            <option value="article" {% if reference.entry_type == 'article' %}selected{% endif %}>Article</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="title"><b>Title:</b></label>
