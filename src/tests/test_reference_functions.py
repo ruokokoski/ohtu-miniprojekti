@@ -1,6 +1,13 @@
 import unittest
 from entities.reference import Reference
-from repositories.reference_repository import list_references_as_dict, delete_reference, get_reference_by_key, list_references_as_bibtex
+from repositories.reference_repository import (
+    list_references_as_dict,
+    delete_reference,
+    get_reference_by_key,
+    list_references_as_bibtex,
+    bibtex_to_dict
+)
+from collections import OrderedDict
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import text
 from config import create_app, db
@@ -80,3 +87,60 @@ class TestReferenceModel(unittest.TestCase):
             self.assertIn("@book", bibtex_str)  # Tarkistetaan, että BibTeX-formaatti sisältää @book
             self.assertIn("Test2024", bibtex_str)  # Tarkistetaan, että viitteen citation_key löytyy
 
+
+class TestBibtexToDict(unittest.TestCase):
+    def test_single_entry(self):
+        """Testaa yhden BibTeX-tietueen muuntamista sanakirjaksi."""
+        bibtex_str = """
+        @article{sample2024,
+          author = {Doe, John},
+          title = {Sample Paper},
+          journal = {Sample Journal},
+          year = {2024},
+          volume = {10},
+          pages = {100-110},
+        }
+        """
+
+        expected_output = {
+            'sample2024': {
+                'author': 'Doe, John',
+                'title': 'Sample Paper',
+                'journal': 'Sample Journal',
+                'year': '2024',
+                'volume': '10',
+                'pages': '100-110'
+            }
+        }
+
+        result = bibtex_to_dict(bibtex_str)
+        result_dict = {k: dict(v) for k, v in result.items()}
+        self.assertEqual(sorted(result_dict.items()), sorted(expected_output.items()))
+
+    def test_multible_authors(self):
+        """Testaa yhden BibTeX-tietueen muuntamista sanakirjaksi."""
+        bibtex_str = """
+        @article{sample2024,
+          author = {Doe, Tina and Smith, Peter and Baker, Alice},
+          title = {Sample Paper},
+          journal = {Sample Journal},
+          year = {2024},
+          volume = {10},
+          pages = {100-110},
+        }
+        """
+
+        expected_output = {
+            'sample2024': {
+                'author': 'Doe, Tina and Smith, Peter and Baker, Alice',
+                'title': 'Sample Paper',
+                'journal': 'Sample Journal',
+                'year': '2024',
+                'volume': '10',
+                'pages': '100-110'
+            }
+        }
+
+        result = bibtex_to_dict(bibtex_str)
+        result_dict = {k: dict(v) for k, v in result.items()}
+        self.assertEqual(sorted(result_dict.items()), sorted(expected_output.items()))
