@@ -1,10 +1,11 @@
 from io import BytesIO
 from sqlalchemy.exc import SQLAlchemyError
+
 from flask import render_template, redirect, request, flash, jsonify, send_file
+
 from db_helper import reset_db
 from config import app, test_env
 from repositories.search_handler import fetch_search_results
-from entities.reference import Reference
 from repositories.reference_repository import (
     delete_reference,
     list_references_as_bibtex,
@@ -12,7 +13,7 @@ from repositories.reference_repository import (
     get_reference_by_key
 )
 from util import process_reference_form
-
+from entities.reference import Reference
 
 @app.route("/")
 def index():
