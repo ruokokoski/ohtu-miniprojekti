@@ -4,6 +4,7 @@ from flask import render_template, redirect, request, flash, jsonify, send_file
 from db_helper import reset_db
 from config import app, test_env
 from repositories.search_handler import fetch_search_results
+from entities.reference import Reference
 from repositories.reference_repository import (
     delete_reference,
     list_references_as_bibtex,
@@ -20,7 +21,9 @@ def index():
 
 @app.route("/new_reference")
 def new():
-    return render_template("new_reference.html")
+    field_profiles = Reference.FIELD_PROFILES
+    print(Reference.FIELD_PROFILES)
+    return render_template("new_reference.html", field_profiles=field_profiles)
 
 @app.route('/create_reference', methods=['POST'])
 def reference_creation():

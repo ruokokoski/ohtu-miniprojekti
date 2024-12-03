@@ -50,11 +50,3 @@ def list_references_as_bibtex():
     bibtex_str = bib_data.to_string('bibtex')
 
     return bibtex_str
-
-
-'''
-def get_bibtex():
-    sql = text('SELECT bibtex FROM refs;')
-    result = db.session.execute(sql).fetchall()
-    return result
-'''
