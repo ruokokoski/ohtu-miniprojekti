@@ -24,20 +24,16 @@ def delete_reference(key):
 
 def list_references_as_dict():
     references = Reference.query.order_by(Reference.citation_key).all()
-    # Muutetaan jokainen Reference-olio sanakirjaksi
     references_dict = [reference.to_dict() for reference in references]
     return references_dict
 
 def list_references_as_bibtex():
-    # Haetaan kaikki viitteet tietokannasta
     references = Reference.query.order_by(Reference.citation_key).all()
     bib_data = BibliographyData()
 
-    # Käydään läpi kaikki viitteet ja luodaan niistä BibTeX-kenttiä
     for reference in references:
-        # Määritellään BibTeX-tiedot
         bib_entry = Entry(
-            reference.entry_type,  # Entry type, esim. 'book' tai 'article'
+            reference.entry_type,
             fields={
                 'author': reference.author,
                 'title': reference.title,
@@ -45,15 +41,12 @@ def list_references_as_bibtex():
             }
         )
 
-        # Lisätään mahdolliset extra_fields
         if reference.extra_fields:
             for key, value in reference.extra_fields.items():
                 bib_entry.fields[key] = str(value)
 
-        # Lisätään BibTeX-tieto bib_data-objektiin käyttäen citation key:tä
         bib_data.entries[reference.citation_key] = bib_entry
 
-    # Muunnetaan BibTeX-objekti merkkijonoksi
     bibtex_str = bib_data.to_string('bibtex')
 
     return bibtex_str

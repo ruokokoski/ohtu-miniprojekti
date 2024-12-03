@@ -1,6 +1,5 @@
 import re
 from flask import redirect, request, flash
-from sqlalchemy.exc import IntegrityError
 from entities.reference import Reference
 from repositories.reference_repository import get_reference_by_key
 from exceptions import UserInputError
@@ -15,7 +14,6 @@ def process_reference_form(is_creation, citation_key=None):
     title = request.form.get('title', '')
     year = request.form.get('year', '')
 
-    # Luodaan extra_fields dynaamisesti
     extra_fields = create_extra_fields(entry_type)
 
     # Luo data-sanakirja
@@ -28,7 +26,7 @@ def process_reference_form(is_creation, citation_key=None):
     }
 
     if not is_creation and citation_key:
-        data['citation_key'] = citation_key  # Lisätään citation_key dataan
+        data['citation_key'] = citation_key
 
     # Suoritetaan validointi
     try:
@@ -55,17 +53,12 @@ def process_reference_form(is_creation, citation_key=None):
 def create_extra_fields(entry_type):
     """Palauttaa dynaamiset extra_fields-kentät viitetyypin mukaan"""
     extra_fields = {}
-    if entry_type == "book":
-        book_fields = [
-            'publisher', 'address', 'volume', 'series', 'edition',
-            'month', 'note', 'url', 'isbn'
-        ]
-        for field in book_fields:
-            extra_fields[field] = request.form.get(field, '')
-    elif entry_type == "article":
-        article_fields = ['journal', 'number', 'volume', 'month', 'note']
-        for field in article_fields:
-            extra_fields[field] = request.form.get(field, '')
+
+    fields_for_entry = Reference.FIELD_PROFILES.get(entry_type, [])
+
+    for field in fields_for_entry:
+        extra_fields[field] = request.form.get(field, '')
+
     return extra_fields
 
 
@@ -73,34 +66,15 @@ def create_reference(data):
     """Luo uusi viite ja tallenna se tietokantaan"""
     citation_key = generate_key(data['author'], data['year'], data['title'])
 
-    try:
-        # Tarkista, onko citation_key jo olemassa tietokannassa
-        existing_reference = get_reference_by_key(citation_key)
-
-        if existing_reference:
-            raise UserInputError(
-                f"A reference with the citation key '{citation_key}' already exists."
-            )
-
-        # Luo uusi viite ja tallenna se tietokantaan
-        reference = Reference(
-            entry_type=data['entry_type'],
-            citation_key=citation_key,
-            author=data['author'],
-            title=data['title'],
-            year=data['year'],
-            extra_fields=data['extra_fields']
-        )
-        reference.save()
-
-    except IntegrityError as e:
-        if 'UniqueViolation' in str(e):
-            raise UserInputError(
-                f"A reference with the citation key '{citation_key}' already exists in the system."
-            ) from e
-        raise UserInputError(
-            "An error occurred while saving the reference. Please try again."
-        ) from e
+    reference = Reference(
+        entry_type=data['entry_type'],
+        citation_key=citation_key,
+        author=data['author'],
+        title=data['title'],
+        year=data['year'],
+        extra_fields=data['extra_fields']
+    )
+    reference.save()
 
 
 def update_reference(citation_key, data):

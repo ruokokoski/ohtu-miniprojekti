@@ -220,3 +220,58 @@ class TestReferenceModel(unittest.TestCase):
         self.assertEqual(updated_reference.title, "Updated Paper")
         self.assertEqual(updated_reference.year, 2025)
         self.assertEqual(updated_reference.extra_fields, {"publisher": "ABC Press"})
+
+class ReferenceModelTestInproceedings(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        """Testauksen valmistelu, luodaan Flask-sovellus ja tietokanta"""
+        cls.app = create_app()
+        cls.app_context = cls.app.app_context()
+        cls.app_context.push()
+        db.create_all()
+
+    @classmethod
+    def tearDownClass(cls):
+        """Testauksen jälkeinen siivous, poistetaan tietokanta"""
+        db.session.remove()
+        db.drop_all()
+        cls.app_context.pop()
+
+    def test_inproceedings_reference(self):
+        """Testaa, että inproceedings-tyyppinen viite voidaan tallentaa tietokantaan"""
+        data = {
+            "entry_type": "inproceedings",
+            "author": "John Doe",
+            "title": "Research Paper Title",
+            "year": "2023",
+            "extra_fields": {
+                "booktitle": "Conference Proceedings",
+                "publisher": "Publisher Name",
+                "address": "Conference City"
+            }
+        }
+
+        # Luo viite
+        reference = Reference(
+            entry_type=data["entry_type"],
+            citation_key="Doe2023Research",  # Käytetään oletettua arvoa, varmista että se on uniikki
+            author=data["author"],
+            title=data["title"],
+            year=data["year"],
+            extra_fields=data["extra_fields"]
+        )
+
+        # Tallenna viite
+        reference.save()
+
+        # Tarkista, että viite on tallennettu tietokantaan
+        saved_reference = Reference.query.filter_by(citation_key="Doe2023Research").first()
+        self.assertIsNotNone(saved_reference)
+        self.assertEqual(saved_reference.entry_type, "inproceedings")
+        self.assertEqual(saved_reference.author, "John Doe")
+        self.assertEqual(saved_reference.title, "Research Paper Title")
+        self.assertEqual(saved_reference.year, 2023)
+        self.assertEqual(saved_reference.extra_fields["booktitle"], "Conference Proceedings")
+
+if __name__ == "__main__":
+    unittest.main()
