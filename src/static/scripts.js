@@ -3,6 +3,60 @@ function setCurrentYearAsMax(id) {
     document.getElementById(id).setAttribute("max", year);
 }
 
+function searchTable(inputId, tableId, column) {
+    // Declare variables
+    var input, filter, table, tbody, tr, td, i, txtValue;
+    input = document.getElementById(inputId);
+    filter = input.value.toUpperCase();
+    table = document.getElementById(tableId);
+    tbody = table.getElementsByTagName("tbody")[0];
+    tr = tbody.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i+=2) {
+        td = tr[i].getElementsByTagName("td")[column];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+
+function filterYear(inputId, tableId, column, min) {
+    // Declare variables
+    var input, filter, table, tbody, tr, td, i, year;
+    input = document.getElementById(inputId);
+    filter = input.value;
+    table = document.getElementById(tableId);
+    tbody = table.getElementsByTagName("tbody")[0];
+    tr = tbody.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i+=2) { //jump over extrafields rows
+        td = tr[i].getElementsByTagName("td")[column];
+        if (td) {
+            year = td.textContent || td.innerText;
+            if (min) {
+                if (Number(year) >= filter) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            } else {
+                if (Number(year) <= filter) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+}
 
 function show(id) {
     var element = document.getElementById(id);
