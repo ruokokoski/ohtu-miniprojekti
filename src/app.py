@@ -23,7 +23,6 @@ def index():
 @app.route("/new_reference")
 def new():
     field_profiles = Reference.FIELD_PROFILES
-    print(Reference.FIELD_PROFILES)
     return render_template("new_reference.html", field_profiles=field_profiles)
 
 @app.route('/create_reference', methods=['POST'])
@@ -38,12 +37,10 @@ def browse_references():
 @app.route('/edit_reference/<citation_key>')
 def edit_reference(citation_key):
     reference = get_reference_by_key(citation_key)
-    print(reference)
     authors = reference.author.split(" and ")
     authors = [{"lastname":nimi.split(", ")[0] ,
                 "firstnames":nimi.split(", ")[1] }
                 for nimi in authors]
-    print(authors)
     return render_template(
         'edit_reference.html',
         reference=reference,
