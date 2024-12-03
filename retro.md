@@ -30,3 +30,19 @@
 - luodaan skripti, joka suorittaa kaikki eri testit
 
 - kiinnitetään tärkeät viestit Discordissa
+
+
+
+
+miten tehdä taulu
+	määritelly kaikki kentät
+	ylläpiti tietorakennetta sovelluksessa, missä määritellään mitä kenttiä on missäkin viittaustyypissä
+	if book --> nämä kentät
+
+vikat user storyt:
+	sovellus tukee useampia viitetyyppejä
+	acm haun tulosten suoraan liittäminen databaseen
+	   preview (1 vaihtoehto, voi tehdä muutenkin)
+Muista sopia koska pidetään demo
+
+
