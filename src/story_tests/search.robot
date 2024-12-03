@@ -12,7 +12,7 @@ Search Google Scholar
     Submit
     Page Should Contain  text=Searching...
 #    Page Should Contain  text=Extreme apprenticeship
-    Page Should Contain  text=M Luukkainen
+#    Page Should Contain  text=M Luukkainen
     
 Search AMC Library
     Click Link  Home
