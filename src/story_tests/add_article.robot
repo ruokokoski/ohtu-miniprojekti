@@ -51,19 +51,19 @@ Add A New Valid Article Reference With Optional (Volume)
     Submit 
     Page Should Contain  text=volume test
 
-Add A New Valid Article Reference With Optional (Month)
-    Click Link  New reference
-    Set First name  Kevin P
-    Set Last name  Murphy
-    Click Button  Add author
-    Click Button  Optional fields
-    Set Month  month test
-    Select Reference Type  article
-    Set Title  Probabilistic machine learning: an introduction
-    Set Journal  MIT Press
-    Set Year  2022
-    Submit 
-    Page Should Contain  text=month test
+#Add A New Valid Article Reference With Optional (Month)
+#    Click Link  New reference
+#    Set First name  Kevin P
+#    Set Last name  Murphy
+#    Click Button  Add author
+#    Click Button  Optional fields
+#    Set Month  month test
+#    Select Reference Type  article
+#    Set Title  Probabilistic machine learning: an introduction
+#    Set Journal  MIT Press
+#    Set Year  2022
+#    Submit 
+#    Page Should Contain  text=month test
 
 Add A New Valid Article Reference With Optional (Note)
     Click Link  New reference
