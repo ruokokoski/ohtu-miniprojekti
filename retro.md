@@ -46,3 +46,27 @@ vikat user storyt:
 Muista sopia koska pidetään demo
 
 
+# Retrospektiivi 3.12
+
+### Mad:
+
+- Robot testit tyhjentää tietokannan
+- stressitasot olivat korkealla terveyshuolten takia
+
+### Sad:
+
+- robot testit eivät ole stabiileja
+
+### Glad:
+
+- pysyimme aikataulussa
+- maini "tarpeeksi" ehjä
+- keskustelu on parantunut 
+- olemme parantaneet lokaaleja testejä
+
+## Kehitystoimenpiteet
+
+- Robot testien lopuksi lisätään testiviitteitä
+- mainitsee lopputiimille löytämistään bugeista
+
+
