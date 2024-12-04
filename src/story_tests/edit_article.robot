@@ -6,94 +6,86 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 
 *** Test Cases ***
 Edit A Reference (Edit Author)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
-    Click Button  Delete
+    Click Button  Poista
     Set First name  edited first name
     Set Last name  edited last name
-    Entry type is article
-    Click Button  Add author
-    Click Button  Save
+    Click Button  Lisää author
+    Select Reference Type  article
+    Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited last name, edited first name
     Page Should Not Contain  text=Murphy, Kevin P
 
 Edit A Reference (Edit Title)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
     Set Title  edited title
-    Entry type is article
-    Click Button  Save
+    Select Reference Type  article
+    Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited title
     Page Should Not Contain  text=Probabilistic machine learning: an introduction
 
 Edit A Reference (Edit Journal)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
-    Entry type is article
-    Click Button  Optional fields
+    Select Reference Type  article
+    Click Button  Näytä valinnaiset
     Set Journal  edited journal
-    Click Button  Save
+    Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited journal
     Page Should Not Contain  text=MIT Press
 
 Edit A Reference (Edit Year)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
     Set Year  2000
-    Entry type is article
-    Click Button  Save
+    Select Reference Type  article
+    Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=2000
     Page Should Not Contain  text=1234
 
 Edit A Reference (Edit Number)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
-    Entry type is article
-    Click Button  Optional fields
+    Select Reference Type  article
+    Click Button  Näytä valinnaiset
     Set Number  edited number
-    Click Button  Save
+    Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited number
 
 Edit A Reference (Edit Volume)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
-    Entry type is article
-    Click Button  Optional fields
+    Click Button  Näytä valinnaiset
     Set Volume  edited volume
-    Set Year  2021
-    Click Button  Save
-    Page Should Contain  text=Reference updated
+    Select Reference Type  article
+    Click Button  Tallenna muutokset
+    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Page Should Contain  text=edited volume
 
 Edit A Reference (Edit Month)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
-    Click Button  Optional fields
+    Click Button  Näytä valinnaiset
     Set Month  edited month
-    Entry type is article
-    Click Button  Save
+    Select Reference Type  article
+    Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited month
 
 Edit A Reference (Edit Note)
-    Click Link  References
-    Mouse Over  editbutton 
+    Click Link  Viitteet
     Click Button  Edit
-    Click Button  Optional fields
+    Click Button  Näytä valinnaiset
     Set Note  edited note
-    Entry type is article
-    Click Button  Save
+    Select Reference Type  article
+    Click Button  Tallenna muutokset
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited note
 
@@ -101,20 +93,20 @@ Edit A Reference (Edit Note)
 Reset Table Add A Reference And Go To Starting Page
     Reset Table
     Go To Starting page
-    Click Link  New reference
+    Click Link  Uusi viite
     Set First name  Kevin P
     Set Last name  Murphy
-    Select Reference Type    article
-    Click Button  Add author
-    Click Button  Optional fields
+    Click Button  Lisää author
+    Click Button  Näytä valinnaiset
     Set Title  Probabilistic machine learning: an introduction
+    Select Reference Type  article
     Set Journal  MIT Press
     Set Year  2022
     Submit 
     Go To Starting page
 
 Submit
-    Click Button  Save
+    Click Button  Tallenna
 
 Set First name
     [Arguments]  ${first_name}
@@ -127,9 +119,6 @@ Set Last name
 Select Reference Type
     [Arguments]  ${reference_type}
     Select From List By Label  entry_type  ${reference_type}
-
-Entry type is article
-    List Selection Should Be    entry_type    article
 
 Set Title
     [Arguments]  ${title}
@@ -149,12 +138,12 @@ Set Number
 
 Set Volume
     [Arguments]  ${volume}
-    Input Text  article_volume  ${volume}
+    Input Text  volume  ${volume}
 
 Set Month
     [Arguments]  ${month}
-    Input Text  article_month  ${month}
+    Input Text  month  ${month}
 
 Set Note
     [Arguments]  ${note}
-    Input Text  article_note  ${note}
+    Input Text  note  ${note}

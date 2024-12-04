@@ -11,7 +11,6 @@ Add A New Valid Article Reference
     Set Last name  Murphy
     Click Button  Add author
     Select Reference Type  article
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Journal  MIT Press
     Set Year  2022
@@ -29,7 +28,6 @@ Add A New Valid Article Reference With Optional (Number)
     Click Button  Add author
     Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction
-    Click Button  Optional fields
     Set Journal  MIT Press
     Set Year  2022
     Set Number  number test
@@ -41,7 +39,6 @@ Add A New Valid Article Reference With Optional (Volume)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Volume  volume test
     Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction
@@ -70,7 +67,6 @@ Add A New Valid Article Reference With Optional (Note)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Note  note test
     Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction

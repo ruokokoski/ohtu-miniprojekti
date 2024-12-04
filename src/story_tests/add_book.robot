@@ -10,7 +10,6 @@ Add a new valid book reference
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -26,7 +25,6 @@ Add a new valid book reference with optional (address)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -39,7 +37,6 @@ Add a new valid book reference with optional (volume)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -52,7 +49,6 @@ Add a new valid book reference with optional (series)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -65,7 +61,6 @@ Add a new valid book reference with optional (edition)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -78,7 +73,6 @@ Add a new valid book reference with optional (month)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -91,7 +85,6 @@ Add a new valid book reference with optional (note)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -104,7 +97,6 @@ Add a new valid book reference with optional (URL)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -117,7 +109,6 @@ Add a new valid book reference with optional (ISBN)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -135,7 +126,6 @@ Add a new partially filled book reference (no number in year)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  -
@@ -147,7 +137,6 @@ Add a new partially filled book reference (year too small)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  0
@@ -159,7 +148,6 @@ Add a new partially filled book reference (title too short)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  a
     Set Publisher  MIT Press
     Set Year  2022
@@ -180,7 +168,6 @@ Add a new partially filled book reference (title too short)
 
 Add a new partially filled book reference (no author submited)
     Click Link  New reference
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -209,7 +196,6 @@ Add a new invalid book reference (year too large)
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  10000
