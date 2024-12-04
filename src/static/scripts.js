@@ -84,7 +84,7 @@ window.addEventListener("load", () => {
 });
 
 function createReferenceFormButtons() {
-    document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
+    //document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
     document.getElementById("new_reference").addEventListener("submit", validateForm);
     document.getElementById("entry_type").addEventListener("change", toggleBook);

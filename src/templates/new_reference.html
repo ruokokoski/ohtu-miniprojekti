@@ -6,6 +6,7 @@ New reference
 
 {% block body %}
 <script>document.getElementById("nav_new_reference").classList.toggle("active")</script>
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-4 align-self-center">
@@ -39,20 +40,21 @@ New reference
                             <option value="article"> article
                             </select>
                     </div>
-                    <div class="form-group">
-                        <label for="title"><b>Title:</b></label>
-                        <input type="text" class="form-control" name="title" required>
-                    </div>      
-                    <div class="form-group">
-                        <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" required min="1000">
-                    </div>
                 </div>
+                
+                <!-- Fields -->
+                
+                <div id="optional_fields" style="display: block">
 
-                <!-- OPTIONAL -->
-
-                <div id="optional_fields" style="display: none">
-                    <div id="book_fields">
+                    <div id="book_fields" style="display: block">
+                        <div class="form-group">
+                            <label for="title"><b>Title:</b></label>
+                            <input type="text" class="form-control" name="title" placeholder="Required" required>
+                        </div>      
+                        <div class="form-group">
+                            <label for="year"><b>Year:</b></label>
+                            <input type="number" class="form-control" style="width: 150px;" id="year" name="year" placeholder="Required" required min="1000">
+                        </div>
                         <div class="form-group">
                             <label for="publisher"><b>Publisher:</b></label>
                             <input type="text" class="form-control" name="publisher" placeholder="Required">
@@ -115,7 +117,7 @@ New reference
                     </div>           
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary" id="toggle_optionals_button">Optional fields</button>
+                    <!-- <button type="button" class="btn btn-primary" id="toggle_optionals_button">Optional fields</button> -->
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
