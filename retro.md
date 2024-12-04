@@ -34,39 +34,31 @@
 
 
 
-miten tehdä taulu
-	määritelly kaikki kentät
-	ylläpiti tietorakennetta sovelluksessa, missä määritellään mitä kenttiä on missäkin viittaustyypissä
-	if book --> nämä kentät
-
-vikat user storyt:
-	sovellus tukee useampia viitetyyppejä
-	acm haun tulosten suoraan liittäminen databaseen
-	   preview (1 vaihtoehto, voi tehdä muutenkin)
-Muista sopia koska pidetään demo
-
-
 # Retrospektiivi 3.12
 
 ### Mad:
 
-- Robot testit tyhjentää tietokannan
+- robot-testit tyhjentävät tietokannan
+
 - stressitasot olivat korkealla terveyshuolten takia
 
 ### Sad:
 
-- robot testit eivät ole stabiileja
+- robot-testit eivät ole stabiileja
 
 ### Glad:
 
 - pysyimme aikataulussa
-- maini "tarpeeksi" ehjä
+
+- main-branch "tarpeeksi" ehjä
+
 - keskustelu on parantunut 
+
 - olemme parantaneet lokaaleja testejä
+
 
 ## Kehitystoimenpiteet
 
-- Robot testien lopuksi lisätään testiviitteitä
-- mainitsee lopputiimille löytämistään bugeista
+- Robot-testien lopuksi lisätään testiviitteitä tietokantaan
 
-
+- mainitaan muille tiimin jäsenille löydetyistä bugeista
