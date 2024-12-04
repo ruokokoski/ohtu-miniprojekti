@@ -105,14 +105,14 @@ def search():
     if results is None or len(results) == 0:
         flash("Search didn't find anything", "warning")
         return redirect("/")
-    
+
     session['search_results'] = results
 
     return render_template("index.html", results=results, database=database)
 
 @app.route("/bibtex/<int:result_id>", methods=["GET"])
 def get_bibtex(result_id):
-    print("Button pressed with result_id", result_id)
+    print("Button pressed with result_id:", result_id)
     search_results = session.get('search_results')
     if not search_results:
         return jsonify({"error": "No search results found in session"}), 404
