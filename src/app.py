@@ -27,7 +27,8 @@ def new():
 
 @app.route('/create_reference', methods=['POST'])
 def reference_creation():
-    return process_reference_form(is_creation=True)
+    field_profiles = Reference.get_all_field_profiles()
+    return process_reference_form(is_creation=True,field_profiles=field_profiles)
 
 @app.route('/references')
 def browse_references():

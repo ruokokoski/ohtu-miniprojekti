@@ -110,6 +110,7 @@ function toggleBook() {
     let article = document.getElementById("article_fields");
     let select = document.getElementById("entry_type");
     if (select.value === "book") {
+        let fields = getfield.profiles
         book.style.display = "block";
         article.style.display = "none";
     }

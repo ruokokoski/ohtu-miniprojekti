@@ -70,6 +70,9 @@ class Reference(db.Model):
     def get_fields_for_entry_type(self):
         """Palauta extrakenttien nimet tämän entry_type:n perusteella"""
         return self.FIELD_PROFILES.get(self.entry_type, [])
+    def get_all_field_profiles(self):
+        """palauttaa sanakirjana kaikki viittaustyypit"""
+        return self.FIELD_PROFILES
 
     def to_dict(self):
         data = {
