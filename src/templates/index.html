@@ -63,6 +63,9 @@ Home
                                     {% endif %}
                                 </td>
                                 {% endif %}
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" onclick="handleBibtexButtonClick('{{ result.result_id }}')">BibTeX</button>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -71,4 +74,21 @@ Home
         </div>
     {% endif %}
 </div>
+
+<script>
+    const handleBibtexButtonClick = (resultId) => {
+        fetch(`/bibtex/${encodeURIComponent(resultId)}`)
+            .then(response => {
+                if (response.ok) {
+                    console.log("Button pressed with resultId:", resultId);
+                } else {
+                    console.error("Failed to fetch BibTeX:", response.status);
+                }
+            })
+            .catch(error => {
+                console.error("Error pressing button:", error);
+            });
+    };
+</script>
+
 {% endblock %}

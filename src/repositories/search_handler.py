@@ -87,19 +87,25 @@ def fetch_acm_search_results(search_variable):
         return None
 
     time.sleep(3)
-    results = get_results(soup, 10)
+    results = get_results(soup, 1) # kuinka monta listataan
     if not results:
         driver.quit()
         return None
+    
+    #debug:
+    #html = driver.page_source
+    #print(f"Fetched HTML: {html}")
+    print(f"Fetched Results: {results}")
 
     result_data_list = []
-    for result in results:
+    for index, result in enumerate(results):
         title, title_tag = get_title(result)
         year = get_year(result)
         doi_link, pdf_url = get_doi_link(title_tag)
         authors = get_authors(result)
 
         result_data = {
+            "result_id": index,
             "title": title,
             "authors": authors,
             "year": year,
@@ -110,6 +116,7 @@ def fetch_acm_search_results(search_variable):
 
     driver.quit()
     return result_data_list
+
 
 def initialize_webdriver():
     options = webdriver.ChromeOptions()

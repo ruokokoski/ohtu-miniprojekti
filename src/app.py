@@ -1,7 +1,7 @@
 from io import BytesIO
 from sqlalchemy.exc import SQLAlchemyError
 
-from flask import render_template, redirect, request, flash, jsonify, send_file
+from flask import render_template, redirect, request, flash, jsonify, send_file, Response
 
 from db_helper import reset_db
 from config import app, test_env
@@ -102,20 +102,36 @@ def search():
     except ValueError as e:
         flash(str(e), "danger")
         return redirect("/")
-    '''
-    if database == "ACM":
-        results = fetch_acm_search_results(search_query)
-    elif database == "Google Scholar":
-        results = fetch_google_scholar_results(search_query)
-    else:
-        flash(f"Tuntematon tietokanta: {database}", "danger")
-        return redirect("/")
-    '''
     if results is None or len(results) == 0:
         flash("Search didn't find anything", "warning")
         return redirect("/")
 
     return render_template("index.html", results=results, database=database)
+
+@app.route("/bibtex/<int:result_id>", methods=["GET"])
+def get_bibtex(result_id):
+    print("Button pressed with result_id", result_id)
+    return '', 204
+
+'''
+@app.route("/bibtex/<int:result_id>", methods=["GET"])
+def get_bibtex(result_id):
+    try:
+        bibtex_entry = fetch_bibtex_entry(result_id)
+    except ValueError as e:
+        flash(str(e), "danger")
+        return redirect("/")
+    except Exception as e:
+        flash(f"Unexpected error: {e}", "danger")
+        return redirect("/")
+
+    if bibtex_entry is None:
+        flash("BibTeX entry not found", "warning")
+        return redirect("/")
+    
+    # Return the BibTeX entry as plain text
+    return Response(bibtex_entry, mimetype="text/plain")
+'''
 
 if test_env:
     @app.route("/reset_db")
