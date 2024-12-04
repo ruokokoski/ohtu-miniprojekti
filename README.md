@@ -1,5 +1,7 @@
 # Ohjelmistotuotanto - Miniprojekti
 
+Main branch: [![CI](https://github.com/ruokokoski/ohtu-miniprojekti/actions/workflows/main.yml/badge.svg)](https://github.com/ruokokoski/ohtu-miniprojekti/actions/workflows/main.yml)
+
 [![GHA_workflow_badge](https://github.com/ruokokoski/ohtu-miniprojekti/workflows/CI/badge.svg)](https://github.com/ruokokoski/ohtu-miniprojekti/actions)
 [![codecov](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti/graph/badge.svg?token=HF7SFV0DV0)](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti)
 
