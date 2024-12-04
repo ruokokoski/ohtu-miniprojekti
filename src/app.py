@@ -1,7 +1,7 @@
 from io import BytesIO
 from sqlalchemy.exc import SQLAlchemyError
 
-from flask import render_template, redirect, request, flash, jsonify, send_file, Response
+from flask import render_template, redirect, request, flash, jsonify, send_file, session, Response
 
 from db_helper import reset_db
 from config import app, test_env
@@ -105,33 +105,24 @@ def search():
     if results is None or len(results) == 0:
         flash("Search didn't find anything", "warning")
         return redirect("/")
+    
+    session['search_results'] = results
 
     return render_template("index.html", results=results, database=database)
 
 @app.route("/bibtex/<int:result_id>", methods=["GET"])
 def get_bibtex(result_id):
     print("Button pressed with result_id", result_id)
-    return '', 204
+    search_results = session.get('search_results')
+    if not search_results:
+        return jsonify({"error": "No search results found in session"}), 404
 
-'''
-@app.route("/bibtex/<int:result_id>", methods=["GET"])
-def get_bibtex(result_id):
     try:
-        bibtex_entry = fetch_bibtex_entry(result_id)
-    except ValueError as e:
-        flash(str(e), "danger")
-        return redirect("/")
-    except Exception as e:
-        flash(f"Unexpected error: {e}", "danger")
-        return redirect("/")
-
-    if bibtex_entry is None:
-        flash("BibTeX entry not found", "warning")
-        return redirect("/")
-    
-    # Return the BibTeX entry as plain text
-    return Response(bibtex_entry, mimetype="text/plain")
-'''
+        bibtex_data = search_results[result_id]["bibtex"]
+    except (IndexError, KeyError):
+        return jsonify({"error": "Invalid result_id or BibTeX data not available"}), 404
+    print(f"BibTeX data: {bibtex_data}")
+    return Response(bibtex_data, mimetype="application/x-bibtex")
 
 if test_env:
     @app.route("/reset_db")
