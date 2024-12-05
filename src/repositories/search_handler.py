@@ -88,15 +88,10 @@ def fetch_acm_search_results(search_variable):
         return None
 
     time.sleep(3)
-    results = get_results(soup, 10) # kuinka monta listataan
+    results = get_results(soup, 10)
     if not results:
         driver.quit()
         return None
-
-    #debug:
-    #html = driver.page_source
-    #print(f"Fetched HTML: {html}")
-    #print(f"Fetched Results: {results}")
 
     result_data_list = [process_result(result, index) for index, result in enumerate(results)]
 
@@ -107,7 +102,7 @@ def process_result(result, index):
     year = get_year(result)
     doi_link, pdf_url = get_doi_link(title_tag)
     authors = get_authors(result)
-    bibtex = fetch_bibtex(doi_link)
+    #bibtex = fetch_bibtex(doi_link)
 
     return {
         "result_id": index,
@@ -116,7 +111,7 @@ def process_result(result, index):
         "year": year,
         "doi_link": doi_link,
         "pdf_url": pdf_url,
-        "bibtex": bibtex,
+        "bibtex": None,
     }
 
 def fetch_bibtex(doi_link):

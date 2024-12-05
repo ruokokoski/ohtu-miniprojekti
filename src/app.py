@@ -5,7 +5,7 @@ from flask import render_template, redirect, request, flash, jsonify, session, s
 
 from db_helper import reset_db
 from config import app, test_env
-from repositories.search_handler import fetch_search_results
+from repositories.search_handler import fetch_search_results, fetch_bibtex
 from repositories.reference_repository import (
     delete_reference,
     list_references_as_bibtex,
@@ -115,16 +115,17 @@ def from_search_new_reference(result_id):
 
     results = session.get('search_results', None)
 
-    # Etsitään valittu tulos listasta
-    selected_result = None
-    for result in results:
-        if result['result_id'] == result_id:
-            selected_result = result
-            break
+    selected_result = next((result for result in results if result['result_id'] == result_id), None)
+    if not selected_result:
+        return "Result not found", 404
 
-    # Jos Bibtex-tietoja löytyy, käsitellään se
-    if 'bibtex' in selected_result:
-        bibtex_data = selected_result['bibtex']
+
+    if not selected_result.get('bibtex') and selected_result.get('doi_link'):
+        selected_result['bibtex'] = fetch_bibtex(selected_result['doi_link'])
+        session['search_results'] = results
+
+    bibtex_data = selected_result.get('bibtex')
+    if bibtex_data:
         reference = bibtex_to_dict(bibtex_data)
         entry_type = reference['entry_type']
         field_profiles = Reference.FIELD_PROFILES
