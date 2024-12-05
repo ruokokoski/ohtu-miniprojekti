@@ -126,8 +126,8 @@ def get_bibtex(result_id):
     print(f"BibTeX data: {bibtex_data}")
 
     if request.method == "POST":
-        encoded_bibtex = quote(bibtex_data)
-        redirect_url = url_for("from_search_new_reference", bibtex=encoded_bibtex)
+        #encoded_bibtex = quote(bibtex_data)
+        redirect_url = url_for("from_search_new_reference", bibtex=bibtex_data)
         print(f"Redirecting to: {redirect_url}")
         return redirect(redirect_url)
 
