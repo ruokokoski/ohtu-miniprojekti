@@ -280,6 +280,7 @@ function openPopupFromServer() {
 
 // Open popup
 function openAddReferencePopup() {
+    console.log("Opening popup...");
     document.getElementById("addReferencePopup").style.display = "block";
     document.body.classList.add("popup-open");
 }

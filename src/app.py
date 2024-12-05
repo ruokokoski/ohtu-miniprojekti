@@ -149,6 +149,7 @@ def from_search_new_reference():
     print(f'reference: {reference}')
     entry_type = reference['entry_type']
     field_profiles = Reference.FIELD_PROFILES
+    print(f'entry_type: {entry_type}\nfield_profiles: {field_profiles}')
 
     if not entry_type or entry_type not in field_profiles:
         error_message = (
