@@ -171,7 +171,7 @@ function showFlashMessage(message) {
 // This function opens the popup from the server and adds it to the page.
 function openPopupFromServer() {
     // Send an AJAX request to load the popup content
-    fetch('/new_search_reference_popup')
+    fetch('/popup_new_search_reference')
         .then(response => response.text())
         .then(data => {
             // Insert the fetched content into the body

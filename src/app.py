@@ -116,7 +116,7 @@ def search():
 
     return render_template("index.html", results=results, database=database)
 
-@app.route("/new_search_reference_popup", methods=["GET", "POST"])
+@app.route("/popup_new_search_reference", methods=["GET", "POST"])
 def from_search_new_reference():
     if request.method == "POST":
         return process_reference_form(is_creation=True)
@@ -141,13 +141,13 @@ def from_search_new_reference():
             f"{entry_type.capitalize()} is unknown entry type. "
             "Please add the reference manually."
         )
-        return render_template("new_reference_popup.html",
+        return render_template("popup_new_search_reference.html",
                                reference=reference,
                                entry_type=entry_type,
                                fields=field_profiles,
                                error_message=error_message)
 
-    return render_template("new_reference_popup.html",
+    return render_template("popup_new_search_reference.html",
         reference=reference,
         entry_type=entry_type,
         fields=field_profiles
