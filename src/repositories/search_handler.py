@@ -155,12 +155,18 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
+<<<<<<< HEAD
     generate_human_like_delay(2.5, 4.0)
     results = get_results(soup, 10)
+=======
+    time.sleep(3)
+    results = get_results(soup, 10) # kuinka monta listataan
+>>>>>>> 86fcbba (Connect bibtex from search to database)
     if not results:
         driver.quit()
         return None
 
+<<<<<<< HEAD
     result_data_list = [process_result(result, index) for index, result in enumerate(results)]
 
     return result_data_list
@@ -192,11 +198,56 @@ def fetch_bibtex(doi_link):
 
         print(f"Failed to fetch BibTeX for DOI {doi}. ")
         return None
+=======
+    #debug:
+    #html = driver.page_source
+    #print(f"Fetched HTML: {html}")
+    #print(f"Fetched Results: {results}")
+
+    result_data_list = []
+    for index, result in enumerate(results):
+        title, title_tag = get_title(result)
+        year = get_year(result)
+        doi_link, pdf_url = get_doi_link(title_tag)
+        doi = doi_link.split("https://dl.acm.org/doi/")[-1]
+        authors = get_authors(result)
+        bibtex = fetch_bibtex(doi)
+        #print(f"Bibtex: {bibtex}")
+
+        result_data = {
+            "result_id": index,
+            "title": title,
+            "authors": authors,
+            "year": year,
+            "doi_link": doi_link,
+            "pdf_url": pdf_url,
+            "bibtex": bibtex
+        }
+        result_data_list.append(result_data)
+
+    driver.quit()
+    return result_data_list
+
+def fetch_bibtex(doi):
+    url = f"https://doi.org/{doi}"
+    headers = {"Accept": "application/x-bibtex"}
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return response.text
+        else:
+            print(f"Failed to fetch BibTeX for DOI {doi}. ")
+            return None
+>>>>>>> 86fcbba (Connect bibtex from search to database)
     except requests.RequestException as e:
         print(f"Error fetching BibTeX for DOI {doi}: {e}")
         return None
 
+<<<<<<< HEAD
 def initialize_webdriver(headless):
+=======
+def initialize_webdriver():
+>>>>>>> 86fcbba (Connect bibtex from search to database)
     options = webdriver.ChromeOptions()
 
     if headless:
