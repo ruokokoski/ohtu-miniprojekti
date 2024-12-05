@@ -31,12 +31,12 @@
                             <td>{{ reference.year }}</td>
                             <td>
                                 <a href="/edit_reference/{{ reference.citation_key }}">
-                                    <button type="button" name="editbutton" class="btn btn-warning">Edit</button>
+                                    <button type="button" name="editbutton" class="btn btn-edit">Edit</button>
                                 </a>
                             </td>
                             <td>
                                 <form action="/delete_reference/{{ reference.citation_key }}" method="POST">
-                                    <button type="submit" class="btn btn-danger"
+                                    <button type="submit" class="btn btn-delete"
                                             onclick="return confirm('Are you sure you want to delete reference?')">Delete</button>
                                 </form>
                             </td>
