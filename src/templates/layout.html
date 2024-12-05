@@ -12,18 +12,18 @@
         <header class="header">
             <h1>BibTeX-reference manager</h1>
         </header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <ul class="navbar-nav mr-auto">
+        <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item" id="nav_home">
-                  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item" id="nav_references">
-                  <a class="nav-link" href="/references">References</a>
+                    <a class="nav-link" href="/references">References</a>
                 </li>
                 <li class="nav-item" id="nav_new_reference">
                     <a class="nav-link" href="/new_reference">New reference</a>
                 </li>
-              </ul>
+            </ul>
         </nav>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

@@ -88,7 +88,7 @@ def fetch_acm_search_results(search_variable):
         return None
 
     time.sleep(3)
-    results = get_results(soup, 10)
+    results = get_results(soup, 10) # kuinka monta listataan
     if not results:
         driver.quit()
         return None
@@ -106,7 +106,7 @@ def process_result(result, index):
     year = get_year(result)
     doi_link, pdf_url = get_doi_link(title_tag)
     authors = get_authors(result)
-    #bibtex = fetch_bibtex(doi_link)
+    bibtex = fetch_bibtex(doi_link)
 
     return {
         "result_id": index,
@@ -115,11 +115,10 @@ def process_result(result, index):
         "year": year,
         "doi_link": doi_link,
         "pdf_url": pdf_url,
-        #"bibtex": bibtex,
+        "bibtex": bibtex,
     }
 
 def fetch_bibtex(doi_link):
-    #doi = doi_link.split("https://dl.acm.org/doi/")[-1]
     doi = doi_link.rsplit('https://dl.acm.org/doi/', maxsplit=1)[-1]
     url = f"https://doi.org/{doi}"
     headers = {"Accept": "application/x-bibtex"}

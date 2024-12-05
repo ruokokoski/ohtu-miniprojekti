@@ -2,8 +2,7 @@ from io import BytesIO
 from urllib.parse import quote, unquote
 from sqlalchemy.exc import SQLAlchemyError
 
-from flask import (render_template, redirect, request, flash, jsonify, send_file,
-                   session, Response, url_for)
+from flask import render_template, redirect, request, flash, jsonify, session, send_file
 
 from db_helper import reset_db
 from config import app, test_env
@@ -106,67 +105,51 @@ def search():
     if results is None or len(results) == 0:
         flash("Search didn't find anything", "warning")
         return redirect("/")
-
     session['search_results'] = results
-
     return render_template("index.html", results=results, database=database)
 
-@app.route("/bibtex/<int:result_id>", methods=["GET", "POST"])
-def get_bibtex(result_id):
-    print(f"Button pressed with result_id: {result_id}\n")
-    search_results = session.get('search_results')
-    if not search_results:
-        return jsonify({"error": "No search results found in session"}), 404
 
-    try:
-        doi_link = search_results[result_id]["doi_link"]
-        bibtex_data = fetch_bibtex(doi_link)
-    except (IndexError, KeyError):
-        return jsonify({"error": "Invalid result_id or BibTeX data not available"}), 404
-    print(f"BibTeX data: {bibtex_data}")
-
-    if request.method == "POST":
-        #encoded_bibtex = quote(bibtex_data)
-        redirect_url = url_for("from_search_new_reference", bibtex=bibtex_data)
-        print(f"Redirecting to: {redirect_url}")
-        return redirect(redirect_url)
-
-    return jsonify({"bibtex": bibtex_data}), 200
-
-@app.route("/popup_new_search_reference", methods=["GET", "POST"])
-def from_search_new_reference():
-    bibtex = request.args.get('bibtex')
-    print(f'Bibtex in popup route: {bibtex}')
-    bibtex_decoded = unquote(bibtex)
-    print(f'Decoded in popup route: {bibtex_decoded}')
-    if not bibtex:
-        return "No BibTeX data received.", 400
-    
+@app.route("/popup_new_search_reference/<int:result_id>", methods=["GET", "POST"])
+def from_search_new_reference(result_id):
     if request.method == "POST":
         return process_reference_form(is_creation=True)
 
-    reference = bibtex_to_dict(bibtex_decoded)
-    print(f'reference: {reference}')
-    entry_type = reference['entry_type']
-    field_profiles = Reference.FIELD_PROFILES
-    print(f'entry_type: {entry_type}\nfield_profiles: {field_profiles}')
+    results = session.get('search_results', None)
 
-    if not entry_type or entry_type not in field_profiles:
-        error_message = (
-            f"{entry_type.capitalize()} is unknown entry type. "
-            "Please add the reference manually."
-        )
-        return render_template("popup_new_search_reference.html",
+    # Etsitään valittu tulos listasta
+    selected_result = None
+    for result in results:
+        if result['result_id'] == result_id:
+            selected_result = result
+            break
+
+    # Jos Bibtex-tietoja löytyy, käsitellään se
+    if 'bibtex' in selected_result:
+        bibtex_data = selected_result['bibtex']
+        reference = bibtex_to_dict(bibtex_data)
+        entry_type = reference['entry_type']
+        field_profiles = Reference.FIELD_PROFILES
+
+        # Jos Bibtex-tietueessa on tuntematon entry_type, näytetään virhe
+        if not entry_type or entry_type not in field_profiles:
+            error_message = (
+                f"{entry_type.capitalize()} is unknown entry type. "
+                "Please add the reference manually."
+            )
+
+            return render_template("popup_new_search_reference.html",
+                                   reference=reference,
+                                   entry_type=entry_type,
+                                   fields=field_profiles,
+                                   result_id=result_id,
+                                   error_message=error_message)
+
+    return render_template("popup_new_search_reference.html",
                                reference=reference,
                                entry_type=entry_type,
                                fields=field_profiles,
-                               error_message=error_message)
+                               result_id=result_id)
 
-    return render_template("popup_new_search_reference.html",
-        reference=reference,
-        entry_type=entry_type,
-        fields=field_profiles
-    )
 
 if test_env:
     @app.route("/reset_db")
