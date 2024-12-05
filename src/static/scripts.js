@@ -112,7 +112,7 @@ function toggleBook() {
     let conference = document.getElementById("conference_fields");
     let inbook = document.getElementById("inbook_fields");
     let incollection = document.getElementById("incollection_fields");
-    let inproceesings = document.getElementById("inproceesings_fields");
+    let inproceedings = document.getElementById("inproceedings_fields");
     let manual = document.getElementById("manual_fields");
     let mastersthesis = document.getElementById("mastersthesis_fields");
     let misc = document.getElementById("misc_fields");

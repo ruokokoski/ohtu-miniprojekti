@@ -22,8 +22,7 @@ def index():
 
 @app.route("/new_reference")
 def new():
-    field_profiles = Reference.FIELD_PROFILES
-    return render_template("new_reference.html", field_profiles=field_profiles)
+    return render_template("new_reference.html")
 
 @app.route('/create_reference', methods=['POST'])
 def reference_creation():
