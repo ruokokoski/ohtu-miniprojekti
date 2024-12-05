@@ -165,5 +165,34 @@ function showFlashMessage(message) {
 
     setTimeout(() => {
         flashMessage.remove();
-    }, 15000);
+    }, 5000);
+}
+
+// This function opens the popup from the server and adds it to the page.
+function openPopupFromServer() {
+    // Send an AJAX request to load the popup content
+    fetch('/new_search_reference_popup')
+        .then(response => response.text())
+        .then(data => {
+            // Insert the fetched content into the body
+            document.body.insertAdjacentHTML('beforeend', data);
+
+            // Open the popup after the content is added
+            openAddReferencePopup();
+        })
+        .catch(error => {
+            console.error('Error loading popup content:', error);
+        });
+}
+
+// Open popup
+function openAddReferencePopup() {
+    document.getElementById("addReferencePopup").style.display = "block";
+    document.body.classList.add("popup-open");
+}
+
+// Close popup
+function closeAddReferencePopup() {
+    document.getElementById("addReferencePopup").style.display = "none";
+    document.body.classList.remove("popup-open");
 }

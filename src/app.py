@@ -10,14 +10,14 @@ from repositories.reference_repository import (
     delete_reference,
     list_references_as_bibtex,
     list_references_as_dict,
-    get_reference_by_key
+    get_reference_by_key,
+    bibtex_to_dict
 )
 from util import process_reference_form
 from entities.reference import Reference
 
 @app.route("/")
 def index():
-    #references = get_references()
     return render_template("index.html")
 
 @app.route("/new_reference")
@@ -47,7 +47,6 @@ def edit_reference(citation_key):
         authors=authors,
         extra_fields=reference.extra_fields
         )
-
 
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
@@ -116,6 +115,43 @@ def search():
         return redirect("/")
 
     return render_template("index.html", results=results, database=database)
+
+@app.route("/new_search_reference_popup", methods=["GET", "POST"])
+def from_search_new_reference():
+    if request.method == "POST":
+        return process_reference_form(is_creation=True)
+
+    bibtex = """
+        @conference{sample2024,
+        author = {Doe, Tina and Smith, Peter and Baker, Alice},
+        title = {Sample Paper},
+        editor = {Sample Editor},
+        year = {2020},
+        month = {10},
+        pages = {100-110},
+        organization = {Sample organization}
+        }
+        """  # Example or load it from somewhere
+    reference = bibtex_to_dict(bibtex)
+    entry_type = reference['entry_type']
+    field_profiles = Reference.FIELD_PROFILES
+
+    if not entry_type or entry_type not in field_profiles:
+        error_message = (
+            f"{entry_type.capitalize()} is unknown entry type. "
+            "Please add the reference manually."
+        )
+        return render_template("new_reference_popup.html",
+                               reference=reference,
+                               entry_type=entry_type,
+                               fields=field_profiles,
+                               error_message=error_message)
+
+    return render_template("new_reference_popup.html",
+        reference=reference,
+        entry_type=entry_type,
+        fields=field_profiles
+    )
 
 if test_env:
     @app.route("/reset_db")
