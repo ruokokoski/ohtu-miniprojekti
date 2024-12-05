@@ -106,18 +106,35 @@ function toggleOptionals() {
 }
 
 function toggleBook() {
-    let book = document.getElementById("book_fields");
     let article = document.getElementById("article_fields");
+    let book = document.getElementById("book_fields");
+    let booklet = document.getElementById("booklet_fields");
+    let conference = document.getElementById("conference_fields");
+    let inbook = document.getElementById("inbook_fields");
+    let incollection = document.getElementById("incollection_fields");
+    let inproceesings = document.getElementById("inproceesings_fields");
+    let manual = document.getElementById("manual_fields");
+    let mastersthesis = document.getElementById("mastersthesis_fields");
+    let misc = document.getElementById("misc_fields");
+    let phdthesis = document.getElementById("phdthesis_fields");
+    let proceedings = document.getElementById("proceedings_fields");
+    let techreport = document.getElementById("techreport_fields");
+    let unpublished = document.getElementById("unpublished_fields");
+
     let select = document.getElementById("entry_type");
     if (select.value === "book") {
-        let fields = getfield.profiles
         book.style.display = "block";
-        article.style.display = "none";
     }
-    else if (select.value === "article") {
-        book.style.display = "none";
+    else{
+        book.style.display = "none"
+    }
+    if (select.value === "article") {
         article.style.display = "block";
     }
+    else{
+        article.style.display = "none"
+    }
+    
 }
 
 function addNewAuthor() {
