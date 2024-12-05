@@ -24,6 +24,27 @@
     border-color: #055f7a;
     border-radius: 8px;
 }
+/* Ulkoasu extrafields-osalle */
+.extrafields-wrapper {
+    display: flex;
+    justify-content: left;
+    overflow-wrap: break-word;
+}
+
+/* Lista sarakkeisiin */
+.extrafields-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    column-count: 3;
+    column-gap: 40px;
+    text-align: left;
+}
+
+/* Jokainen listan elementti */
+.extrafields-list li {
+    margin-bottom: 8px;
+}
 
 /* Popup */
 .popup {
