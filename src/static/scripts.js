@@ -77,48 +77,47 @@ const hideFlashMessage = () => {
 }
 window.addEventListener("load", hideFlashMessage);
 
+/*
 window.addEventListener("load", () => {
     document.getElementById('search_form').onsubmit = () => {
         document.getElementById('loading_message').style.display = 'block';
     };
 });
+*/
 
-function createReferenceFormButtons() {
-    //document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
+function createReferenceFormListeners() {
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
     document.getElementById("new_reference").addEventListener("submit", validateForm);
-    document.getElementById("entry_type").addEventListener("change", toggleBook);
+    document.getElementById("entry_type").addEventListener("change", createInputFields);
 };
 
-function toggleOptionals() {
-    toggleBook();
-    var opt = document.getElementById("optional_fields");
-    var btn = document.getElementById("toggle_optionals_button");
+function createInputFields() {
+    const fieldProfiles = JSON.parse(document.getElementById("field_profiles").textContent);
+    const entryType = document.getElementById("entry_type").value;
+    const fields = fieldProfiles[entryType] || [];
+    const container = document.getElementById("optional_fields");
 
-    if (opt.style.display === "none") {
-        opt.style.display = "block";
-        btn.textContent = "Hide optionals";
-    }
-    else {
-        opt.style.display = "none";
-        btn.textContent = "Show optionals";
-    }
-}
+    container.innerHTML = "";
 
-function toggleBook() {
-    let book = document.getElementById("book_fields");
-    let article = document.getElementById("article_fields");
-    let select = document.getElementById("entry_type");
-    if (select.value === "book") {
-        let fields = getfield.profiles
-        book.style.display = "block";
-        article.style.display = "none";
-    }
-    else if (select.value === "article") {
-        book.style.display = "none";
-        article.style.display = "block";
-    }
-}
+    fields.forEach(field => {
+        const div = document.createElement("div");
+        div.className = "form-group";
+
+        const label = document.createElement("label");
+        label.innerHTML = `<b>${field}:</b>`;
+        div.appendChild(label);
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "form-control"
+        input.id = field;
+        input.name = field;
+        div.appendChild(input);
+
+        container.appendChild(div);
+
+    });
+}    
 
 function addNewAuthor() {
     var firstName = document.getElementById("first_name");
