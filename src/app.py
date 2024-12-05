@@ -132,25 +132,21 @@ def get_bibtex(result_id):
         return redirect(redirect_url)
 
     return jsonify({"bibtex": bibtex_data}), 200
-    #return Response(bibtex_data, mimetype="application/x-bibtex")
 
 @app.route("/popup_new_search_reference", methods=["GET", "POST"])
 def from_search_new_reference():
+    bibtex = request.args.get('bibtex')
+    print(f'Bibtex in popup route: {bibtex}')
+    bibtex_decoded = unquote(bibtex)
+    print(f'Decoded in popup route: {bibtex_decoded}')
+    if not bibtex:
+        return "No BibTeX data received.", 400
+    
     if request.method == "POST":
         return process_reference_form(is_creation=True)
 
-    bibtex = """
-        @conference{sample2024,
-        author = {Doe, Tina and Smith, Peter and Baker, Alice},
-        title = {Sample Paper},
-        editor = {Sample Editor},
-        year = {2020},
-        month = {10},
-        pages = {100-110},
-        organization = {Sample organization}
-        }
-        """  # Example or load it from somewhere
-    reference = bibtex_to_dict(bibtex)
+    reference = bibtex_to_dict(bibtex_decoded)
+    print(f'reference: {reference}')
     entry_type = reference['entry_type']
     field_profiles = Reference.FIELD_PROFILES
 
