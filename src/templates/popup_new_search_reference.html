@@ -11,7 +11,7 @@
             {% else %}
             <!-- Lomake näkyy vain, jos ei ole virhettä -->
             <h2>Add new reference</h2>
-            <form action="/popup_new_search_reference" method="post">
+            <form action="/popup_new_search_reference/{{ result_id }}" method="post">
                 <input type="hidden" name="entry_type" value="{{ entry_type }}">
                 
                 <div class="form-group">

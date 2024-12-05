@@ -1,5 +1,6 @@
 import time
 from urllib.parse import urlencode
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -87,29 +88,53 @@ def fetch_acm_search_results(search_variable):
         return None
 
     time.sleep(3)
-    results = get_results(soup, 10)
+    results = get_results(soup, 10) # kuinka monta listataan
     if not results:
         driver.quit()
         return None
 
+    #debug:
+    #html = driver.page_source
+    #print(f"Fetched HTML: {html}")
+    #print(f"Fetched Results: {results}")
+
     result_data_list = []
-    for result in results:
+    for index, result in enumerate(results):
         title, title_tag = get_title(result)
         year = get_year(result)
         doi_link, pdf_url = get_doi_link(title_tag)
+        doi = doi_link.split("https://dl.acm.org/doi/")[-1]
         authors = get_authors(result)
+        bibtex = fetch_bibtex(doi)
+        #print(f"Bibtex: {bibtex}")
 
         result_data = {
+            "result_id": index,
             "title": title,
             "authors": authors,
             "year": year,
             "doi_link": doi_link,
-            "pdf_url": pdf_url
+            "pdf_url": pdf_url,
+            "bibtex": bibtex
         }
         result_data_list.append(result_data)
 
     driver.quit()
     return result_data_list
+
+def fetch_bibtex(doi):
+    url = f"https://doi.org/{doi}"
+    headers = {"Accept": "application/x-bibtex"}
+    try:
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return response.text
+        else:
+            print(f"Failed to fetch BibTeX for DOI {doi}. ")
+            return None
+    except requests.RequestException as e:
+        print(f"Error fetching BibTeX for DOI {doi}: {e}")
+        return None
 
 def initialize_webdriver():
     options = webdriver.ChromeOptions()

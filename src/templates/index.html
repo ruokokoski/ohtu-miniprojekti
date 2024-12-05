@@ -40,7 +40,6 @@ Home
             <div class="col-10">
                 <h5 class="text-left">Top 10 results from database: {{ database }}</h5>
                 <table class="table table-bordered">
-                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Author(s)</th>
@@ -63,6 +62,7 @@ Home
                                     {% endif %}
                                 </td>
                                 {% endif %}
+                                <td><button class="btn btn-primary btn-sm ml-2" onclick="openPopupFromServer('{{ result.result_id }}')">BibTeX</button></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -71,8 +71,5 @@ Home
         </div>
     {% endif %}
 </div>
-
-<!-- This button will trigger the popup via AJAX -->
-<button class="btn btn-primary" onclick="openPopupFromServer()">TEST Open Reference Popup</button>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 from io import BytesIO
 from sqlalchemy.exc import SQLAlchemyError
 
-from flask import render_template, redirect, request, flash, jsonify, send_file
+from flask import render_template, redirect, request, flash, jsonify, session, send_file
 
 from db_helper import reset_db
 from config import app, test_env
@@ -101,57 +101,54 @@ def search():
     except ValueError as e:
         flash(str(e), "danger")
         return redirect("/")
-    '''
-    if database == "ACM":
-        results = fetch_acm_search_results(search_query)
-    elif database == "Google Scholar":
-        results = fetch_google_scholar_results(search_query)
-    else:
-        flash(f"Tuntematon tietokanta: {database}", "danger")
-        return redirect("/")
-    '''
     if results is None or len(results) == 0:
         flash("Search didn't find anything", "warning")
         return redirect("/")
-
+    session['search_results'] = results
     return render_template("index.html", results=results, database=database)
 
-@app.route("/popup_new_search_reference", methods=["GET", "POST"])
-def from_search_new_reference():
+
+@app.route("/popup_new_search_reference/<int:result_id>", methods=["GET", "POST"])
+def from_search_new_reference(result_id):
     if request.method == "POST":
         return process_reference_form(is_creation=True)
 
-    bibtex = """
-        @conference{sample2024,
-        author = {Doe, Tina and Smith, Peter and Baker, Alice},
-        title = {Sample Paper},
-        editor = {Sample Editor},
-        year = {2020},
-        month = {10},
-        pages = {100-110},
-        organization = {Sample organization}
-        }
-        """  # Example or load it from somewhere
-    reference = bibtex_to_dict(bibtex)
-    entry_type = reference['entry_type']
-    field_profiles = Reference.FIELD_PROFILES
+    results = session.get('search_results', None)
 
-    if not entry_type or entry_type not in field_profiles:
-        error_message = (
-            f"{entry_type.capitalize()} is unknown entry type. "
-            "Please add the reference manually."
-        )
-        return render_template("popup_new_search_reference.html",
+    # Etsitään valittu tulos listasta
+    selected_result = None
+    for result in results:
+        if result['result_id'] == result_id:
+            selected_result = result
+            break
+
+    # Jos Bibtex-tietoja löytyy, käsitellään se
+    if 'bibtex' in selected_result:
+        bibtex_data = selected_result['bibtex']
+        reference = bibtex_to_dict(bibtex_data)
+        entry_type = reference['entry_type']
+        field_profiles = Reference.FIELD_PROFILES
+
+        # Jos Bibtex-tietueessa on tuntematon entry_type, näytetään virhe
+        if not entry_type or entry_type not in field_profiles:
+            error_message = (
+                f"{entry_type.capitalize()} is unknown entry type. "
+                "Please add the reference manually."
+            )
+
+            return render_template("popup_new_search_reference.html",
+                                   reference=reference,
+                                   entry_type=entry_type,
+                                   fields=field_profiles,
+                                   result_id=result_id,
+                                   error_message=error_message)
+
+    return render_template("popup_new_search_reference.html",
                                reference=reference,
                                entry_type=entry_type,
                                fields=field_profiles,
-                               error_message=error_message)
+                               result_id=result_id)
 
-    return render_template("popup_new_search_reference.html",
-        reference=reference,
-        entry_type=entry_type,
-        fields=field_profiles
-    )
 
 if test_env:
     @app.route("/reset_db")

@@ -168,30 +168,30 @@ function showFlashMessage(message) {
     }, 5000);
 }
 
-// This function opens the popup from the server and adds it to the page.
-function openPopupFromServer() {
-    // Send an AJAX request to load the popup content
-    fetch('/popup_new_search_reference')
+// Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
+function openPopupFromServer(result_id) {
+    // Lähetetään AJAX-pyyntö, jossa mukana result_id
+    fetch('/popup_new_search_reference/' + result_id)
         .then(response => response.text())
         .then(data => {
-            // Insert the fetched content into the body
+            // Lisää haettu sisältö sivulle
             document.body.insertAdjacentHTML('beforeend', data);
 
-            // Open the popup after the content is added
+            // Avaa popup sen jälkeen, kun sisältö on lisätty
             openAddReferencePopup();
         })
         .catch(error => {
-            console.error('Error loading popup content:', error);
+            console.error('Virhe popupin lataamisessa:', error);
         });
 }
 
-// Open popup
+// Avaa popup
 function openAddReferencePopup() {
     document.getElementById("addReferencePopup").style.display = "block";
     document.body.classList.add("popup-open");
 }
 
-// Close popup
+// Sulje popup
 function closeAddReferencePopup() {
     document.getElementById("addReferencePopup").style.display = "none";
     document.body.classList.remove("popup-open");
