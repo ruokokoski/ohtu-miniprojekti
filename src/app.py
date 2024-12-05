@@ -20,7 +20,6 @@ from entities.reference import Reference
 
 @app.route("/")
 def index():
-    #references = get_references()
     return render_template("index.html")
 
 @app.route("/new_reference")
@@ -50,7 +49,6 @@ def edit_reference(citation_key):
         authors=authors,
         extra_fields=reference.extra_fields
         )
-
 
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
@@ -136,6 +134,42 @@ def get_bibtex(result_id):
     return jsonify({"bibtex": bibtex_data}), 200
     #return Response(bibtex_data, mimetype="application/x-bibtex")
 
+@app.route("/popup_new_search_reference", methods=["GET", "POST"])
+def from_search_new_reference():
+    if request.method == "POST":
+        return process_reference_form(is_creation=True)
+
+    bibtex = """
+        @conference{sample2024,
+        author = {Doe, Tina and Smith, Peter and Baker, Alice},
+        title = {Sample Paper},
+        editor = {Sample Editor},
+        year = {2020},
+        month = {10},
+        pages = {100-110},
+        organization = {Sample organization}
+        }
+        """  # Example or load it from somewhere
+    reference = bibtex_to_dict(bibtex)
+    entry_type = reference['entry_type']
+    field_profiles = Reference.FIELD_PROFILES
+
+    if not entry_type or entry_type not in field_profiles:
+        error_message = (
+            f"{entry_type.capitalize()} is unknown entry type. "
+            "Please add the reference manually."
+        )
+        return render_template("popup_new_search_reference.html",
+                               reference=reference,
+                               entry_type=entry_type,
+                               fields=field_profiles,
+                               error_message=error_message)
+
+    return render_template("popup_new_search_reference.html",
+        reference=reference,
+        entry_type=entry_type,
+        fields=field_profiles
+    )
 
 if test_env:
     @app.route("/reset_db")

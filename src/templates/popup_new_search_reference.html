@@ -1,0 +1,52 @@
+{% block body %}
+    <div id="addReferencePopup" class="popup" style="display:none;">
+        <div class="popup-content">
+            <span class="popup-close" onclick="closeAddReferencePopup()">&times;</span>
+
+            {% if error_message %}
+            <!-- Virheviesti näkyy, jos on virhe -->
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+            {% else %}
+            <!-- Lomake näkyy vain, jos ei ole virhettä -->
+            <h2>Add new reference</h2>
+            <form action="/popup_new_search_reference" method="post">
+                <input type="hidden" name="entry_type" value="{{ entry_type }}">
+                
+                <div class="form-group">
+                    <label for="entry_type"><b>Entry Type:</b></label>
+                    <input type="text" class="form-control" name="entry_type" id="entry_type" value="{{ entry_type.capitalize() }}" readonly>
+                </div>
+                
+                <div id="required_fields">
+                    <div class="form-group">
+                        <label for="author"><b>Author:</b></label>
+                        <input type="text" class="form-control" name="author" value="{{ reference.get('author', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"><b>Title:</b></label>
+                        <input type="text" class="form-control" name="title" value="{{ reference.get('title', '') }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="year"><b>Year:</b></label>
+                        <input type="number" class="form-control" name="year" value="{{ reference.get('year', '') }}" min="1000" required>
+                    </div>
+                </div>
+
+                <div id="optional_fields">
+                    {% for field in fields[entry_type] %}
+                        <div class="form-group">
+                            <label for="{{ field }}"><b>{{ field.capitalize() }}:</b></label>
+                            <input type="text" class="form-control" name="{{ field }}" value="{{ reference.get(field, '') }}">
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save reference</button>
+                <button type="button" class="btn btn-secondary" id="cancel_edit_button" onclick="closeAddReferencePopup()">Cancel</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

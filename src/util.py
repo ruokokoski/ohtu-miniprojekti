@@ -89,7 +89,6 @@ def validate_reference(reference):
     validate_title(reference)
     validate_year(reference)
 
-    # Viitetyypin tarkastukset
     if reference['entry_type'] == "book":
         validate_book(reference)
     if reference['entry_type'] == "article":
