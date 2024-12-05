@@ -82,6 +82,45 @@ window.addEventListener("load", () => {
         document.getElementById('loading_message').style.display = 'block';
     };
 });
+/*
+const handleBibtexButtonClick = (resultId) => {
+    fetch(`/bibtex/${encodeURIComponent(resultId)}`)
+        .then(response => {
+            if (response.ok) {
+                console.log("Button pressed with resultId:", resultId);
+                return response.text();
+            } else {
+                console.error("Failed to fetch BibTeX:", response.status);
+                throw new Error(`Failed to fetch BibTeX for resultId: ${resultId}`);
+            }
+        })
+        .catch(error => {
+            console.error("Error pressing button:", error);
+        });
+};
+*/
+
+const handleBibtexButtonClick = (resultId) => {
+    fetch(`/bibtex/${encodeURIComponent(resultId)}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ result_id: resultId }),
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log("Button pressed with resultId:", resultId);
+                return response.text();
+            } else {
+                console.error("Failed to fetch BibTeX:", response.status);
+                throw new Error(`Failed to fetch BibTeX for resultId: ${resultId}`);
+            }
+        })
+        .catch(error => {
+            console.error("Error pressing button:", error);
+        });
+};
 
 function createReferenceFormButtons() {
     document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);

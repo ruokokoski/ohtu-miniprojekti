@@ -1,16 +1,19 @@
 from io import BytesIO
+from urllib.parse import quote, unquote
 from sqlalchemy.exc import SQLAlchemyError
 
-from flask import render_template, redirect, request, flash, jsonify, send_file, session, Response
+from flask import (render_template, redirect, request, flash, jsonify, send_file,
+                   session, Response, url_for)
 
 from db_helper import reset_db
 from config import app, test_env
-from repositories.search_handler import fetch_search_results
+from repositories.search_handler import fetch_search_results, fetch_bibtex
 from repositories.reference_repository import (
     delete_reference,
     list_references_as_bibtex,
     list_references_as_dict,
-    get_reference_by_key
+    get_reference_by_key,
+    bibtex_to_dict
 )
 from util import process_reference_form
 from entities.reference import Reference
@@ -110,19 +113,29 @@ def search():
 
     return render_template("index.html", results=results, database=database)
 
-@app.route("/bibtex/<int:result_id>", methods=["GET"])
+@app.route("/bibtex/<int:result_id>", methods=["GET", "POST"])
 def get_bibtex(result_id):
-    print("Button pressed with result_id:", result_id)
+    print(f"Button pressed with result_id: {result_id}\n")
     search_results = session.get('search_results')
     if not search_results:
         return jsonify({"error": "No search results found in session"}), 404
 
     try:
-        bibtex_data = search_results[result_id]["bibtex"]
+        doi_link = search_results[result_id]["doi_link"]
+        bibtex_data = fetch_bibtex(doi_link)
     except (IndexError, KeyError):
         return jsonify({"error": "Invalid result_id or BibTeX data not available"}), 404
     print(f"BibTeX data: {bibtex_data}")
-    return Response(bibtex_data, mimetype="application/x-bibtex")
+
+    if request.method == "POST":
+        encoded_bibtex = quote(bibtex_data)
+        redirect_url = url_for("from_search_new_reference", bibtex=encoded_bibtex)
+        print(f"Redirecting to: {redirect_url}")
+        return redirect(redirect_url)
+
+    return jsonify({"bibtex": bibtex_data}), 200
+    #return Response(bibtex_data, mimetype="application/x-bibtex")
+
 
 if test_env:
     @app.route("/reset_db")

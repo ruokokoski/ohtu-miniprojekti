@@ -106,7 +106,7 @@ def process_result(result, index):
     year = get_year(result)
     doi_link, pdf_url = get_doi_link(title_tag)
     authors = get_authors(result)
-    bibtex = fetch_bibtex(doi_link)
+    #bibtex = fetch_bibtex(doi_link)
 
     return {
         "result_id": index,
@@ -115,7 +115,7 @@ def process_result(result, index):
         "year": year,
         "doi_link": doi_link,
         "pdf_url": pdf_url,
-        "bibtex": bibtex,
+        #"bibtex": bibtex,
     }
 
 def fetch_bibtex(doi_link):
