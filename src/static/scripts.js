@@ -134,6 +134,78 @@ function toggleBook() {
     else{
         article.style.display = "none"
     }
+    if (select.value === "booklet") {
+        booklet.style.display = "block";
+    }
+    else{
+        booklet.style.display = "none"
+    }
+    if (select.value === "conference") {
+        conference.style.display = "block";
+    }
+    else{
+        conference.style.display = "none"
+    }
+    if (select.value === "inbook") {
+        inbook.style.display = "block";
+    }
+    else{
+        inbook.style.display = "none"
+    }
+    if (select.value === "incollection") {
+        incollection.style.display = "block";
+    }
+    else{
+        incollection.style.display = "none"
+    }
+    if (select.value === "inproceedings") {
+        inproceedings.style.display = "block";
+    }
+    else{
+        inproceedings.style.display = "none"
+    }
+    if (select.value === "manual") {
+        manual.style.display = "block";
+    }
+    else{
+        manual.style.display = "none"
+    }
+    if (select.value === "mastersthesis") {
+        mastersthesis.style.display = "block";
+    }
+    else{
+        mastersthesis.style.display = "none"
+    }
+    if (select.value === "misc") {
+        misc.style.display = "block";
+    }
+    else{
+        misc.style.display = "none"
+    }
+    if (select.value === "phdthesis") {
+        phdthesis.style.display = "block";
+    }
+    else{
+        phdthesis.style.display = "none"
+    }
+    if (select.value === "proceedings") {
+        proceedings.style.display = "block";
+    }
+    else{
+        proceedings.style.display = "none"
+    }
+    if (select.value === "techreport") {
+        techreport.style.display = "block";
+    }
+    else{
+        techreport.style.display = "none"
+    }
+    if (select.value === "unpublished") {
+        unpublished.style.display = "block";
+    }
+    else{
+        unpublished.style.display = "none"
+    }
     
 }
 

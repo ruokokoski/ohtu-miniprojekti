@@ -38,6 +38,18 @@ New reference
                         <select name="entry_type" id="entry_type">
                             <option value="book" selected> book
                             <option value="article"> article
+                            <option value="booklet"> booklet
+                            <option value="conference"> conference
+                            <option value="inbook"> inbook
+                            <option value="incollection"> incollection
+                            <option value="inproceedings"> inproceedings
+                            <option value="manual"> manual
+                            <option value="mastersthesis"> mastersthesis
+                            <option value="misc"> misc
+                            <option value="phdthesis"> phdthesis
+                            <option value="proceedings"> proceedings
+                            <option value="proceedingstechreport"> proceedingstechreport
+                            <option value="unpublished"> unpublished
                             </select>
                     </div>
                 </div>
@@ -45,6 +57,28 @@ New reference
                 <!-- Fields -->
                 
                 <div id="optional_fields" style="display: block">
+                    <div id="article_fields" style="display: none">
+                        <div class="form-group">
+                            <label for="journal"><b>Journal:</b></label>
+                            <input type="text" class="form-control" name="journal" placeholder="Required">
+                        </div>
+                        <div class="form-group">
+                            <label for="number"><b>Number:</b></label>
+                            <input type="text" class="form-control" name="number" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="volume"><b>Volume: </b></label>
+                            <input type="text" class="form-control" name="volume" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="month"><b>Month:</b></label>
+                            <input type="text" class="form-control" name="month" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="note"><b>Note:</b></label>
+                            <input type="text" class="form-control" name="note" placeholder="Optional">
+                        </div>
+                    </div>           
 
                     <div id="book_fields" style="display: block">
                         <div class="form-group">
@@ -93,29 +127,57 @@ New reference
                         </div>
                     </div>
 
-                    <div id="article_fields" style="display: none">
+                    <div id="booklet_fields" style="display: block">
                         <div class="form-group">
-                            <label for="journal"><b>Journal:</b></label>
-                            <input type="text" class="form-control" name="journal" placeholder="Required">
+                            <label for="title"><b>Title:</b></label>
+                            <input type="text" class="form-control" name="title" placeholder="required" required>
+                        </div>      
+                        <div class="form-group">
+                            <label for="author"><b>Author:</b></label>
+                            <input type="number" class="form-control" style="width: 150px;" id="author" name="author" placeholder="required" required min="1000">
+                        </div>
+                        <div class="form-group">
+                            <label for="howpublished"><b>Howpublished:</b></label>
+                            <input type="text" class="form-control" name="howpublished" placeholder="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="address"><b>Address:</b></label>
+                            <input type="text" class="form-control" name="address" placeholder="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="year"><b>Year:</b></label>
+                            <input type="text" class="form-control" name="year" placeholder="required">
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="editor"><b>Editor:</b></label>
+                            <input type="text" class="form-control" name="editor" placeholder="optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="volume"><b>Volume:</b></label>
+                            <input type="text" class="form-control" name="volume" placeholder="optional">
                         </div>
                         <div class="form-group">
                             <label for="number"><b>Number:</b></label>
-                            <input type="text" class="form-control" name="number" placeholder="Optional">
+                            <input type="text" class="form-control" name="number" placeholder="optional">
                         </div>
                         <div class="form-group">
-                            <label for="volume"><b>Volume: </b></label>
-                            <input type="text" class="form-control" name="volume" placeholder="Optional">
+                            <label for="series"><b>Series:</b></label>
+                            <input type="text" class="form-control" name="series" placeholder="optional">
+                        </div>
+                        <div class="form-group">
+                            <label for="organisation"><b>Organisation:</b></label>
+                            <input type="text" class="form-control" name="organisation" placeholder="optional">
                         </div>
                         <div class="form-group">
                             <label for="month"><b>Month:</b></label>
-                            <input type="text" class="form-control" name="month" placeholder="Optional">
+                            <input type="text" class="form-control" name="month" placeholder="optional">
                         </div>
                         <div class="form-group">
                             <label for="note"><b>Note:</b></label>
-                            <input type="text" class="form-control" name="note" placeholder="Optional">
+                            <input type="text" class="form-control" name="note" placeholder="optional">
                         </div>
-                    </div>           
-                </div>
+                    </div>
                 <div>
                     <!-- <button type="button" class="btn btn-primary" id="toggle_optionals_button">Optional fields</button> -->
                     <button type="submit" class="btn btn-primary">Save</button>
