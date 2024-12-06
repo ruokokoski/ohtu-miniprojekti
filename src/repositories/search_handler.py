@@ -41,7 +41,7 @@ def fetch_scholar_results(search_variable):
 
         results = []
         for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
-            if index >= 2:
+            if index >= 10:
                 break
             title_tag = item.find('h3', class_='gs_rt')
             link = "Link not available"
