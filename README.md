@@ -3,6 +3,12 @@
 [![GHA_workflow_badge](https://github.com/ruokokoski/ohtu-miniprojekti/workflows/CI/badge.svg)](https://github.com/ruokokoski/ohtu-miniprojekti/actions)
 [![codecov](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti/graph/badge.svg?token=HF7SFV0DV0)](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti)
 
+Tämä repositorio sisältää Helsingin Yliopiston Ohjelmistotuotanto-kurssilla kehitetyn BibTeX-viitteidenhallintaohjelman.
+
+**Kehitystiimin jäsenet:**
+
+Laura, Ville, Joni, Teemu, Samuli ja Touko
+
 ## Projektin käyttöönotto
 
 ### Asentaminen
@@ -56,11 +62,17 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 * [Sprint backlog viikko 3](https://github.com/users/ruokokoski/projects/7)
 
+* [Sprint backlog viikko 4](https://github.com/users/ruokokoski/projects/8)
+
 ## Dokumentit
 
 * [Burndown ja muistiinpanot](https://docs.google.com/spreadsheets/d/1luvy2gwmod2LeKPFvA8zie4YPotvT7EOjNS1cLOUY30/edit?gid=1923908994#gid=1923908994)
 
 * [Testikattavuusraportti](https://app.codecov.io/gh/ruokokoski/ohtu-miniprojekti)
+
+* [Lisenssi](https://github.com/ruokokoski/ohtu-miniprojekti/blob/main/LICENSE)
+
+* [Retrospektiivit](https://github.com/ruokokoski/ohtu-miniprojekti/blob/main/retro.md)
 
 * [Käytetty tietokantapalvelu](https://aiven.io/)
 
@@ -107,5 +119,3 @@ Tietokantaan yhdistäminen suoraan konsolista (lähinnä testausta varten):
 
 ## Current sprint burndown chart
 ![Alt text](https://docs.google.com/spreadsheets/d/e/2PACX-1vSgmI9CcnHExwW76f3Iid2vBFtww8dJj3gGbKORF8bFOcxoj4qKHqvyHGiRsX7gq379fEPJEW54qcTe/pubchart?oid=1546569514&format=image)
-
-Lisenssi: MIT

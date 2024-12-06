@@ -5,11 +5,31 @@
 {% block body %}
 <script>document.getElementById("nav_references").classList.toggle("active")</script>
 <div class="container-fluid text-center">
+    <div class="row justify-content-center" style="text-align: left;">
+        <div class="col-2">
+            <label for="search_author"><b>Author:</b></label>
+            <input type="text" class="form-control" id="search_author" onkeyup="searchTable('search_author', 'reference_table', column=2)" placeholder="Search for author..">
+        </div>
+        <div class="col-2">
+            <label for="search_title"><b>Title:</b></label>
+            <input type="text" class="form-control" id="search_title" onkeyup="searchTable('search_title', 'reference_table', column=3)" placeholder="Search for title..">
+        </div>
+        <div class="col-1">
+
+            <label for="filter_year"><b>Min Year:</b></label>
+            <input type="number" class="form-control" id="min_year" onkeyup="filterYear('min_year', 'reference_table', column=4, true)" placeholder="Min year...">
+        </div>
+        <div class="col-1">
+            <label for="filter_year"><b>Max Year:</b></label>
+            <input type="number" class="form-control" id="max_year" onkeyup="filterYear('max_year', 'reference_table', column=4, false)" placeholder="Max year...">
+        </div>
+    </div>
+    
     <div class="row justify-content-center">
         <div class="col">
             <h2>References</h2>
             <div>
-                <table class="table">
+                <table class="table" id="reference_table">
                     <thead>
                         <tr>
                             <th>Entry Type</th>
@@ -43,10 +63,10 @@
                         </tr>
                         <tr class="extrafields">
                             <td colspan="7">
-                                <div style="display: flex; justify-content: center;">
-                                    <ul style="column-count: 7; text-align: left;">
+                                <div class="extrafields-wrapper">
+                                    <ul class="extrafields-list">
                                         {% for key, value in reference.extra_fields.items() %}
-                                            <li style="margin-right: 100px;">{{key}}: {{value}}</li>
+                                            <li>{{ key }}: {{ value }}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
