@@ -5,11 +5,7 @@ from flask import render_template, redirect, request, flash, jsonify, session, s
 
 from db_helper import reset_db
 from config import app, test_env
-<<<<<<< HEAD
 from repositories.search_handler import fetch_search_results, fetch_bibtex, search_specific
-=======
-from repositories.search_handler import fetch_search_results, fetch_bibtex
->>>>>>> 4423f6b (Fix bibtex creating logic)
 from repositories.reference_repository import (
     delete_reference,
     list_references_as_bibtex,
