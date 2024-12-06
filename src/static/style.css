@@ -24,27 +24,7 @@
     border-color: #055f7a;
     border-radius: 8px;
 }
-/* Ulkoasu extrafields-osalle */
-.extrafields-wrapper {
-    display: flex;
-    justify-content: left;
-    overflow-wrap: break-word;
-}
 
-/* Lista sarakkeisiin */
-.extrafields-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    column-count: 3;
-    column-gap: 40px;
-    text-align: left;
-}
-
-/* Jokainen listan elementti */
-.extrafields-list li {
-    margin-bottom: 8px;
-}
 
 /* Popup */
 .popup {
@@ -55,7 +35,8 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3); /* Hieman kevyempi tausta */
+    background-color: rgba(0, 0, 0, 0.3);
+
 }
 
 /* Popup Content */
@@ -162,6 +143,10 @@ h3 {
     border: none;
 }
 
+button.btn {
+    display: inline-block;
+    margin-left: 10px;
+}
 
 /* Primary Button - Default Turquoise */
 .btn-primary {
@@ -247,4 +232,9 @@ h3 {
 .table th {
     background-color: #fbfcfc;
     color: #050505;
+}
+
+.table td {
+    word-wrap: break-word;
+    white-space: normal;
 }

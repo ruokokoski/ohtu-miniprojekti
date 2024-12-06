@@ -46,24 +46,26 @@ def list_references_as_bibtex():
                 bib_entry.fields[key] = str(value)
 
         bib_data.entries[reference.citation_key] = bib_entry
-
     bibtex_str = bib_data.to_string('bibtex')
-
     return bibtex_str
 
 def bibtex_to_dict(bibtex_str):
     bib_data = parse_string(bibtex_str, "bibtex")
 
     result = {}
-    for key, entry in bib_data.entries.items():
-        fields = {field: entry.fields.get(field, "") for field in entry.fields}
+
+    for entry in bib_data.entries.values():
+        fields = {}
+
+        for field, value in entry.fields.items():
+            fields[field] = value
+
+        fields['entry_type'] = entry.type
 
         if 'author' in entry.persons:
-            # Poimi kirjoittajat ja muodosta merkkijono
             authors = entry.persons['author']
-            author_names = [str(person) for person in authors]  # Person-objektit merkkijonoksi
-            author_names_str = " and ".join(author_names)  # Yhdistä nimet "and"-sanalla
-            fields['author'] = author_names_str
+            author_names = [str(person) for person in authors]
+            fields['author'] = " and ".join(author_names)
 
-        result[key] = fields
+        result = fields
     return result

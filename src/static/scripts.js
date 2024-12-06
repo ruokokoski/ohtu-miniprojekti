@@ -219,5 +219,34 @@ function showFlashMessage(message) {
 
     setTimeout(() => {
         flashMessage.remove();
-    }, 15000);
+    }, 5000);
+}
+
+// Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
+function openPopupFromServer(result_id) {
+    // Lähetetään AJAX-pyyntö, jossa mukana result_id
+    fetch('/popup_new_search_reference/' + result_id)
+        .then(response => response.text())
+        .then(data => {
+            // Lisää haettu sisältö sivulle
+            document.body.insertAdjacentHTML('beforeend', data);
+
+            // Avaa popup sen jälkeen, kun sisältö on lisätty
+            openAddReferencePopup();
+        })
+        .catch(error => {
+            console.error('Virhe popupin lataamisessa:', error);
+        });
+}
+
+// Avaa popup
+function openAddReferencePopup() {
+    document.getElementById("addReferencePopup").style.display = "block";
+    document.body.classList.add("popup-open");
+}
+
+// Sulje popup
+function closeAddReferencePopup() {
+    document.getElementById("addReferencePopup").style.display = "none";
+    document.body.classList.remove("popup-open");
 }
