@@ -11,24 +11,27 @@ from bs4 import BeautifulSoup
 def fetch_search_results(database, search_variable):
     if database == "ACM":
         return fetch_acm_search_results(search_variable)
-    return fetch_scholar_results(search_variable)
+    else:
+        print(database)
+        return fetch_scholar_results(search_variable)
 
 def fetch_scholar_results(search_variable):
-    driver = initialize_webdriver()
+    driver = initialize_webdriver(headless = False)
     search_url = "https://scholar.google.com/"
     driver.get(search_url)
 
     try:
-        search = WebDriverWait(driver, 10).until(
+        search = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.NAME, "q"))
         )
         search.send_keys(search_variable)
         search.submit()
 
-        WebDriverWait(driver, 10).until(
+        time.sleep(0.342)
+        WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
-        time.sleep(3)
+        time.sleep(2.521)
 
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
@@ -72,7 +75,7 @@ def fetch_scholar_results(search_variable):
     return results
 
 def search_specific(title):
-    driver = initialize_webdriver()
+    driver = initialize_webdriver(headless = False)
     search_url = "https://scholar.google.com/scholar?"
     search_url += urlencode({"q": title, "num": 1})
     driver.get(search_url)
@@ -130,7 +133,7 @@ def parse_author_year(author_year_text):
     return authors, year
 
 def fetch_acm_search_results(search_variable):
-    driver = initialize_webdriver()
+    driver = initialize_webdriver(headless = True)
     search_url = build_search_url(search_variable)
     driver.get(search_url)
 
@@ -138,7 +141,7 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    time.sleep(3)
+    time.sleep(2.7952)
     results = get_results(soup, 10)
     if not results:
         driver.quit()
@@ -179,9 +182,11 @@ def fetch_bibtex(doi_link):
         print(f"Error fetching BibTeX for DOI {doi}: {e}")
         return None
 
-def initialize_webdriver():
+def initialize_webdriver(headless):
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
+    #options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+    if headless:
+        options.add_argument('--headless')
     return webdriver.Chrome(options=options)
 
 def build_search_url(search_variable):
