@@ -103,7 +103,7 @@ def validate_author(reference):
 def validate_title(reference):
     if len(reference['title']) < 2:
         raise UserInputError("Title must be at least 2 characters long.")
-    if len(reference['title']) > 100:
+    if len(reference['title']) > 150:
         raise UserInputError("Title must be under 100 characters long.")
 
 def validate_year(reference):

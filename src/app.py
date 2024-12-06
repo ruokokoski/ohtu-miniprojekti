@@ -107,6 +107,19 @@ def search():
     session['search_results'] = results
     return render_template("index.html", results=results, database=database)
 
+@app.route("/sch_bibtex/<int:result_id>", methods=["GET"])
+def bibtex_to_console(result_id):
+    results = session.get('search_results', None)
+    selected_result = next((result for result in results if result['result_id'] == result_id), None)
+    if not selected_result:
+        return "Result not found", 404
+
+    bibtex_data = selected_result.get('bibtex')
+    if bibtex_data:
+        print(f"BibTeX for result ID {result_id}:")
+        print(bibtex_data)
+        return jsonify({"message": "BibTeX printed to console"}), 200
+    return jsonify({"message": "No BibTeX data available"}), 404
 
 @app.route("/popup_new_search_reference/<int:result_id>", methods=["GET", "POST"])
 def from_search_new_reference(result_id):

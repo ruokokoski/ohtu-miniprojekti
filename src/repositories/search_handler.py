@@ -19,21 +19,23 @@ def fetch_scholar_results(search_variable):
     driver.get(search_url)
 
     try:
-        search_box = WebDriverWait(driver, 10).until(
+        search = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.NAME, "q"))
         )
-        search_box.send_keys(search_variable)
-        search_box.submit()
+        search.send_keys(search_variable)
+        search.submit()
 
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
+        time.sleep(2)
+
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
 
         results = []
         for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
-            if index >= 10:
+            if index >= 1:
                 break
             title_tag = item.find('h3', class_='gs_rt')
             link = "Link not available"
@@ -57,7 +59,8 @@ def fetch_scholar_results(search_variable):
                 "authors": authors,
                 "year": year,
                 "doi_link": link,
-                "pdf_url": "Not available"
+                "pdf_url": "Not available",
+                "bibtex": get_sch_bibtex(driver) #item
             }
             results.append(result)
 
@@ -67,6 +70,36 @@ def fetch_scholar_results(search_variable):
         driver.quit()
 
     return results
+
+def get_sch_bibtex(driver):
+    try:
+        cite_xpath = "//div[@class='gs_ri']//a[@aria-controls='gs_cit']"
+        cite = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, cite_xpath))
+        )
+        cite.click()
+        #time.sleep(1)
+
+        WebDriverWait(driver, 10).until(EC.url_contains("#d=gs_cit"))
+        bibtex_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "BibTeX"))
+        )
+        bibtex_button.click()
+        #time.sleep(1)
+
+        bibtex = WebDriverWait(driver, 10).until(
+                EC.visibility_of_element_located((By.TAG_NAME, "pre"))
+            )
+        return bibtex.text
+    except TimeoutException:
+        print("Timeout while waiting for the BibTeX to load.")
+        return None
+    except WebDriverException:
+        print("WebDriverException occurred while interacting with the page.")
+        return None
+    except AttributeError:
+        print("AttributeError: Issue with finding the cite button or BibTeX.")
+        return None
 
 def parse_author_year(author_year_text):
     if author_year_text == "-":
