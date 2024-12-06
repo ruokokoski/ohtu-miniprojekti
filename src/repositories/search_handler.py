@@ -28,14 +28,14 @@ def fetch_scholar_results(search_variable):
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
-        time.sleep(2)
+        time.sleep(3)
 
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
 
         results = []
         for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
-            if index >= 2:
+            if index >= 10:
                 break
             title_tag = item.find('h3', class_='gs_rt')
             link = "Link not available"
@@ -107,8 +107,8 @@ def get_sch_bibtex(driver):
         #time.sleep(1)
 
         bibtex = WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.TAG_NAME, "pre"))
-            )
+            EC.visibility_of_element_located((By.TAG_NAME, "pre"))
+        )
         return bibtex.text
     except TimeoutException:
         print("Timeout while waiting for the BibTeX to load.")

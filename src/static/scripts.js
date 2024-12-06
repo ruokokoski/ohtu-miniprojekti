@@ -223,9 +223,9 @@ function showFlashMessage(message) {
 }
 
 // Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
-function openPopupFromServer(result_id) {
+function openPopupFromServer(result_id, database) {
     // Lähetetään AJAX-pyyntö, jossa mukana result_id
-    fetch('/popup_new_search_reference/' + result_id)
+    fetch('/popup_new_search_reference/' + result_id + '?database=' + database)
         .then(response => response.text())
         .then(data => {
             // Lisää haettu sisältö sivulle

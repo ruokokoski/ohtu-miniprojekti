@@ -126,6 +126,9 @@ def bibtex_to_console(result_id):
 
 @app.route("/popup_new_search_reference/<int:result_id>", methods=["GET", "POST"])
 def from_search_new_reference(result_id):
+    database = request.args.get('database')
+    print(f'Database: {database}')
+
     if request.method == "POST":
         return process_reference_form(is_creation=True)
 
@@ -133,14 +136,20 @@ def from_search_new_reference(result_id):
 
     selected_result = next((result for result in results if result['result_id'] == result_id), None)
     if not selected_result:
-        return "Result not found", 404
+        flash("Result not found.", "error")
+        return redirect("/")
 
-
-    if not selected_result.get('bibtex') and selected_result.get('doi_link'):
-        selected_result['bibtex'] = fetch_bibtex(selected_result['doi_link'])
-        session['search_results'] = results
+    if database == 'ACM':
+        if not selected_result.get('bibtex') and selected_result.get('doi_link'):
+            selected_result['bibtex'] = fetch_bibtex(selected_result['doi_link'])
+            session['search_results'] = results
+    else:
+        if not selected_result.get('bibtex') and selected_result.get('title'):
+            selected_result['bibtex'] = search_specific(selected_result['title'])
+            session['search_results'] = results
 
     bibtex_data = selected_result.get('bibtex')
+
     if bibtex_data:
         reference = bibtex_to_dict(bibtex_data)
         entry_type = reference['entry_type']
