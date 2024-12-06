@@ -41,7 +41,7 @@ def fetch_scholar_results(search_variable):
 
         results = []
         for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
-            if index >= 1:
+            if index >= 2:
                 break
             title_tag = item.find('h3', class_='gs_rt')
             link = "Link not available"
@@ -103,7 +103,6 @@ def search_specific(title):
 
     except (TimeoutException, WebDriverException):
         bibtex = None
-
     driver.quit()
     return bibtex
 
