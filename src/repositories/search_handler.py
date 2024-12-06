@@ -11,11 +11,9 @@ from bs4 import BeautifulSoup
 def fetch_search_results(database, search_variable):
     if database == "ACM":
         return fetch_acm_search_results(search_variable)
-    if database == "Google Scholar":
-        return fetch_google_scholar_results(search_variable)
-    raise ValueError(f"Database {database} not supported.")
+    return fetch_scholar_results(search_variable)
 
-def fetch_google_scholar_results(search_variable):
+def fetch_scholar_results(search_variable):
     driver = initialize_webdriver()
     search_url = "https://scholar.google.com/"
     driver.get(search_url)
@@ -34,27 +32,28 @@ def fetch_google_scholar_results(search_variable):
         soup = BeautifulSoup(html, 'html.parser')
 
         results = []
-        for item in soup.find_all('div', class_='gs_r gs_or gs_scl'):
+        for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
+            if index >= 10:
+                break
             title_tag = item.find('h3', class_='gs_rt')
-            title = title_tag.text.strip() if title_tag else "-"
+            link = "Link not available"
             if title_tag and title_tag.find('a'):
                 link = title_tag.find('a')['href']
-            else:
-                link = "Link not available"
-            title = title.replace("[HTML]", "")
-            title = title.replace("[PDF]", "")
-            title = title.replace("[CITATION]", "")
-            title = title.replace("[BOOK]", "").replace("[B]", "")
-            title = title.strip()
 
             author_year_tag = item.find('div', class_='gs_a')
-            #author_year_text = author_year_tag.text.strip() if author_year_tag else "-"
             authors, year = parse_author_year(
                 author_year_tag.text.strip() if item.find('div', class_='gs_a') else "-"
             )
 
             result = {
-                "title": title,
+                "result_id": index,
+                "title": (title_tag.text if title_tag else "-")
+                         .replace("[HTML]", "")
+                         .replace("[PDF]", "")
+                         .replace("[CITATION]", "")
+                         .replace("[BOOK]", "")
+                         .replace("[B]", "")
+                         .strip(),
                 "authors": authors,
                 "year": year,
                 "doi_link": link,
@@ -102,7 +101,6 @@ def process_result(result, index):
     year = get_year(result)
     doi_link, pdf_url = get_doi_link(title_tag)
     authors = get_authors(result)
-    #bibtex = fetch_bibtex(doi_link)
 
     return {
         "result_id": index,

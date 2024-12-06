@@ -62,7 +62,21 @@ Home
                                     {% endif %}
                                 </td>
                                 {% endif %}
-                                <td><button class="btn btn-primary btn-sm ml-2" onclick="openPopupFromServer('{{ result.result_id }}')">BibTeX</button></td>
+                                <td>
+                                    {% if database == "ACM" %}
+                                        <button 
+                                            class="btn btn-primary btn-sm" 
+                                            onclick="openPopupFromServer('{{ result.result_id }}')">
+                                            BibTeX
+                                        </button>
+                                    {% else %}
+                                        <button 
+                                            class="btn btn-info btn-sm" 
+                                            onclick="bibtexScholar('{{ result.result_id }}')">
+                                            BibTeX
+                                        </button>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -70,6 +84,12 @@ Home
             </div>
         </div>
     {% endif %}
+
+    <script>
+        const bibtexScholar = (resultId) => {
+            console.log("Button pressed for result ID:", resultId);
+        };
+    </script>
 </div>
 
 {% endblock %}
