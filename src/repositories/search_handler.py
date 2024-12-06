@@ -16,18 +16,11 @@ def generate_human_like_delay(min_delay=0.5, max_delay=3.0):
 def fetch_search_results(database, search_variable):
     if database == "ACM":
         return fetch_acm_search_results(search_variable)
-<<<<<<< HEAD
     #print(database)
     return fetch_scholar_results(search_variable)
 
 def fetch_scholar_results(search_variable):
     driver = initialize_webdriver(headless = False)
-=======
-    return fetch_scholar_results(search_variable)
-
-def fetch_scholar_results(search_variable):
-    driver = initialize_webdriver()
->>>>>>> 6b45ed3 (Refactor code)
     search_url = "https://scholar.google.com/"
     driver.get(search_url)
 
@@ -48,20 +41,15 @@ def fetch_scholar_results(search_variable):
 
         results = []
         for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
-            if index >= 10:
+            if index >= 1:
                 break
             title_tag = item.find('h3', class_='gs_rt')
             link = "Link not available"
-<<<<<<< HEAD
             pdf_url = None
             if title_tag and title_tag.find('a'):
                 link = title_tag.find('a')['href']
                 print(f'Link: {link}')
                 pdf_url = check_pdf(link)
-=======
-            if title_tag and title_tag.find('a'):
-                link = title_tag.find('a')['href']
->>>>>>> 6b45ed3 (Refactor code)
 
             author_year_tag = item.find('div', class_='gs_a')
             authors, year = parse_author_year(
