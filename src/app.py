@@ -5,7 +5,7 @@ from flask import render_template, redirect, request, flash, jsonify, session, s
 
 from db_helper import reset_db
 from config import app, test_env
-from repositories.search_handler import fetch_search_results, fetch_bibtex
+from repositories.search_handler import fetch_search_results, fetch_bibtex, search_specific
 from repositories.reference_repository import (
     delete_reference,
     list_references_as_bibtex,
@@ -114,12 +114,15 @@ def bibtex_to_console(result_id):
     if not selected_result:
         return "Result not found", 404
 
-    bibtex_data = selected_result.get('bibtex')
-    if bibtex_data:
-        print(f"BibTeX for result ID {result_id}:")
-        print(bibtex_data)
-        return jsonify({"message": "BibTeX printed to console"}), 200
-    return jsonify({"message": "No BibTeX data available"}), 404
+    title = selected_result.get('title')
+    if title:
+        print(f"Title for result ID {result_id}:")
+        print(title)
+        bibtex = search_specific(title)
+        print(f"BibTeX:")
+        print(bibtex)
+        return jsonify({"message": "Title printed to console"}), 200
+    return jsonify({"message": "No title available"}), 404
 
 @app.route("/popup_new_search_reference/<int:result_id>", methods=["GET", "POST"])
 def from_search_new_reference(result_id):

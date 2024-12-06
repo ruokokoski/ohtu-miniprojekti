@@ -35,7 +35,7 @@ def fetch_scholar_results(search_variable):
 
         results = []
         for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
-            if index >= 1:
+            if index >= 2:
                 break
             title_tag = item.find('h3', class_='gs_rt')
             link = "Link not available"
@@ -60,7 +60,7 @@ def fetch_scholar_results(search_variable):
                 "year": year,
                 "doi_link": link,
                 "pdf_url": "Not available",
-                "bibtex": get_sch_bibtex(driver) #item
+                "bibtex": None
             }
             results.append(result)
 
@@ -70,6 +70,25 @@ def fetch_scholar_results(search_variable):
         driver.quit()
 
     return results
+
+def search_specific(title):
+    driver = initialize_webdriver()
+    search_url = "https://scholar.google.com/scholar?"
+    search_url += urlencode({"q": title, "num": 1})
+    driver.get(search_url)
+
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
+        )
+        #time.sleep(2)
+        bibtex = get_sch_bibtex(driver)
+
+    except (TimeoutException, WebDriverException):
+        bibtex = None
+    
+    driver.quit()
+    return bibtex
 
 def get_sch_bibtex(driver):
     try:
