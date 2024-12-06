@@ -119,7 +119,7 @@ def bibtex_to_console(result_id):
         print(f"Title for result ID {result_id}:")
         print(title)
         bibtex = search_specific(title)
-        print(f"BibTeX:")
+        print("BibTeX:")
         print(bibtex)
         return jsonify({"message": "Title printed to console"}), 200
     return jsonify({"message": "No title available"}), 404

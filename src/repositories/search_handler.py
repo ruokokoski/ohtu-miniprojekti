@@ -86,7 +86,7 @@ def search_specific(title):
 
     except (TimeoutException, WebDriverException):
         bibtex = None
-    
+
     driver.quit()
     return bibtex
 
