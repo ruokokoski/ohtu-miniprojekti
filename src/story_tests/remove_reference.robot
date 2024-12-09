@@ -21,6 +21,7 @@ Reset Table Add A Reference And Go To Starting Page
     Set Last name  Murphy
     Click Button  Add author
     Set Title  Probabilistic machine learning: an introduction
+    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
@@ -28,6 +29,10 @@ Reset Table Add A Reference And Go To Starting Page
 
 Submit
     Click Button  Save
+
+Select Reference Type
+    [Arguments]  ${reference_type}
+    Select From List By Label  entry_type  ${reference_type}
 
 Set First name
     [Arguments]  ${first_name}
