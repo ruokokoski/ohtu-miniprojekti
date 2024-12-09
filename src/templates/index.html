@@ -55,27 +55,27 @@ Home
                                 <td><a href="{{ result.doi_link }}" target="_blank">{{ result.title }}</a></td>
                                 {% if database == "ACM" %}
                                 <td>
-                                    {% if result.pdf_url != "PDF-linkkiä ei löytynyt" %}
+                                    {% if result.pdf_url != "PDF-link not found" %}
                                         <a href="{{ result.pdf_url }}" target="_blank" class="btn btn-secondary btn-sm">PDF</a>
                                     {% else %}
                                         <button class="btn btn-secondary btn-sm" disabled>PDF</button>
                                     {% endif %}
                                 </td>
+                                {% elif database == "Google Scholar" %}
+                                    <td>
+                                        {% if result.pdf_url %}
+                                            <a href="{{ result.pdf_url }}" target="_blank" class="btn btn-secondary btn-sm">PDF</a>
+                                        {% else %}
+                                            <!-- empty cell -->
+                                        {% endif %}
+                                    </td>
                                 {% endif %}
                                 <td>
-                                    {% if database == "ACM" %}
-                                        <button 
-                                            class="btn btn-primary btn-sm" 
-                                            onclick="openPopupFromServer('{{ result.result_id }}')">
-                                            BibTeX
-                                        </button>
-                                    {% else %}
-                                        <button 
-                                            class="btn btn-info btn-sm" 
-                                            onclick="bibtexScholar('{{ result.result_id }}')">
-                                            BibTeX
-                                        </button>
-                                    {% endif %}
+                                    <button 
+                                        class="btn btn-primary btn-sm" 
+                                        onclick="openPopupFromServer('{{ result.result_id }}', '{{ database }}')">
+                                        BibTeX
+                                    </button>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -88,6 +88,15 @@ Home
     <script>
         const bibtexScholar = (resultId) => {
             console.log("Button pressed for result ID:", resultId);
+
+            fetch(`/sch_bibtex/${resultId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         };
     </script>
 </div>

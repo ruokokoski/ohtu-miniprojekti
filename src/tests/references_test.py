@@ -99,6 +99,7 @@ class TestUserInputError(unittest.TestCase):
         }
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
+
         self.assertEqual(str(context.exception), "Title must be under 250 characters long.")
 
 
