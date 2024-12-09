@@ -93,13 +93,13 @@ class TestUserInputError(unittest.TestCase):
     def test_title_exceeds_max_length(self):
         data = {
             "author": "asd",
-            "title": "A" * 101,
+            "title": "A" * 251,
             "year": "2024",
             "publisher": "Publisher"
         }
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
-        self.assertEqual(str(context.exception), "Title must be under 100 characters long.")
+        self.assertEqual(str(context.exception), "Title must be under 250 characters long.")
 
 
 class TestReferenceModel(unittest.TestCase):

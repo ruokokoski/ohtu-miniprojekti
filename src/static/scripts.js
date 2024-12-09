@@ -224,7 +224,6 @@ function showFlashMessage(message) {
 
 // Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
 function openPopupFromServer(result_id) {
-    // Lähetetään AJAX-pyyntö, jossa mukana result_id
     fetch('/popup_new_search_reference/' + result_id)
         .then(response => response.text())
         .then(data => {
