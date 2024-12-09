@@ -17,54 +17,62 @@ class Reference(db.Model):
 
     # Kenttäprofiilit eri entry_tyypeille
     FIELD_PROFILES = {
-        "article": [
-            "month", "journal", "volume", "number", "pages", "note", "doi"
-        ],
-        "book": [
-            "publisher", "address", "volume", "series", "edition",
-            "month", "note", "url", "isbn"
-        ],
-        "booklet": [
-            "month", "address", "note", "howpublished", "editor"
-        ],
-        "conference": [
-            "month", "booktitle", "publisher", "address", "pages",
-            "note", "editor", "organization"
-        ],
-        "inbook": [
-            "editor", "volume", "number", "series", "address",
-            "edition", "month", "pages", "note"
-        ],
-        "incollection": [
-            "booktitle", "publisher", "editor", "volume", "number",
-            "series", "pages", "address", "month"
-        ],
-        "inproceedings": [
-            "booktitle","editor", "volume", "number", "series", "pages",
-            "address", "month", "organization", "publisher"
-        ],
-        "manual": [
-            "organization", "address", "edition", "month", "note"
-        ],
-        "mastersthesis": [
-            "school", "type", "address", "month", "note"
-        ],
-        "phdthesis": [
-            "school", "type", "address", "month", "note"
-        ],
-        "proceedings": [
-            "editor", "volume", "number", "series", "address", "month", 
-            "publisher"
-        ],
-        "techreport": [
-            "institution", "number"
-        ],
-        "unpublished": [
-            "institution"
-        ],
-        "misc": [
-            "howpublished", "note"
-        ]
+        "article": {
+            "required": ["author", "title", "journal", "year"],
+            "optional": ["volume", "number", "pages", "month", "note", "doi"]
+        },
+        "book": {
+            "required": ["author", "title", "publisher", "year"],
+            "optional": ["volume", "series", "address", "edition", "month", "note", "url", "isbn"]
+        },
+        "booklet": {
+            "required": ["title"],
+            "optional": ["author", "howpublished", "address", "month", "year", "note"]
+        },
+        "conference": {
+            "required": ["author", "title", "booktitle", "year"],
+            "optional": ["editor", "volume", "number", "series", "pages", "address", "month", "organization", "publisher", "note"]
+        },
+        "inbook": {
+            "required": ["author", "title", "chapter", "pages", "publisher", "year"],
+            "optional": ["volume", "series", "address", "edition", "month", "note"]
+        },
+        "incollection": {
+            "required": ["author", "title", "booktitle", "publisher", "year"],
+            "optional": ["editor", "volume", "number", "series", "type", "chapter", "pages", "address", "edition", "month", "note"]
+        },
+        "inproceedings": {
+            "required": ["author", "title", "booktitle", "year"],
+            "optional": ["editor", "volume", "number", "series", "pages", "address", "month", "organization", "publisher", "note"]
+        },
+        "manual": {
+            "required": ["title"],
+            "optional": ["author", "organization", "address", "edition", "month", "year", "note"]
+        },
+        "mastersthesis": {
+            "required": ["author", "title", "school", "year"],
+            "optional": ["type", "address", "month", "note"]
+        },
+        "phdthesis": {
+            "required": ["author", "title", "school", "year"],
+            "optional": ["type", "address", "month", "note"]
+        },
+        "proceedings": {
+            "required": ["title", "year"],
+            "optional": ["editor", "volume", "number", "series", "address", "publisher", "note", "month", "organization"]
+        },
+        "techreport": {
+            "required": ["author", "title", "institution", "year"],
+            "optional": ["type", "number", "address", "month", "note"]
+        },
+        "unpublished": {
+            "required": ["author", "title", "note"],
+            "optional": ["month", "year"]
+        },
+        "misc": {
+            "required": [],
+            "optional": ["author", "title", "howpublished", "month", "year", "note"]
+        }
     }
 
     def get_fields_for_entry_type(self):

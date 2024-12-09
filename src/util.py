@@ -54,10 +54,16 @@ def create_extra_fields(entry_type):
     """Palauttaa dynaamiset extra_fields-kentät viitetyypin mukaan"""
     extra_fields = {}
 
-    fields_for_entry = Reference.FIELD_PROFILES.get(entry_type, [])
+    fields_for_entry = Reference.FIELD_PROFILES.get(entry_type, {})
 
-    for field in fields_for_entry:
-        extra_fields[field] = request.form.get(field, '')
+    required_fields = fields_for_entry.get("required", [])
+    optional_fields = fields_for_entry.get("optional", [])
+
+    exclude_fields = ["author", "title", "year"]
+
+    for field in required_fields + optional_fields:
+        if field not in exclude_fields:
+            extra_fields[field] = request.form.get(field, '')
 
     return extra_fields
 

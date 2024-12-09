@@ -91,33 +91,70 @@ function createReferenceFormListeners() {
     document.getElementById("entry_type").addEventListener("change", createInputFields);
 };
 
+function createEditFormListeners() {
+    document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
+    document.getElementById("new_reference").addEventListener("submit", validateForm);   
+}
+
 function createInputFields() {
     const fieldProfiles = JSON.parse(document.getElementById("field_profiles").textContent);
     const entryType = document.getElementById("entry_type").value;
-    const fields = fieldProfiles[entryType] || [];
-    const container = document.getElementById("optional_fields");
+    const fields = fieldProfiles[entryType] || { required: [], optional: [] };
+    const requiredContainer = document.getElementById("required_fields");
+    const optionalContainer = document.getElementById("optional_fields");
 
-    container.innerHTML = "";
+    // Clear existing fields
+    requiredContainer.innerHTML = "";
+    optionalContainer.innerHTML = "";
 
-    fields.forEach(field => {
-        const div = document.createElement("div");
-        div.className = "form-group";
+    if (fields.required && fields.required.length > 0) {
 
-        const label = document.createElement("label");
-        label.innerHTML = `<b>${field}:</b>`;
-        div.appendChild(label);
+        fields.required.forEach(field => {
+            if (field === "author") return;
 
-        const input = document.createElement("input");
-        input.type = "text";
-        input.className = "form-control"
-        input.id = field;
-        input.name = field;
-        div.appendChild(input);
+            const div = document.createElement("div");
+            div.className = "form-group";
 
-        container.appendChild(div);
+            const label = document.createElement("label");
+            label.innerHTML = `<b>${field}:</b>`;
+            div.appendChild(label);
 
-    });
-}    
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            input.id = field;
+            input.name = field;
+            input.required = true;
+            input.placeholder = "required"
+            div.appendChild(input);
+
+            requiredContainer.appendChild(div);
+        });
+    }
+
+    if (fields.optional && fields.optional.length > 0) {
+
+        fields.optional.forEach(field => {
+            if (field === "author") return;
+
+            const div = document.createElement("div");
+            div.className = "form-group";
+
+            const label = document.createElement("label");
+            label.innerHTML = `<b>${field}:</b>`;
+            div.appendChild(label);
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            input.id = field;
+            input.name = field;
+            div.appendChild(input);
+
+            optionalContainer.appendChild(div);
+        });
+    }
+}   
 
 function addNewAuthor() {
     var firstName = document.getElementById("first_name");
@@ -152,7 +189,7 @@ function addNewAuthor() {
 function validateForm(event) {
     var authorList = document.getElementById("author_list");
     var author = document.getElementById("author");
-
+    
     if (authorList.children.length === 0) {
         alert("Add atleast one author before submitting.");
         event.preventDefault();

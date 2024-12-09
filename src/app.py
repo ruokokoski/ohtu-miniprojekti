@@ -41,13 +41,12 @@ def edit_reference(citation_key):
     authors = [{"lastname":nimi.split(", ")[0] ,
                 "firstnames":nimi.split(", ")[1] }
                 for nimi in authors]
+
     return render_template(
         'edit_reference.html',
-        reference=reference,
-        authors=authors,
-        extra_fields=reference.extra_fields
+        reference=reference, 
+        authors=authors
         )
-
 
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
@@ -56,6 +55,7 @@ def update_reference_entry():
         flash("Citation key is missing", "error")
         return redirect("/references")
     return process_reference_form(is_creation=False, citation_key=citation_key)
+
 
 @app.route("/delete_reference/<citation_key>", methods=["POST"])
 def reference_remove(citation_key):

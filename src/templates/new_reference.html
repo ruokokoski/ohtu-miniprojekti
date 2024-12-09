@@ -19,46 +19,40 @@ New reference
 
                 <div class="form-group">
                     <label for="entry_type"><b>Type:</b></label>
-                    <select name="entry_type" id="entry_type">
-                        <option value="">Select entry type
-                      {% for entry_type in field_profiles.keys() %}
-                        <option value="{{entry_type}}"> {{entry_type}}
-                      {% endfor %}
+                    <select name="entry_type" id="entry_type" required>
+                        <option value="" disabled selected>Select entry type
+                        {% for entry_type in field_profiles.keys() %}
+                            <option value="{{entry_type}}"> {{entry_type}}
+                        {% endfor %}
                     </select>
                 </div>
-                <div id="required_fields">
 
-                    <b>Authors:</b>
-                    <ul id="author_list">
-                        <!-- Authors will be added here dynamically -->
-                    </ul>
+                <b>List of authors: </b>(at least one author is required)
+                <ul id="author_list">
+                    <!-- Authors will be added here dynamically -->
+                </ul>
 
-                    <div class="form-group">
-                        <div class="row">
-                            <input type="hidden" id="author" name="author">
-                            <div class="col">
-                                <input type="text" class="form-control" id="first_name" placeholder="Firstnames">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" id="last_name" placeholder="Lastname">
-                            </div>
-                            <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
+                <div class="form-group">
+                    <div class="row">
+                        <input type="hidden" id="author" name="author">
+                        <div class="col">
+                            <label for="first_name"><b>First name:</b></label>
+                            <input type="text" class="form-control" id="first_name">
                         </div>
-
-                        <div class="form-group">
-                            <label for="title"><b>Title:</b></label>
-                            <input type="text" class="form-control" name="title" required>
-                        </div>      
-                        
-                        <div class="form-group">
-                            <label for="year"><b>Year:</b></label>
-                            <input type="number" class="form-control" style="width: 150px;" id="year" name="year" required min="1000">
-                        </div>                              
+                        <div class="col">
+                            <label for="last_name"><b>Last name:</b></label>
+                            <input type="text" class="form-control" id="last_name">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
                     </div>
                 </div>
 
+                <div class="form-group" id="required_fields">
+                    <!-- REQUIRED FIELDS -->
+                </div>
+
                 <div class="form-group" id="optional_fields">
-                     <br>
+                    <!-- OPTIONAL FIELDS -->
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
