@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from bs4 import BeautifulSoup
 
-def human_like_delay(min_delay=0.5, max_delay=3.0):
+def generate_human_like_delay(min_delay=0.5, max_delay=3.0):
     delay = random.uniform(min_delay, max_delay)
     time.sleep(delay)
 
@@ -31,14 +31,13 @@ def fetch_scholar_results(search_variable):
         search.send_keys(search_variable)
         search.submit()
 
-        human_like_delay(0.3, 0.6)
+        generate_human_like_delay(0.3, 0.6)
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
-        human_like_delay(2, 3)
+        generate_human_like_delay(2, 3)
 
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
 
         results = []
         for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
@@ -46,8 +45,11 @@ def fetch_scholar_results(search_variable):
                 break
             title_tag = item.find('h3', class_='gs_rt')
             link = "Link not available"
+            pdf_url = None
             if title_tag and title_tag.find('a'):
                 link = title_tag.find('a')['href']
+                print(f'Link: {link}')
+                pdf_url = check_pdf(link)
 
             author_year_tag = item.find('div', class_='gs_a')
             authors, year = parse_author_year(
@@ -66,7 +68,7 @@ def fetch_scholar_results(search_variable):
                 "authors": authors,
                 "year": year,
                 "doi_link": link,
-                "pdf_url": "Not available",
+                "pdf_url": pdf_url,
                 "bibtex": None
             }
             results.append(result)
@@ -77,6 +79,14 @@ def fetch_scholar_results(search_variable):
         driver.quit()
 
     return results
+
+def check_pdf(link):
+    if link.startswith('https://dl.acm.org'):
+        doi_path = link.split('https://dl.acm.org')[-1]
+        pdf_url = f"https://dl.acm.org/doi/pdf{doi_path.split('/doi')[-1]}"
+        pdf_url = pdf_url.replace('/abs/', '/')
+        return pdf_url
+    return None
 
 def search_specific(title):
     driver = initialize_webdriver(headless = False)
@@ -104,14 +114,14 @@ def get_sch_bibtex(driver):
             EC.element_to_be_clickable((By.XPATH, cite_xpath))
         )
         cite.click()
-        human_like_delay(0.2, 1.5)
+        generate_human_like_delay(0.2, 1.5)
 
         WebDriverWait(driver, 10).until(EC.url_contains("#d=gs_cit"))
         bibtex_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.LINK_TEXT, "BibTeX"))
         )
         bibtex_button.click()
-        human_like_delay(0.2, 1.5)
+        generate_human_like_delay(0.2, 1.5)
 
         bibtex = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.TAG_NAME, "pre"))
@@ -145,7 +155,7 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    human_like_delay(2.5, 3.5)
+    generate_human_like_delay(2.5, 4.0)
     results = get_results(soup, 10)
     if not results:
         driver.quit()
