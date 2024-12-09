@@ -96,7 +96,7 @@ def validate_reference(reference):
 
 
 def validate_author(reference):
-    if not reference['author'] or len(reference['author'].strip()) == 0:
+    if 'author' not in reference or not reference['author'].strip():
         raise UserInputError("Author is required.")
 
 

@@ -86,16 +86,15 @@ class Reference(db.Model):
     def save(self):
         """Tallenna viite tietokantaan ja tarkista virheet"""
         try:
-            # Haetaan mahdollinen olemassa oleva viite
             existing_reference = db.session.query(Reference).filter_by(
                 citation_key=self.citation_key
             ).first()
 
-            # Jos viite löytyy, nostetaan virhe
             if existing_reference:
                 error_message = (
                     f"A reference with the citation key '{self.citation_key}' already exists."
                 )
+                db.session.rollback()
                 raise UserInputError(error_message)
 
             db.session.add(self)

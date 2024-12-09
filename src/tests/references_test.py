@@ -1,9 +1,10 @@
 import unittest
 from unittest import mock
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, MagicMock
 from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 from entities.reference import Reference
-from util import validate_reference, process_reference_form, create_reference, generate_key
+from util import validate_reference, process_reference_form, generate_key
 from exceptions import UserInputError
 from config import create_app, db
 from app import app
@@ -76,6 +77,11 @@ class TestGenerateKey(unittest.TestCase):
         expected_key = "Testaaja2024Testi"
         self.assertEqual(generate_key(author, year, title), expected_key)
 
+    def test_generate_key_missing_title(self):
+        with self.assertRaises(UserInputError):
+            generate_key("Test Author", "2024", "")
+
+
 
 class TestUserInputError(unittest.TestCase):
     def test_short_title(self):
@@ -99,8 +105,25 @@ class TestUserInputError(unittest.TestCase):
         }
         with self.assertRaises(UserInputError) as context:
             validate_reference(data)
-
         self.assertEqual(str(context.exception), "Title must be under 250 characters long.")
+
+    def test_missing_author(self):
+        data = {"title": "Some Title", "year": "2024", "extra_fields": {}}
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Author is required.")
+
+    def test_missing_publisher_for_book(self):
+        data = {"author": "John Doe", "title": "Some Title", "year": "2024", "entry_type": "book", "extra_fields": {}}
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Publisher is required for books.")
+
+    def test_missing_journal_for_article(self):
+        data = {"author": "John Doe", "title": "Some Title", "year": "2024", "entry_type": "article", "extra_fields": {}}
+        with self.assertRaises(UserInputError) as context:
+            validate_reference(data)
+        self.assertEqual(str(context.exception), "Journal is required for articles.")
 
 
 class TestReferenceModel(unittest.TestCase):
@@ -222,6 +245,7 @@ class TestReferenceModel(unittest.TestCase):
         self.assertEqual(updated_reference.year, 2025)
         self.assertEqual(updated_reference.extra_fields, {"publisher": "ABC Press"})
 
+
 class ReferenceModelTestInproceedings(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -273,6 +297,35 @@ class ReferenceModelTestInproceedings(unittest.TestCase):
         self.assertEqual(saved_reference.title, "Research Paper Title")
         self.assertEqual(saved_reference.year, 2023)
         self.assertEqual(saved_reference.extra_fields["booktitle"], "Conference Proceedings")
+
+
+class TestSaveMethodDuplicateReference(unittest.TestCase):
+
+    @patch("config.db.session.query")
+    @patch("config.db.session.add")
+    @patch("config.db.session.commit")
+    @patch("config.db.session.rollback")
+    def test_duplicate_reference_error(self, mock_rollback, mock_commit, mock_add, mock_query):
+        # Simulate the scenario where a reference with the same citation key already exists.
+        # Mocking the query to return an existing reference
+        mock_existing_reference = MagicMock()
+        mock_query.filter_by.return_value.first.return_value = mock_existing_reference
+
+        ref = Reference(entry_type="book", citation_key="Book2024", author="Author Name", title="Test Book", year=2024)
+
+        # Expecting a UserInputError to be raised
+        with self.assertRaises(UserInputError) as context:
+            ref.save()
+
+        # Assert that the exception message is correct
+        self.assertEqual(str(context.exception), "A reference with the citation key 'Book2024' already exists.")
+
+        # Ensure that add and commit are NOT called because the reference already exists
+        mock_add.assert_not_called()
+        mock_commit.assert_not_called()
+
+        # Ensure that rollback is called when an error occurs
+        mock_rollback.assert_called_once()
 
 if __name__ == "__main__":
     unittest.main()
