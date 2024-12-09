@@ -45,7 +45,7 @@ class TestFetchSearchResults(unittest.TestCase):
         mock_driver = MagicMock()
         mock_chrome.return_value = mock_driver
 
-        driver = initialize_webdriver()
+        driver = initialize_webdriver(headless=True)
 
         mock_chrome.assert_called_once()
         mock_driver.set_window_size.assert_not_called()

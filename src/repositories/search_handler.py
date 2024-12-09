@@ -1,4 +1,5 @@
 import time
+import random
 from urllib.parse import urlencode
 import requests
 from selenium import webdriver
@@ -8,12 +9,15 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from bs4 import BeautifulSoup
 
+def human_like_delay(min_delay=0.5, max_delay=3.0):
+    delay = random.uniform(min_delay, max_delay)
+    time.sleep(delay)
+
 def fetch_search_results(database, search_variable):
     if database == "ACM":
         return fetch_acm_search_results(search_variable)
-    else:
-        print(database)
-        return fetch_scholar_results(search_variable)
+    #print(database)
+    return fetch_scholar_results(search_variable)
 
 def fetch_scholar_results(search_variable):
     driver = initialize_webdriver(headless = False)
@@ -27,11 +31,11 @@ def fetch_scholar_results(search_variable):
         search.send_keys(search_variable)
         search.submit()
 
-        time.sleep(0.342)
+        human_like_delay(0.3, 0.6)
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
-        time.sleep(2.521)
+        human_like_delay(2, 3)
 
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
@@ -100,14 +104,14 @@ def get_sch_bibtex(driver):
             EC.element_to_be_clickable((By.XPATH, cite_xpath))
         )
         cite.click()
-        #time.sleep(1)
+        human_like_delay(0.2, 1.5)
 
         WebDriverWait(driver, 10).until(EC.url_contains("#d=gs_cit"))
         bibtex_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.LINK_TEXT, "BibTeX"))
         )
         bibtex_button.click()
-        #time.sleep(1)
+        human_like_delay(0.2, 1.5)
 
         bibtex = WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located((By.TAG_NAME, "pre"))
@@ -141,7 +145,7 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    time.sleep(2.7952)
+    human_like_delay(2.5, 3.5)
     results = get_results(soup, 10)
     if not results:
         driver.quit()
@@ -184,7 +188,7 @@ def fetch_bibtex(doi_link):
 
 def initialize_webdriver(headless):
     options = webdriver.ChromeOptions()
-    #options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+
     if headless:
         options.add_argument('--headless')
     return webdriver.Chrome(options=options)
@@ -197,7 +201,6 @@ def build_search_url(search_variable):
 def load_page_and_get_soup(driver):
     wait = WebDriverWait(driver, 15)
     try:
-        # results_containeria tarvitaan myöhemmin bibtex-buttonin hakua varten
         # pylint: disable=unused-variable
         results_container = wait.until(
             EC.presence_of_element_located(
