@@ -3,22 +3,53 @@ function setCurrentYearAsMax(id) {
     document.getElementById(id).setAttribute("max", year);
 }
 
-function searchTable(inputId, tableId, column) {
+function filterTable(){
     // Declare variables
-    var input, filter, table, tbody, tr, td, i, txtValue;
-    input = document.getElementById(inputId);
-    filter = input.value.toUpperCase();
-    table = document.getElementById(tableId);
+    var input_author, input_title, input_minyear, input_maxyear, table, tbody, tr;
+    var i, elements, author, title;
+
+    input_author = document.getElementById("search_author").value.toUpperCase();
+    input_title = document.getElementById("search_title").value.toUpperCase();
+    input_minyear = document.getElementById("min_year").value;
+    input_maxyear = document.getElementById("max_year").value;
+    table = document.getElementById("reference_table");
     tbody = table.getElementsByTagName("tbody")[0];
     tr = tbody.getElementsByTagName("tr");
-  
+
     // Loop through all table rows, and hide those who don't match the search query
+    
     for (i = 0; i < tr.length; i+=2) {
-        td = tr[i].getElementsByTagName("td")[column];
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
+        elements = tr[i].getElementsByTagName("td");
+        author = elements[2];
+        title = elements[3];
+        year = elements[4];
+        if (author || title || year) {
+            author = author.textContent || author.innerText;
+            title = title.textContent || title.innerText;
+            year = year.textContent || year.innerText;
+            year = Number(year);
+            if (author.toUpperCase().indexOf(input_author) > -1 && title.toUpperCase().indexOf(input_title) > -1) {
+                if(input_minyear && input_maxyear){
+                    if(input_minyear <= year && year <= input_maxyear){
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                } else if (input_minyear) {
+                    if(input_minyear <= year){
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                } else if (input_maxyear){
+                    if(year <= input_maxyear){
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                } else {
+                    tr[i].style.display = "";
+                }
             } else {
                 tr[i].style.display = "none";
             }
@@ -26,37 +57,6 @@ function searchTable(inputId, tableId, column) {
     }
 }
 
-
-function filterYear(inputId, tableId, column, min) {
-    // Declare variables
-    var input, filter, table, tbody, tr, td, i, year;
-    input = document.getElementById(inputId);
-    filter = input.value;
-    table = document.getElementById(tableId);
-    tbody = table.getElementsByTagName("tbody")[0];
-    tr = tbody.getElementsByTagName("tr");
-  
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i+=2) { //jump over extrafields rows
-        td = tr[i].getElementsByTagName("td")[column];
-        if (td) {
-            year = td.textContent || td.innerText;
-            if (min) {
-                if (Number(year) >= filter) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            } else {
-                if (Number(year) <= filter) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-}
 
 function show(id) {
     var element = document.getElementById(id);
@@ -223,9 +223,11 @@ function showFlashMessage(message) {
 }
 
 // Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
+// Huom! database tarvitaan!
 function openPopupFromServer(result_id, database) {
     // Lähetetään AJAX-pyyntö, jossa mukana result_id
     fetch('/popup_new_search_reference/' + result_id + '?database=' + database)
+
         .then(response => response.text())
         .then(data => {
             // Lisää haettu sisältö sivulle

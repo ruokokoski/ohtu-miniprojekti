@@ -5,26 +5,32 @@
 {% block body %}
 <script>document.getElementById("nav_references").classList.toggle("active")</script>
 <div class="container-fluid text-center">
-    <div class="row justify-content-center" style="text-align: left;">
+    <!-- Hakukentät vasemmalle -->
+    <div class="row justify-content-start" style="text-align: left;">
         <div class="col-2">
             <label for="search_author"><b>Author:</b></label>
-            <input type="text" class="form-control" id="search_author" onkeyup="searchTable('search_author', 'reference_table', column=2)" placeholder="Search for author..">
+            <input type="text" class="form-control" id="search_author" onkeyup="filterTable()" placeholder="Search for author..">
         </div>
         <div class="col-2">
             <label for="search_title"><b>Title:</b></label>
-            <input type="text" class="form-control" id="search_title" onkeyup="searchTable('search_title', 'reference_table', column=3)" placeholder="Search for title..">
+            <input type="text" class="form-control" id="search_title" onkeyup="filterTable()" placeholder="Search for title..">
         </div>
         <div class="col-1">
-
             <label for="filter_year"><b>Min Year:</b></label>
-            <input type="number" class="form-control" id="min_year" onkeyup="filterYear('min_year', 'reference_table', column=4, true)" placeholder="Min year...">
+            <input type="number" class="form-control" id="min_year" onkeyup="filterTable()" placeholder="Min year...">
         </div>
         <div class="col-1">
             <label for="filter_year"><b>Max Year:</b></label>
-            <input type="number" class="form-control" id="max_year" onkeyup="filterYear('max_year', 'reference_table', column=4, false)" placeholder="Max year...">
+            <input type="number" class="form-control" id="max_year" onkeyup="filterTable()" placeholder="Max year...">
         </div>
     </div>
-    
+
+    <!-- Painike oikealle -->
+    <div class="row justify-content-end" style="margin-top: 25px;">
+        <button class="btn btn-primary" onclick="downloadReferences()">Download references as BibTeX</button>
+    </div>
+
+    <!-- Taulukko -->
     <div class="row justify-content-center">
         <div class="col">
             <h2>References</h2>
@@ -81,11 +87,6 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div class="row" style="display: flex; justify-content: center; margin-top: 25px;">
-        <button class="btn btn-primary" onclick="downloadReferences()">Download</button>
-    </div>
-        </a>
     </div>
 </div>
 {% endblock %}

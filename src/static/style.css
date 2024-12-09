@@ -25,6 +25,22 @@
     border-radius: 8px;
 }
 
+/* List-sivun painikeet*/
+.row.justify-content-start {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+
+.row.justify-content-end {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 25px;
+}
+
 
 /* Popup */
 .popup {
