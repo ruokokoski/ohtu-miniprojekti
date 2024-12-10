@@ -44,7 +44,7 @@ def edit_reference(citation_key):
 
     return render_template(
         'edit_reference.html',
-        reference=reference, 
+        reference=reference,
         authors=authors
         )
 
