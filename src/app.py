@@ -55,7 +55,7 @@ def update_reference_entry():
     if not citation_key:
         flash("Citation key is missing", "error")
         return redirect("/references")
-    
+
     return process_reference_form(is_creation=False, citation_key=citation_key)
 
 
