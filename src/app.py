@@ -153,30 +153,31 @@ def from_search_new_reference(result_id):
 
     bibtex_data = selected_result.get('bibtex')
 
+    field_profiles = {}
+
     if bibtex_data:
         reference = bibtex_to_dict(bibtex_data)
         entry_type = reference['entry_type']
-        field_profiles = Reference.FIELD_PROFILES
+        field_profiles = Reference.FIELD_PROFILES.get(entry_type, {})
+
 
         # Jos Bibtex-tietueessa on tuntematon entry_type, näytetään virhe
-        if not entry_type or entry_type not in field_profiles:
+        if not entry_type or entry_type not in Reference.FIELD_PROFILES:
             error_message = (
                 f"{entry_type.capitalize()} is unknown entry type. "
                 "Please add the reference manually."
             )
 
             return render_template("popup_new_search_reference.html",
-                                   reference=reference,
-                                   entry_type=entry_type,
-                                   fields=field_profiles,
-                                   result_id=result_id,
                                    error_message=error_message)
 
     return render_template("popup_new_search_reference.html",
-                               reference=reference,
-                               entry_type=entry_type,
-                               fields=field_profiles,
-                               result_id=result_id)
+                            reference=reference,
+                            entry_type=entry_type,
+                            fields=field_profiles,
+                            required_fields=field_profiles.get('required', []),
+                            optional_fields=field_profiles.get('optional', []),
+                            result_id=result_id)
 
 
 if test_env:

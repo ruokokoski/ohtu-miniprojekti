@@ -88,19 +88,20 @@ h3 {
     color: #04151b;
 }
 
-/* Form Field Styles */
+
+/* form-group-asettelua */
 .form-group {
-    margin-bottom: 12px;
-    padding: 10px;
+    margin-bottom: 8px;
+    padding: 8px;
     background-color: #f9f9f9;
     border-radius: 8px;
     text-align: left;
 }
 
-/* Form Control */
+/* Kenttäsyöte (input) */
 .form-control {
     width: 100%;
-    padding: 8px;
+    padding: 6px 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border 0.3s ease-in-out;
@@ -109,6 +110,98 @@ h3 {
 .form-control:focus {
     border-color: #076f7c;
 }
+
+/* Kenttäotsikon ja kenttäsyötteen tiivistäminen */
+.form-group label {
+    display: inline-block;
+    width: 25%; /* Kenttäotsikko vie 30% tilasta */
+    text-align: right;
+    margin-right: 8px; /* Lisää hieman väliä */
+}
+
+.form-group input {
+    display: inline-block;
+    width: 65%; /* Kenttäsyöte vie 65% tilasta */
+}
+
+/* Kenttien asettelu responsiiviseksi */
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%; /* Kenttäotsikko vie koko leveyden pienillä näytöillä */
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .form-group input {
+        width: 100%; /* Kenttä vie koko leveyden pienillä näytöillä */
+    }
+}
+
+
+/* Author-kentän asettelu */
+.author-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Pehmeä varjo */
+    margin-bottom: 20px;
+}
+
+.author-container h3 {
+    font-size: 18px;
+    color: #04151b;
+    margin-bottom: 10px;
+}
+
+.author-container .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.author-container .col {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.author-container .col:last-child {
+    margin-right: 0;
+}
+
+.author-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.author-container .form-control {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px; /* Väli kentän ja napin välillä */
+}
+
+/* Button */
+.author-container .btn-primary {
+    background-color: #017a7a;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.author-container .btn-primary:hover {
+    background-color: #015e5e;
+}
+
+
 
 /* Button Styles */
 .popup-buttons {
@@ -253,4 +346,10 @@ button.btn {
 .table td {
     word-wrap: break-word;
     white-space: normal;
+}
+
+/* Lisää tilaa koko sovelluksen reunoille ja alaosaan */
+.container-fluid {
+    padding: 70px; /* Lisää tilaa reunoille */
+    margin-bottom: 200px; /* Lisää tilaa alareunaan */
 }

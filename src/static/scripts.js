@@ -116,7 +116,7 @@ function createInputFields() {
             div.className = "form-group";
 
             const label = document.createElement("label");
-            label.innerHTML = `<b>${field}:</b>`;
+            label.innerHTML = `<b>${capitalizeFirstLetter(field)}:</b>`;
             div.appendChild(label);
 
             const input = document.createElement("input");
@@ -141,7 +141,7 @@ function createInputFields() {
             div.className = "form-group";
 
             const label = document.createElement("label");
-            label.innerHTML = `<b>${field}:</b>`;
+            label.innerHTML = `<b>${capitalizeFirstLetter(field)}:</b>`;
             div.appendChild(label);
 
             const input = document.createElement("input");
@@ -155,6 +155,12 @@ function createInputFields() {
         });
     }
 }   
+
+// Funktio ison alkukirjaimen lisäämiseksi kentän nimeen
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 
 function addNewAuthor() {
     var firstName = document.getElementById("first_name");
@@ -260,7 +266,6 @@ function showFlashMessage(message) {
 }
 
 // Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
-// Huom! database tarvitaan!
 function openPopupFromServer(result_id, database) {
     // Lähetetään AJAX-pyyntö, jossa mukana result_id
     fetch('/popup_new_search_reference/' + result_id + '?database=' + database)

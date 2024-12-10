@@ -18,7 +18,7 @@ New reference
                 </div>
 
                 <div class="form-group">
-                    <label for="entry_type"><b>type:</b></label>
+                    <label for="entry_type"><b>Entry type:</b></label>
                     <select name="entry_type" id="entry_type" required>
                         <option value="" disabled selected>select entry type
                         {% for entry_type in field_profiles.keys() %}
@@ -27,24 +27,28 @@ New reference
                     </select>
                 </div>
 
-                <b>list of authors: </b>(at least one author is required)
+                <div class="author-container">
+                    <h3>Author Information (at least one is required)</h3> <!-- Otsikko kenttäryhmälle -->
+
+                    <div class="row">
+                        <input type="hidden" id="author" name="author">
+
+                        <div class="col">
+                            <label for="first_name"><b>First name:</b></label>
+                            <input type="text" class="form-control" id="first_name">
+                        </div>
+
+                        <div class="col">
+                            <label for="last_name"><b>Last name:</b></label>
+                            <input type="text" class="form-control" id="last_name">
+                        </div>
+
+                        <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
+                    </div>
                 <ul id="author_list">
                     <!-- Authors will be added here dynamically -->
                 </ul>
 
-                <div class="form-group">
-                    <div class="row">
-                        <input type="hidden" id="author" name="author">
-                        <div class="col">
-                            <label for="first_name"><b>first name:</b></label>
-                            <input type="text" class="form-control" id="first_name">
-                        </div>
-                        <div class="col">
-                            <label for="last_name"><b>last name:</b></label>
-                            <input type="text" class="form-control" id="last_name">
-                        </div>
-                        <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
-                    </div>
                 </div>
 
                 <div class="form-group" id="required_fields">
