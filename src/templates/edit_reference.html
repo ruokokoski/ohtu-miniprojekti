@@ -8,117 +8,76 @@ Muokkaa viitettä
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-4 align-self-center">
-            <h2>Edit references</h2>
+            <h2>Edit reference</h2>
             <form action="/update_reference" method="post" id="new_reference" style="display: inline-block;">
-                <!-- REQUIRED -->
-                <input type="hidden" name="citation_key" value="{{reference.citation_key}}">
-                <input type="hidden" id="author" name="author">
+
                 <div id="required_fields">
-                    <b>Authors:</b>
-                    <ul id="author_list">
-                    </ul>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <input type="text" class="form-control" id="first_name" placeholder="Firstnames">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" id="last_name" placeholder="Lastname">
-                            </div>
-                            <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
+                    <input type="hidden" name="entry_type" value="{{ reference.entry_type }}">
+                    <b>entry type: </b>{{reference.entry_type}} <br>
+                    
+                    <b>citation key: </b>{{reference.citation_key}} <br>
+                    <input type="hidden" name="citation_key" value="{{reference.citation_key}}">
+
+
+                    <!--label for="citation_key"><b>citation key:</b></label>
+                    <input type="text" name="citation_key" value="{{reference.citation_key}}"-->
+                </div>
+
+                <input type="hidden" id="author" name="author">
+
+                <b>list of authors: </b>(at least one author is required)
+
+                <ul id="author_list">
+                    <!-- LIST OF AUTHORS-->
+                </ul>
+
+                <div class="form-group">
+                    <div class="row">
+                        <input type="hidden" id="author" name="author">
+                        <div class="col">
+                            <label for="first_name"><b>first name:</b></label>
+                            <input type="text" class="form-control" id="first_name">
                         </div>
+                        <div class="col">
+                            <label for="last_name"><b>last name:</b></label>
+                            <input type="text" class="form-control" id="last_name">
+                        </div>
+                        <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
                     </div>
-                    <div class="form-group">
-                        <label for="entry_type"><b>Type:</b></label>
-                        <select name="entry_type" id="entry_type" onchange="updateFields()">
-                            <option value="book" {% if reference.entry_type == 'book' %}selected{% endif %}>Book</option>
-                            <option value="article" {% if reference.entry_type == 'article' %}selected{% endif %}>Article</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="title"><b>Title:</b></label>
-                        <input type="text" class="form-control" name="title" value="{{ reference.title }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference.year }}" required min="1000">
-                    </div>
+
+                    {% if reference.title %}
+                        <div class="form-group">
+                            <label for="title"><b>title:</b></label>
+                            <input type="text" class="form-control" name="title" value="{{ reference.title }}">
+                        </div>
+                    {% endif %}
+
+                    {% if reference.year %}
+                        <div class="form-group">
+                            <label for="year"><b>year:</b></label>
+                            <input type="text" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference.year }}">
+                        </div>
+                    {% endif %}
                 </div>
 
                 <!-- OPTIONAL -->
 
-                <div id="optional_fields" style="display: none">
-                    <div id="book_fields">
-                        <div class="form-group">
-                            <label for="publisher"><b>Publisher:</b></label>
-                            <input type="text" class="form-control" name="publisher" value="{{ extra_fields['publisher'] }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address"><b>Address:</b></label>
-                        <input type="text" class="form-control" name="address" value="{{ extra_fields['address'] }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="volume"><b>Volume/Number:</b></label>
-                        <input type="text" class="form-control" name="volume" value="{{ extra_fields['volume'] }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="series"><b>Series:</b></label>
-                        <input type="text" class="form-control" name="series" value="{{ extra_fields['series'] }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="edition"><b>Edition:</b></label>
-                        <input type="text" class="form-control" name="edition" value="{{ extra_fields['edition'] }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="month"><b>Month:</b></label>
-                        <input type="text" class="form-control" name="month" value="{{ extra_fields['month'] }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="note"><b>Note:</b></label>
-                        <input type="text" class="form-control" name="note" value="{{ extra_fields['note'] }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="url"><b>URL:</b></label>
-                        <input type="text" class="form-control" name="url" value="{{ extra_fields['url'] }}">
-                        </div>
-                    <div class="form-group">
-                        <label for="isbn"><b>ISBN:</b></label>
-                        <input type="text" class="form-control" name="isbn" value="{{ extra_fields['isbn'] }}">
-                        </div>
-                    </div>
-                    <div id="article_fields" style="display: none">
-                        <div class="form-group">
-                            <label for="journal"><b>Journal:</b></label>
-                            <input type="text" class="form-control" name="journal" value="{{ extra_fields['journal'] }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="number"><b>Number:</b></label>
-                            <input type="text" class="form-control" name="number" value="{{ extra_fields['number'] }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="volume"><b>Volume: </b></label>
-                            <input type="text" class="form-control" id="article_volume" name="volume" value="{{ extra_fields['volume'] }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="month"><b>Month:</b></label>
-                            <input type="text" class="form-control" id="article_month" name="month" value="{{ extra_fields['month'] }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="note"><b>Note:</b></label>
-                            <input type="text" class="form-control" id="article_note" name="note" value="{{ extra_fields['note'] }}">
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-primary" id="toggle_optionals_button">Optional fields</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <div class="form-group" id="optional_fields">
+                    {% for field in reference.extra_fields %}
+                        <label for="{{field}}"><b>{{field}}:</b></label>
+                        <input type="text" class="form-control" name="{{field}}" value="{{reference.extra_fields[field]}}">
+                    {% endfor %}
+               </div>
+               
+               <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>
 </div>
+
 {% for author in authors %}
 <script>addAuthor("{{author.firstnames}}", "{{author.lastname}}")</script>
 {% endfor %}
-<script>setCurrentYearAsMax("year")</script>
-<script>createReferenceFormButtons()</script>
+
+<script>createEditFormListeners()</script>
 {% endblock %}

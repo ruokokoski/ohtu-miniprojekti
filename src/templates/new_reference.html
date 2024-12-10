@@ -6,122 +6,64 @@ New reference
 
 {% block body %}
 <script>document.getElementById("nav_new_reference").classList.toggle("active")</script>
+
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-4 align-self-center">
             <h2>Create new reference</h2>
             <form action="/create_reference" id="new_reference" method="post" style="display: inline-block;">
-                <!-- REQUIRED -->
 
-                <!-- <label for="reference_type" style="display: inline-block; width: 200px;">Valitse viitteen tyyppi:</label> -->
-                <div id="required_fields">
-                    <b>Authors:</b>
-                    <ul id="author_list">
-                        <!-- Authors will be added here dynamically -->
-                    </ul>
-                    <div class="form-group">
-                        <div class="row">
-                            <input type="hidden" id="author" name="author">
-                            <div class="col">
-                                <input type="text" class="form-control" id="first_name" placeholder="Firstnames">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" id="last_name" placeholder="Lastname">
-                            </div>
-                            <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
-                        </div>  
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="entry_type"><b>Type:</b></label>
-                        <select name="entry_type" id="entry_type">
-                            <option value="book" selected> book
-                            <option value="article"> article
-                            </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="title"><b>Title:</b></label>
-                        <input type="text" class="form-control" name="title" required>
-                    </div>      
-                    <div class="form-group">
-                        <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" required min="1000">
-                    </div>
+                <div id="field_profiles" style="display: none;">
+                    {{ field_profiles | tojson | safe }}
                 </div>
 
-                <!-- OPTIONAL -->
+                <div class="form-group">
+                    <label for="entry_type"><b>Entry type:</b></label>
+                    <select name="entry_type" id="entry_type" required>
+                        <option value="" disabled selected>select entry type</option>
+                        {% for entry_type in field_profiles.keys() %}
+                            <option value="{{ entry_type }}">{{ entry_type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                <div id="optional_fields" style="display: none">
-                    <div id="book_fields">
-                        <div class="form-group">
-                            <label for="publisher"><b>Publisher:</b></label>
-                            <input type="text" class="form-control" name="publisher" placeholder="Required">
+                <div class="author-container">
+                    <h3>Author Information (at least one is required)</h3> <!-- Otsikko kenttäryhmälle -->
+
+                    <div class="row">
+                        <input type="hidden" id="author" name="author">
+
+                        <div class="col">
+                            <label for="first_name"><b>First name:</b></label>
+                            <input type="text" class="form-control" id="first_name">
                         </div>
-                        <div class="form-group">
-                            <label for="address"><b>Address:</b></label>
-                            <input type="text" class="form-control" name="address" placeholder="Optional">
+
+                        <div class="col">
+                            <label for="last_name"><b>Last name:</b></label>
+                            <input type="text" class="form-control" id="last_name">
                         </div>
-                        <div class="form-group">
-                            <label for="volume"><b>Volume/Number:</b></label>
-                            <input type="text" class="form-control" name="volume" placeholder="Optional">
-                        </div>
-                        <div class="form-group">
-                            <label for="series"><b>Series:</b></label>
-                            <input type="text" class="form-control" name="series" placeholder="Optional">
-                        </div>
-                        <div class="form-group">
-                            <label for="edition"><b>Edition:</b></label>
-                            <input type="text" class="form-control" name="edition" placeholder="Optional">
-                        </div>
-                        <div>
-                            <label for="month"><b>Month:</b></label>
-                            <input type="text" class="form-control" name="month" placeholder="Optional">
-                        </div>
-                        <div class="form-group">
-                            <label for="note"><b>Note:</b></label>
-                            <input type="text" class="form-control" name="note" placeholder="Optional">
-                        </div>
-                        <div class="form-group">
-                            <label for="url"><b>URL:</b></label>
-                            <input type="text" class="form-control" name="url" placeholder="Optional">
-                        </div>
-                        <div>
-                            <label for="isbn"><b>ISBN:</b></label>
-                            <input type="text" class="form-control" name="isbn" placeholder="Optional">
-                        </div>
+
+                        <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
                     </div>
+                <ul id="author_list">
+                    <!-- Authors will be added here dynamically -->
+                </ul>
 
-                    <div id="article_fields" style="display: none">
-                        <div class="form-group">
-                            <label for="journal"><b>Journal:</b></label>
-                            <input type="text" class="form-control" name="journal" placeholder="Required">
-                        </div>
-                        <div class="form-group">
-                            <label for="number"><b>Number:</b></label>
-                            <input type="text" class="form-control" name="number" placeholder="Optional">
-                        </div>
-                        <div class="form-group">
-                            <label for="volume"><b>Volume: </b></label>
-                            <input type="text" class="form-control" name="volume" placeholder="Optional">
-                        </div>
-                        <div class="form-group">
-                            <label for="month"><b>Month:</b></label>
-                            <input type="text" class="form-control" name="month" placeholder="Optional">
-                        </div>
-                        <div class="form-group">
-                            <label for="note"><b>Note:</b></label>
-                            <input type="text" class="form-control" name="note" placeholder="Optional">
-                        </div>
-                    </div>           
                 </div>
-                <div>
-                    <button type="button" class="btn btn-primary" id="toggle_optionals_button">Optional fields</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+
+                <div class="form-group" id="required_fields">
+                    <!-- REQUIRED FIELDS -->
                 </div>
+
+                <div class="form-group" id="optional_fields">
+                    <!-- OPTIONAL FIELDS -->
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>
 </div>
-<script>setCurrentYearAsMax("year")</script>
-<script>createReferenceFormButtons()</script>
+
+<script>createReferenceFormListeners()</script>
 {% endblock %}

@@ -77,46 +77,88 @@ const hideFlashMessage = () => {
 }
 window.addEventListener("load", hideFlashMessage);
 
+/*
 window.addEventListener("load", () => {
     document.getElementById('search_form').onsubmit = () => {
         document.getElementById('loading_message').style.display = 'block';
     };
 });
+*/
 
-function createReferenceFormButtons() {
-    document.getElementById("toggle_optionals_button").addEventListener("click", toggleOptionals);
+function createReferenceFormListeners() {
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
     document.getElementById("new_reference").addEventListener("submit", validateForm);
-    document.getElementById("entry_type").addEventListener("change", toggleBook);
+    document.getElementById("entry_type").addEventListener("change", createInputFields);
 };
 
-function toggleOptionals() {
-    toggleBook();
-    var opt = document.getElementById("optional_fields");
-    var btn = document.getElementById("toggle_optionals_button");
-
-    if (opt.style.display === "none") {
-        opt.style.display = "block";
-        btn.textContent = "Hide optionals";
-    }
-    else {
-        opt.style.display = "none";
-        btn.textContent = "Show optionals";
-    }
+function createEditFormListeners() {
+    document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
+    document.getElementById("new_reference").addEventListener("submit", validateForm);   
 }
 
-function toggleBook() {
-    let book = document.getElementById("book_fields");
-    let article = document.getElementById("article_fields");
-    let select = document.getElementById("entry_type");
-    if (select.value === "book") {
-        book.style.display = "block";
-        article.style.display = "none";
+function createInputFields() {
+    const fieldProfiles = JSON.parse(document.getElementById("field_profiles").textContent);
+    const entryType = document.getElementById("entry_type").value;
+    const fields = fieldProfiles[entryType] || { required: [], optional: [] };
+    const requiredContainer = document.getElementById("required_fields");
+    const optionalContainer = document.getElementById("optional_fields");
+
+    // Clear existing fields
+    requiredContainer.innerHTML = "";
+    optionalContainer.innerHTML = "";
+
+    if (fields.required && fields.required.length > 0) {
+
+        fields.required.forEach(field => {
+            if (field === "author") return;
+
+            const div = document.createElement("div");
+            div.className = "form-group";
+
+            const label = document.createElement("label");
+            label.innerHTML = `<b>${capitalizeFirstLetter(field)}:</b>`;
+            div.appendChild(label);
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            input.id = field;
+            input.name = field;
+            input.required = true;
+            input.placeholder = "required"
+            div.appendChild(input);
+
+            requiredContainer.appendChild(div);
+        });
     }
-    else if (select.value === "article") {
-        book.style.display = "none";
-        article.style.display = "block";
+
+    if (fields.optional && fields.optional.length > 0) {
+
+        fields.optional.forEach(field => {
+            if (field === "author") return;
+
+            const div = document.createElement("div");
+            div.className = "form-group";
+
+            const label = document.createElement("label");
+            label.innerHTML = `<b>${capitalizeFirstLetter(field)}:</b>`;
+            div.appendChild(label);
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "form-control";
+            input.id = field;
+            input.name = field;
+            div.appendChild(input);
+
+            optionalContainer.appendChild(div);
+        });
     }
+}   
+
+// Funktio ison alkukirjaimen lisäämiseksi kentän nimeen
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function addNewAuthor() {
@@ -152,7 +194,7 @@ function addNewAuthor() {
 function validateForm(event) {
     var authorList = document.getElementById("author_list");
     var author = document.getElementById("author");
-
+    
     if (authorList.children.length === 0) {
         alert("Add atleast one author before submitting.");
         event.preventDefault();
@@ -223,7 +265,6 @@ function showFlashMessage(message) {
 }
 
 // Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
-// Huom! database tarvitaan!
 function openPopupFromServer(result_id, database) {
     // Lähetetään AJAX-pyyntö, jossa mukana result_id
     fetch('/popup_new_search_reference/' + result_id + '?database=' + database)

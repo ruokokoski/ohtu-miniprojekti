@@ -12,7 +12,6 @@ Edit A Reference (Edit Author)
     Click Button  Delete
     Set First name  edited first name
     Set Last name  edited last name
-    Entry type is article
     Click Button  Add author
     Click Button  Save
     #Page Should Contain  text=Viite päivitetty onnistuneesti
@@ -24,7 +23,6 @@ Edit A Reference (Edit Title)
     Mouse Over  editbutton 
     Click Button  Edit
     Set Title  edited title
-    Entry type is article
     Click Button  Save
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited title
@@ -34,8 +32,6 @@ Edit A Reference (Edit Journal)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Entry type is article
-    Click Button  Optional fields
     Set Journal  edited journal
     Click Button  Save
     #Page Should Contain  text=Viite päivitetty onnistuneesti
@@ -47,7 +43,6 @@ Edit A Reference (Edit Year)
     Mouse Over  editbutton 
     Click Button  Edit
     Set Year  2000
-    Entry type is article
     Click Button  Save
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=2000
@@ -57,8 +52,6 @@ Edit A Reference (Edit Number)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Entry type is article
-    Click Button  Optional fields
     Set Number  edited number
     Click Button  Save
     #Page Should Contain  text=Viite päivitetty onnistuneesti
@@ -68,20 +61,16 @@ Edit A Reference (Edit Volume)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Entry type is article
-    Click Button  Optional fields
     Set Volume  edited volume
-    Set Year  2021
     Click Button  Save
-    Page Should Contain  text=Reference updated
+    #Page Should Contain  text=Viite päivitetty onnistuneesti
+    Page Should Contain  text=edited volume
 
 Edit A Reference (Edit Month)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Month  edited month
-    Entry type is article
     Click Button  Save
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited month
@@ -90,9 +79,7 @@ Edit A Reference (Edit Note)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Note  edited note
-    Entry type is article
     Click Button  Save
     #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited note
@@ -104,9 +91,8 @@ Reset Table Add A Reference And Go To Starting Page
     Click Link  New reference
     Set First name  Kevin P
     Set Last name  Murphy
-    Select Reference Type    article
     Click Button  Add author
-    Click Button  Optional fields
+    Select Reference Type  article
     Set Title  Probabilistic machine learning: an introduction
     Set Journal  MIT Press
     Set Year  2022
@@ -128,9 +114,6 @@ Select Reference Type
     [Arguments]  ${reference_type}
     Select From List By Label  entry_type  ${reference_type}
 
-Entry type is article
-    List Selection Should Be    entry_type    article
-
 Set Title
     [Arguments]  ${title}
     Input Text  title  ${title}
@@ -149,12 +132,12 @@ Set Number
 
 Set Volume
     [Arguments]  ${volume}
-    Input Text  article_volume  ${volume}
+    Input Text  volume  ${volume}
 
 Set Month
     [Arguments]  ${month}
-    Input Text  article_month  ${month}
+    Input Text  month  ${month}
 
 Set Note
     [Arguments]  ${note}
-    Input Text  article_note  ${note}
+    Input Text  note  ${note}

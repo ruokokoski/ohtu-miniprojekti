@@ -41,20 +41,23 @@ def edit_reference(citation_key):
     authors = [{"lastname":nimi.split(", ")[0] ,
                 "firstnames":nimi.split(", ")[1] }
                 for nimi in authors]
+
     return render_template(
         'edit_reference.html',
         reference=reference,
-        authors=authors,
-        extra_fields=reference.extra_fields
+        authors=authors
         )
 
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
     citation_key = request.form.get('citation_key')
+
     if not citation_key:
         flash("Citation key is missing", "error")
         return redirect("/references")
+
     return process_reference_form(is_creation=False, citation_key=citation_key)
+
 
 @app.route("/delete_reference/<citation_key>", methods=["POST"])
 def reference_remove(citation_key):
@@ -150,30 +153,30 @@ def from_search_new_reference(result_id):
 
     bibtex_data = selected_result.get('bibtex')
 
+    field_profiles = {}
+
     if bibtex_data:
         reference = bibtex_to_dict(bibtex_data)
         entry_type = reference['entry_type']
-        field_profiles = Reference.FIELD_PROFILES
+        field_profiles = Reference.FIELD_PROFILES.get(entry_type, {})
 
         # Jos Bibtex-tietueessa on tuntematon entry_type, näytetään virhe
-        if not entry_type or entry_type not in field_profiles:
+        if not entry_type or entry_type not in Reference.FIELD_PROFILES:
             error_message = (
                 f"{entry_type.capitalize()} is unknown entry type. "
                 "Please add the reference manually."
             )
 
             return render_template("popup_new_search_reference.html",
-                                   reference=reference,
-                                   entry_type=entry_type,
-                                   fields=field_profiles,
-                                   result_id=result_id,
                                    error_message=error_message)
 
     return render_template("popup_new_search_reference.html",
-                               reference=reference,
-                               entry_type=entry_type,
-                               fields=field_profiles,
-                               result_id=result_id)
+                            reference=reference,
+                            entry_type=entry_type,
+                            fields=field_profiles,
+                            required_fields=field_profiles.get('required', []),
+                            optional_fields=field_profiles.get('optional', []),
+                            result_id=result_id)
 
 
 if test_env:

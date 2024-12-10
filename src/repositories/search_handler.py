@@ -103,7 +103,6 @@ def search_specific(title):
 
     except (TimeoutException, WebDriverException):
         bibtex = None
-
     driver.quit()
     return bibtex
 
@@ -198,7 +197,6 @@ def fetch_bibtex(doi_link):
 
 def initialize_webdriver(headless):
     options = webdriver.ChromeOptions()
-
     if headless:
         options.add_argument('--headless')
     return webdriver.Chrome(options=options)

@@ -9,7 +9,6 @@
                 {{ error_message }}
             </div>
             {% else %}
-            <!-- Lomake näkyy vain, jos ei ole virhettä -->
             <h2>Add new reference</h2>
             <form action="/popup_new_search_reference/{{ result_id }}" method="post">
                 <input type="hidden" name="entry_type" value="{{ entry_type }}">
@@ -18,24 +17,17 @@
                     <label for="entry_type"><b>Entry Type:</b></label>
                     <input type="text" class="form-control" name="entry_type" id="entry_type" value="{{ entry_type.capitalize() }}" readonly>
                 </div>
-                
                 <div id="required_fields">
-                    <div class="form-group">
-                        <label for="author"><b>Author:</b></label>
-                        <input type="text" class="form-control" name="author" value="{{ reference.get('author', '') }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="title"><b>Title:</b></label>
-                        <input type="text" class="form-control" name="title" value="{{ reference.get('title', '') }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" name="year" value="{{ reference.get('year', '') }}" min="1000" required>
-                    </div>
+                    {% for field in required_fields %}
+                        <div class="form-group">
+                            <label for="{{ field }}"><b>{{ field.capitalize() }}:</b></label>
+                            <input type="text" class="form-control" name="{{ field }}" value="{{ reference.get(field, '') }}">
+                        </div>
+                    {% endfor %}
                 </div>
 
                 <div id="optional_fields">
-                    {% for field in fields[entry_type] %}
+                    {% for field in optional_fields %}
                         <div class="form-group">
                             <label for="{{ field }}"><b>{{ field.capitalize() }}:</b></label>
                             <input type="text" class="form-control" name="{{ field }}" value="{{ reference.get(field, '') }}">

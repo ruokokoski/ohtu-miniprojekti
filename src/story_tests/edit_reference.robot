@@ -32,7 +32,6 @@ Edit A Reference (Edit Publisher)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Publisher  edited publisher
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -53,7 +52,6 @@ Edit A Reference (Edit Address)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Address  edited address
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -63,7 +61,6 @@ Edit A Reference (Edit Volume)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Volume  edited volume
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -73,7 +70,6 @@ Edit A Reference (Edit Series)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Series  edited series
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -83,7 +79,6 @@ Edit A Reference (Edit Edition)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Edition  edited edition
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -93,7 +88,6 @@ Edit A Reference (Edit Month)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Month  edited month
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -103,7 +97,6 @@ Edit A Reference (Edit Note)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set Note  edited note
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -113,7 +106,6 @@ Edit A Reference (Edit URL)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set URL  http://localhost:5001/
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -123,7 +115,6 @@ Edit A Reference (Edit ISBN)
     Click Link  References
     Mouse Over  editbutton 
     Click Button  Edit
-    Click Button  Optional fields
     Set ISBN  edited ISBN
     Click Button  Save
     #Page Should Contain  text=Reference updated
@@ -137,7 +128,7 @@ Reset Table Add A Reference And Go To Starting Page
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Click Button  Optional fields
+    Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
@@ -146,6 +137,10 @@ Reset Table Add A Reference And Go To Starting Page
 
 Submit
     Click Button  Save
+
+Select Reference Type
+    [Arguments]  ${reference_type}
+    Select From List By Label  entry_type  ${reference_type}
 
 Set First name
     [Arguments]  ${first_name}
