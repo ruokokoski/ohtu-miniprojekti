@@ -249,6 +249,6 @@ function openAddReferencePopup() {
 
 // Sulje popup
 function closeAddReferencePopup() {
-    document.getElementById("addReferencePopup").style.display = "none";
+    document.getElementById("addReferencePopup").remove();
     document.body.classList.remove("popup-open");
 }
