@@ -57,9 +57,11 @@ class TestRoutes(unittest.TestCase):
     def test_edit_reference_route(self, mock_get_reference_by_key):
         mock_get_reference_by_key.return_value = Reference(
             citation_key="Author2020Test",
+            entry_type="journal",
             author="Author, John",
             title="Test Title",
-            year="2020"
+            year="2020",
+            extra_fields={"journal": "Test Journal"}
         )
         response = self.client.get("/edit_reference/Author2020Test")
         mock_get_reference_by_key.assert_called_once_with("Author2020Test")
@@ -72,8 +74,11 @@ class TestRoutes(unittest.TestCase):
         mock_process_reference_form.return_value = redirect("/references")
         response = self.client.post("/update_reference", data={
             "citation_key": "TestKey",
+            "entry_type": "book",
             "author": "Updated Author",
-            "title": "Updated Title"
+            "title": "Updated Title",
+            "year":"2020",
+            "extra_fields":{"publisher": "Test Publisher"}
         })
         mock_process_reference_form.assert_called_once_with(is_creation=False, citation_key="TestKey")
         self.assertEqual(response.status_code, 302)
