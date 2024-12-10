@@ -20,8 +20,8 @@ Reset Table Add A Reference And Go To Starting Page
     Set First name  Kevin P
     Set Last name  Murphy
     Click Button  Add author
-    Set Title  Probabilistic machine learning: an introduction
     Select Reference Type  book
+    Set Title  Probabilistic machine learning: an introduction
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
