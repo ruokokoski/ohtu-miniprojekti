@@ -7,7 +7,7 @@ Test Setup  Reset Table Add A Reference And Go To Starting Page
 *** Test Cases ***
 Download references
     Click Link  References
-    Click Button  Download
+    Click Button  Download all references as BibTeX
     Wait Until Created  path=~/Downloads/references.bib
     File Should Exist  path=~/Downloads/references.bib
     Remove File  path=~/Downloads/references.bib
