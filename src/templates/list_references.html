@@ -51,22 +51,22 @@
                             <td>{{ reference.year }}</td>
                             <td>
                                 <a href="/edit_reference/{{ reference.citation_key }}">
-                                    <button type="button" name="editbutton" class="btn btn-warning">Edit</button>
+                                    <button type="button" name="editbutton" class="btn btn-edit">Edit</button>
                                 </a>
                             </td>
                             <td>
                                 <form action="/delete_reference/{{ reference.citation_key }}" method="POST">
-                                    <button type="submit" class="btn btn-danger"
+                                    <button type="submit" class="btn btn-delete"
                                             onclick="return confirm('Are you sure you want to delete reference?')">Delete</button>
                                 </form>
                             </td>
                         </tr>
                         <tr class="extrafields">
                             <td colspan="7">
-                                <div style="display: flex; justify-content: center;">
-                                    <ul style="column-count: 7; text-align: left;">
+                                <div class="extrafields-wrapper">
+                                    <ul class="extrafields-list">
                                         {% for key, value in reference.extra_fields.items() %}
-                                            <li style="margin-right: 100px;">{{key}}: {{value}}</li>
+                                            <li>{{ key }}: {{ value }}</li>
                                         {% endfor %}
                                     </ul>
                                 </div>
