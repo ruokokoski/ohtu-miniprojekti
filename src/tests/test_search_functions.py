@@ -11,6 +11,9 @@ from repositories.search_handler import (
     get_title,
     get_year,
     get_doi_link,
+    check_pdf,
+    search_specific,
+    get_sch_bibtex
 )
 
 
@@ -162,3 +165,51 @@ class TestFetchSearchResults(unittest.TestCase):
         results = get_results(soup, 5)
 
         self.assertEqual(len(results), 2)
+
+    def test_check_pdf(self):
+        acm_link = "https://dl.acm.org/doi/10.1145/example"
+        pdf_url = check_pdf(acm_link)
+        expected_pdf_url = "https://dl.acm.org/doi/pdf/10.1145/example"
+        self.assertEqual(pdf_url, expected_pdf_url)
+
+        non_acm_link = "https://example.com/some-article"
+        pdf_url = check_pdf(non_acm_link)
+        self.assertIsNone(pdf_url)
+
+    @patch("repositories.search_handler.initialize_webdriver")
+    def test_search_specific(self, mock_initialize_webdriver):
+        mock_driver = MagicMock()
+        mock_initialize_webdriver.return_value = mock_driver
+        
+        mock_driver.get.return_value = None
+        mock_driver.quit.return_value = None
+        
+        with patch("repositories.search_handler.get_sch_bibtex") as mock_get_sch_bibtex:
+            mock_get_sch_bibtex.return_value = "@article{example, title={Example Title}}"
+            bibtex = search_specific("Example Title")
+            
+            mock_driver.get.assert_called_once_with("https://scholar.google.com/scholar?q=Example+Title&num=1")
+            self.assertEqual(bibtex, "@article{example, title={Example Title}}")
+
+    @patch("repositories.search_handler.WebDriverWait")
+    def test_get_sch_bibtex(self, mock_webdriver_wait):
+        mock_driver = MagicMock()
+        
+        mock_cite_button = MagicMock()
+        mock_cite_button.click.return_value = None
+        
+        mock_bibtex_button = MagicMock()
+        mock_bibtex_button.click.return_value = None
+        
+        mock_bibtex_content = MagicMock()
+        mock_bibtex_content.text = "@article{example, title={Example Title}}"
+        
+        mock_webdriver_wait.return_value.until.side_effect = [
+            mock_cite_button,
+            None,
+            mock_bibtex_button,
+            mock_bibtex_content
+        ]
+        
+        bibtex = get_sch_bibtex(mock_driver)
+        self.assertEqual(bibtex, "@article{example, title={Example Title}}")

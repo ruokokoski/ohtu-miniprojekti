@@ -18,7 +18,9 @@ from entities.reference import Reference
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    results = session.get('search_results', [])
+    database = session.get('database', "ACM")
+    return render_template("index.html", results=results, database=database)
 
 @app.route("/new_reference")
 def new():
@@ -31,6 +33,8 @@ def reference_creation():
 
 @app.route('/references')
 def browse_references():
+    session.pop('search_results', None)
+    session.pop('database', None)
     references_dict = list_references_as_dict()
     return render_template('list_references.html', references=references_dict)
 
@@ -86,14 +90,10 @@ def download_references():
         "status": "success"
     })
 
-@app.route("/search", methods=["GET", "POST"])
+@app.route("/search", methods=["POST"])
 def search():
-    if request.method == "POST":
-        search_query = request.form.get("query", "")
-        database = request.form.get("database", "ACM")
-    else:
-        search_query = request.args.get("query", "")
-        database = request.args.get("database", "ACM")
+    search_query = request.form.get("query", "")
+    database = request.form.get("database", "ACM")
 
     if not search_query:
         flash("Searchfield empty", "danger")
@@ -104,12 +104,16 @@ def search():
     except ValueError as e:
         flash(str(e), "danger")
         return redirect("/")
+
     if results is None or len(results) == 0:
         flash("Search didn't find anything", "warning")
         return redirect("/")
+
     session['search_results'] = results
+    session['database'] = database
     return render_template("index.html", results=results, database=database)
 
+'''test-route
 @app.route("/sch_bibtex/<int:result_id>", methods=["GET"])
 def bibtex_to_console(result_id):
     results = session.get('search_results', None)
@@ -126,6 +130,7 @@ def bibtex_to_console(result_id):
         print(bibtex)
         return jsonify({"message": "Title printed to console"}), 200
     return jsonify({"message": "No title available"}), 404
+'''
 
 @app.route("/popup_new_search_reference/<int:result_id>", methods=["GET", "POST"])
 def from_search_new_reference(result_id):
