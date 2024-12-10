@@ -18,64 +18,64 @@ class Reference(db.Model):
     # Kenttäprofiilit eri entry_tyypeille
     FIELD_PROFILES = {
         "article": {
-            "required": ["author", "title", "journal", "year"],
+            "required": ["author", "title", "year", "journal",],
             "optional": ["volume", "number", "pages", "month", "note", "doi"]
         },
         "book": {
-            "required": ["author", "title", "publisher", "year"],
+            "required": ["author", "title", "year", "publisher", ],
             "optional": ["volume", "series", "address", "edition", "month", "note", "url", "isbn"]
         },
         "booklet": {
-            "required": ["title"],
-            "optional": ["author", "howpublished", "address", "month", "year", "note"]
+            "required": ["author", "title", "year"],
+            "optional": ["howpublished", "address", "month","note"]
         },
         "conference": {
-            "required": ["author", "title", "booktitle", "year"],
+            "required": ["author", "title", "year", "booktitle"],
             "optional": ["editor", "volume", "number", "series", "pages", 
                          "address", "month", "organization", "publisher", "note"]
         },
         "inbook": {
-            "required": ["author", "title", "chapter", "pages", "publisher", "year"],
+            "required": ["author", "title", "year", "chapter", "pages", "publisher"],
             "optional": ["volume", "series", "address", "edition", "month", "note"]
         },
         "incollection": {
-            "required": ["author", "title", "booktitle", "publisher", "year"],
+            "required": ["author", "title", "year", "booktitle", "publisher"],
             "optional": ["editor", "volume", "number", "series", "type", "chapter", 
                          "pages", "address", "edition", "month", "note"]
         },
         "inproceedings": {
-            "required": ["author", "title", "booktitle", "year"],
+            "required": ["author", "title", "year", "booktitle"],
             "optional": ["editor", "volume", "number", "series", "pages", "address", 
                          "month", "organization", "publisher", "note"]
         },
         "manual": {
-            "required": ["title"],
-            "optional": ["author", "organization", "address", "edition", "month", "year", "note"]
+            "required": ["author", "title", "year"],
+            "optional": ["organization", "address", "edition", "month", "note"]
         },
         "mastersthesis": {
-            "required": ["author", "title", "school", "year"],
+            "required": ["author", "title", "year", "school"],
             "optional": ["type", "address", "month", "note"]
         },
         "phdthesis": {
-            "required": ["author", "title", "school", "year"],
+            "required": ["author", "title", "year", "school"],
             "optional": ["type", "address", "month", "note"]
         },
         "proceedings": {
-            "required": ["title", "year"],
+            "required": ["author", "title", "year"],
             "optional": ["editor", "volume", "number", "series", "address", 
                          "publisher", "note", "month", "organization"]
         },
         "techreport": {
-            "required": ["author", "title", "institution", "year"],
+            "required": ["author", "title", "year", "institution"],
             "optional": ["type", "number", "address", "month", "note"]
         },
         "unpublished": {
-            "required": ["author", "title", "note"],
-            "optional": ["month", "year"]
+            "required": ["author", "title","year",  "note"],
+            "optional": ["month"]
         },
         "misc": {
-            "required": [],
-            "optional": ["author", "title", "howpublished", "month", "year", "note"]
+            "required": ["author", "title", "year"],
+            "optional": ["howpublished", "month", "note", "url", "urldate"]
         }
     }
 
