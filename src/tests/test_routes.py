@@ -23,7 +23,6 @@ class TestRoutes(unittest.TestCase):
     def test_new_reference_route(self):
         response = self.client.get("/new_reference")
         self.assertEqual(response.status_code, 200)
-        #self.assertIn(b"New Reference", response.data)
 
 
     @patch("app.process_reference_form")
@@ -33,6 +32,7 @@ class TestRoutes(unittest.TestCase):
             "citation_key": "TestKey",
             "author": "Author Test",
             "title": "Test Title"
+
         })
         mock_process_reference_form.assert_called_once_with(is_creation=True)
         self.assertEqual(response.status_code, 302)

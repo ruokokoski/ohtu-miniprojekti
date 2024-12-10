@@ -4,12 +4,10 @@
             <span class="popup-close" onclick="closeAddReferencePopup()">&times;</span>
 
             {% if error_message %}
-            <!-- Virheviesti näkyy, jos on virhe -->
             <div class="alert alert-danger" role="alert">
                 {{ error_message }}
             </div>
             {% else %}
-            <!-- Lomake näkyy vain, jos ei ole virhettä -->
             <h2>Add new reference</h2>
             <form action="/popup_new_search_reference/{{ result_id }}" method="post">
                 <input type="hidden" name="entry_type" value="{{ entry_type }}">

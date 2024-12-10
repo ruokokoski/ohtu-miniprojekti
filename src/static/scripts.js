@@ -161,7 +161,6 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
 function addNewAuthor() {
     var firstName = document.getElementById("first_name");
     var lastName = document.getElementById("last_name");

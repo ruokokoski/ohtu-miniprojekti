@@ -20,9 +20,9 @@ New reference
                 <div class="form-group">
                     <label for="entry_type"><b>Entry type:</b></label>
                     <select name="entry_type" id="entry_type" required>
-                        <option value="" disabled selected>select entry type
+                        <option value="" disabled selected>select entry type</option>
                         {% for entry_type in field_profiles.keys() %}
-                            <option value="{{entry_type}}"> {{entry_type}}
+                            <option value="{{ entry_type }}">{{ entry_type }}</option>
                         {% endfor %}
                     </select>
                 </div>

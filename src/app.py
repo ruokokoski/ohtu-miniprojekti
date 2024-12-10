@@ -160,7 +160,6 @@ def from_search_new_reference(result_id):
         entry_type = reference['entry_type']
         field_profiles = Reference.FIELD_PROFILES.get(entry_type, {})
 
-
         # Jos Bibtex-tietueessa on tuntematon entry_type, näytetään virhe
         if not entry_type or entry_type not in Reference.FIELD_PROFILES:
             error_message = (
