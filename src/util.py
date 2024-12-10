@@ -14,7 +14,9 @@ def process_reference_form(is_creation, citation_key=None):
     title = request.form.get('title', '')
     year = request.form.get('year', '')
 
+
     extra_fields = create_extra_fields(entry_type)
+
 
     # Luo data-sanakirja
     data = {
@@ -24,6 +26,7 @@ def process_reference_form(is_creation, citation_key=None):
         "year": year,
         "extra_fields": extra_fields
     }
+    print(data)
 
     if not is_creation and citation_key:
         data['citation_key'] = citation_key

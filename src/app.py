@@ -44,16 +44,18 @@ def edit_reference(citation_key):
 
     return render_template(
         'edit_reference.html',
-        reference=reference, 
+        reference=reference,
         authors=authors
         )
 
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
     citation_key = request.form.get('citation_key')
+
     if not citation_key:
         flash("Citation key is missing", "error")
         return redirect("/references")
+    
     return process_reference_form(is_creation=False, citation_key=citation_key)
 
 

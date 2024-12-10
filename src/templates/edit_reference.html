@@ -8,16 +8,24 @@ Muokkaa viitettä
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-4 align-self-center">
-            <h2>Edit references</h2>
+            <h2>Edit reference</h2>
             <form action="/update_reference" method="post" id="new_reference" style="display: inline-block;">
 
-                <input type="hidden" name="citation_key" value="{{reference.citation_key}}">
-                <input type="hidden" id="author" name="author">
                 <div id="required_fields">
+                    <input type="hidden" name="entry_type" value="{{ reference.entry_type }}">
+                    <b>entry type: </b>{{reference.entry_type}} <br>
+                    
+                    <b>citation key: </b>{{reference.citation_key}} <br>
+                    <input type="hidden" name="citation_key" value="{{reference.citation_key}}">
 
-                    <b>Type: </b>{{reference.entry_type}} <br>
 
-                <b>List of authors: </b>(at least one author is required)
+                    <!--label for="citation_key"><b>citation key:</b></label>
+                    <input type="text" name="citation_key" value="{{reference.citation_key}}"-->
+                </div>
+
+                <input type="hidden" id="author" name="author">
+
+                <b>list of authors: </b>(at least one author is required)
 
                 <ul id="author_list">
                     <!-- LIST OF AUTHORS-->
@@ -27,25 +35,29 @@ Muokkaa viitettä
                     <div class="row">
                         <input type="hidden" id="author" name="author">
                         <div class="col">
-                            <label for="first_name"><b>First name:</b></label>
+                            <label for="first_name"><b>first name:</b></label>
                             <input type="text" class="form-control" id="first_name">
                         </div>
                         <div class="col">
-                            <label for="last_name"><b>Last name:</b></label>
+                            <label for="last_name"><b>last name:</b></label>
                             <input type="text" class="form-control" id="last_name">
                         </div>
                         <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
                     </div>
-                </div>
 
-                    <div class="form-group">
-                        <label for="title"><b>Title:</b></label>
-                        <input type="text" class="form-control" name="title" value="{{ reference.title }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="year"><b>Year:</b></label>
-                        <input type="number" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference.year }}" required min="1000">
-                    </div>
+                    {% if reference.title %}
+                        <div class="form-group">
+                            <label for="title"><b>title:</b></label>
+                            <input type="text" class="form-control" name="title" value="{{ reference.title }}">
+                        </div>
+                    {% endif %}
+
+                    {% if reference.year %}
+                        <div class="form-group">
+                            <label for="year"><b>year:</b></label>
+                            <input type="text" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference.year }}">
+                        </div>
+                    {% endif %}
                 </div>
 
                 <!-- OPTIONAL -->
