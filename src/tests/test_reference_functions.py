@@ -101,21 +101,18 @@ class TestBibtexToDict(unittest.TestCase):
           pages = {100-110},
         }
         """
-
         expected_output = {
-            'sample2024': {
+                'entry_type': 'article',
                 'author': 'Doe, John',
                 'title': 'Sample Paper',
                 'journal': 'Sample Journal',
                 'year': '2024',
                 'volume': '10',
                 'pages': '100-110'
-            }
         }
 
         result = bibtex_to_dict(bibtex_str)
-        result_dict = {k: dict(v) for k, v in result.items()}
-        self.assertEqual(sorted(result_dict.items()), sorted(expected_output.items()))
+        self.assertEqual(sorted(result.items()), sorted(expected_output.items()))
 
     def test_multible_authors(self):
         """Testaa yhden BibTeX-tietueen muuntamista sanakirjaksi."""
@@ -131,16 +128,14 @@ class TestBibtexToDict(unittest.TestCase):
         """
 
         expected_output = {
-            'sample2024': {
+                'entry_type': 'article',
                 'author': 'Doe, Tina and Smith, Peter and Baker, Alice',
                 'title': 'Sample Paper',
                 'journal': 'Sample Journal',
                 'year': '2024',
                 'volume': '10',
                 'pages': '100-110'
-            }
         }
 
         result = bibtex_to_dict(bibtex_str)
-        result_dict = {k: dict(v) for k, v in result.items()}
-        self.assertEqual(sorted(result_dict.items()), sorted(expected_output.items()))
+        self.assertEqual(sorted(result.items()), sorted(expected_output.items()))

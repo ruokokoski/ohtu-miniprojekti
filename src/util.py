@@ -98,7 +98,6 @@ def validate_reference(reference):
     validate_title(reference)
     validate_year(reference)
 
-    # Viitetyypin tarkastukset
     if reference['entry_type'] == "book":
         validate_book(reference)
     if reference['entry_type'] == "article":
@@ -106,15 +105,17 @@ def validate_reference(reference):
 
 
 def validate_author(reference):
-    if not reference['author'] or len(reference['author'].strip()) == 0:
+    if 'author' not in reference or not reference['author'].strip():
         raise UserInputError("Author is required.")
 
 
 def validate_title(reference):
     if len(reference['title']) < 2:
         raise UserInputError("Title must be at least 2 characters long.")
-    if len(reference['title']) > 100:
-        raise UserInputError("Title must be under 100 characters long.")
+
+    if len(reference['title']) > 250:
+        raise UserInputError("Title must be under 250 characters long.")
+
 
 def validate_year(reference):
     if not reference['year'].isdigit() or not 1000 <= int(reference['year']) <= 9999:

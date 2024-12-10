@@ -1,5 +1,7 @@
 import time
+import random
 from urllib.parse import urlencode
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -7,57 +9,67 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from bs4 import BeautifulSoup
 
+def generate_human_like_delay(min_delay=0.5, max_delay=3.0):
+    delay = random.uniform(min_delay, max_delay)
+    time.sleep(delay)
+
 def fetch_search_results(database, search_variable):
     if database == "ACM":
         return fetch_acm_search_results(search_variable)
-    if database == "Google Scholar":
-        return fetch_google_scholar_results(search_variable)
-    raise ValueError(f"Database {database} not supported.")
+    #print(database)
+    return fetch_scholar_results(search_variable)
 
-def fetch_google_scholar_results(search_variable):
-    driver = initialize_webdriver()
+def fetch_scholar_results(search_variable):
+    driver = initialize_webdriver(headless = False)
     search_url = "https://scholar.google.com/"
     driver.get(search_url)
 
     try:
-        search_box = WebDriverWait(driver, 10).until(
+        search = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.NAME, "q"))
         )
-        search_box.send_keys(search_variable)
-        search_box.submit()
+        search.send_keys(search_variable)
+        search.submit()
 
-        WebDriverWait(driver, 10).until(
+        generate_human_like_delay(0.3, 0.6)
+        WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
+        generate_human_like_delay(2, 3)
+
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
 
         results = []
-        for item in soup.find_all('div', class_='gs_r gs_or gs_scl'):
+        for index, item in enumerate(soup.find_all('div', class_='gs_r gs_or gs_scl')):
+            if index >= 10:
+                break
             title_tag = item.find('h3', class_='gs_rt')
-            title = title_tag.text.strip() if title_tag else "-"
+            link = "Link not available"
+            pdf_url = None
             if title_tag and title_tag.find('a'):
                 link = title_tag.find('a')['href']
-            else:
-                link = "Link not available"
-            title = title.replace("[HTML]", "")
-            title = title.replace("[PDF]", "")
-            title = title.replace("[CITATION]", "")
-            title = title.replace("[BOOK]", "").replace("[B]", "")
-            title = title.strip()
+                print(f'Link: {link}')
+                pdf_url = check_pdf(link)
 
             author_year_tag = item.find('div', class_='gs_a')
-            #author_year_text = author_year_tag.text.strip() if author_year_tag else "-"
             authors, year = parse_author_year(
                 author_year_tag.text.strip() if item.find('div', class_='gs_a') else "-"
             )
 
             result = {
-                "title": title,
+                "result_id": index,
+                "title": (title_tag.text if title_tag else "-")
+                         .replace("[HTML]", "")
+                         .replace("[PDF]", "")
+                         .replace("[CITATION]", "")
+                         .replace("[BOOK]", "")
+                         .replace("[B]", "")
+                         .strip(),
                 "authors": authors,
                 "year": year,
                 "doi_link": link,
-                "pdf_url": "Not available"
+                "pdf_url": pdf_url,
+                "bibtex": None
             }
             results.append(result)
 
@@ -67,6 +79,63 @@ def fetch_google_scholar_results(search_variable):
         driver.quit()
 
     return results
+
+def check_pdf(link):
+    if link.startswith('https://dl.acm.org'):
+        doi_path = link.split('https://dl.acm.org')[-1]
+        pdf_url = f"https://dl.acm.org/doi/pdf{doi_path.split('/doi')[-1]}"
+        pdf_url = pdf_url.replace('/abs/', '/')
+        return pdf_url
+    return None
+
+def search_specific(title):
+    driver = initialize_webdriver(headless = False)
+    search_url = "https://scholar.google.com/scholar?"
+    search_url += urlencode({"q": title, "num": 1})
+    driver.get(search_url)
+
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
+        )
+        #time.sleep(2)
+        bibtex = get_sch_bibtex(driver)
+
+    except (TimeoutException, WebDriverException):
+        bibtex = None
+
+    driver.quit()
+    return bibtex
+
+def get_sch_bibtex(driver):
+    try:
+        cite_xpath = "//div[@class='gs_ri']//a[@aria-controls='gs_cit']"
+        cite = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, cite_xpath))
+        )
+        cite.click()
+        generate_human_like_delay(0.2, 1.5)
+
+        WebDriverWait(driver, 10).until(EC.url_contains("#d=gs_cit"))
+        bibtex_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.LINK_TEXT, "BibTeX"))
+        )
+        bibtex_button.click()
+        generate_human_like_delay(0.2, 1.5)
+
+        bibtex = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.TAG_NAME, "pre"))
+        )
+        return bibtex.text
+    except TimeoutException:
+        print("Timeout while waiting for the BibTeX to load.")
+        return None
+    except WebDriverException:
+        print("WebDriverException occurred while interacting with the page.")
+        return None
+    except AttributeError:
+        print("AttributeError: Issue with finding the cite button or BibTeX.")
+        return None
 
 def parse_author_year(author_year_text):
     if author_year_text == "-":
@@ -78,7 +147,7 @@ def parse_author_year(author_year_text):
     return authors, year
 
 def fetch_acm_search_results(search_variable):
-    driver = initialize_webdriver()
+    driver = initialize_webdriver(headless = True)
     search_url = build_search_url(search_variable)
     driver.get(search_url)
 
@@ -86,34 +155,52 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    time.sleep(3)
+    generate_human_like_delay(2.5, 4.0)
     results = get_results(soup, 10)
     if not results:
         driver.quit()
         return None
 
-    result_data_list = []
-    for result in results:
-        title, title_tag = get_title(result)
-        year = get_year(result)
-        doi_link, pdf_url = get_doi_link(title_tag)
-        authors = get_authors(result)
+    result_data_list = [process_result(result, index) for index, result in enumerate(results)]
 
-        result_data = {
-            "title": title,
-            "authors": authors,
-            "year": year,
-            "doi_link": doi_link,
-            "pdf_url": pdf_url
-        }
-        result_data_list.append(result_data)
-
-    driver.quit()
     return result_data_list
 
-def initialize_webdriver():
+def process_result(result, index):
+    title, title_tag = get_title(result)
+    year = get_year(result)
+    doi_link, pdf_url = get_doi_link(title_tag)
+    authors = get_authors(result)
+
+    return {
+        "result_id": index,
+        "title": title,
+        "authors": authors,
+        "year": year,
+        "doi_link": doi_link,
+        "pdf_url": pdf_url,
+        "bibtex": None,
+    }
+
+def fetch_bibtex(doi_link):
+    doi = doi_link.rsplit('https://dl.acm.org/doi/', maxsplit=1)[-1]
+    url = f"https://doi.org/{doi}"
+    headers = {"Accept": "application/x-bibtex"}
+    try:
+        response = requests.get(url, headers=headers, timeout=10)
+        if response.status_code == 200:
+            return response.text
+
+        print(f"Failed to fetch BibTeX for DOI {doi}. ")
+        return None
+    except requests.RequestException as e:
+        print(f"Error fetching BibTeX for DOI {doi}: {e}")
+        return None
+
+def initialize_webdriver(headless):
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
+
+    if headless:
+        options.add_argument('--headless')
     return webdriver.Chrome(options=options)
 
 def build_search_url(search_variable):
@@ -124,7 +211,6 @@ def build_search_url(search_variable):
 def load_page_and_get_soup(driver):
     wait = WebDriverWait(driver, 15)
     try:
-        # results_containeria tarvitaan myöhemmin bibtex-buttonin hakua varten
         # pylint: disable=unused-variable
         results_container = wait.until(
             EC.presence_of_element_located(

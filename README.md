@@ -1,6 +1,6 @@
 # Ohjelmistotuotanto - Miniprojekti
 
-[![GHA_workflow_badge](https://github.com/ruokokoski/ohtu-miniprojekti/workflows/CI/badge.svg)](https://github.com/ruokokoski/ohtu-miniprojekti/actions)
+[![CI](https://github.com/ruokokoski/ohtu-miniprojekti/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/ruokokoski/ohtu-miniprojekti/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti/graph/badge.svg?token=HF7SFV0DV0)](https://codecov.io/gh/ruokokoski/ohtu-miniprojekti)
 
 Tämä repositorio sisältää Helsingin Yliopiston Ohjelmistotuotanto-kurssilla kehitetyn BibTeX-viitteidenhallintaohjelman.

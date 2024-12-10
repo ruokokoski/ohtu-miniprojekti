@@ -40,7 +40,6 @@ Home
             <div class="col-10">
                 <h5 class="text-left">Top 10 results from database: {{ database }}</h5>
                 <table class="table table-bordered">
-                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Author(s)</th>
@@ -56,13 +55,28 @@ Home
                                 <td><a href="{{ result.doi_link }}" target="_blank">{{ result.title }}</a></td>
                                 {% if database == "ACM" %}
                                 <td>
-                                    {% if result.pdf_url != "PDF-linkkiä ei löytynyt" %}
+                                    {% if result.pdf_url != "PDF-link not found" %}
                                         <a href="{{ result.pdf_url }}" target="_blank" class="btn btn-secondary btn-sm">PDF</a>
                                     {% else %}
                                         <button class="btn btn-secondary btn-sm" disabled>PDF</button>
                                     {% endif %}
                                 </td>
+                                {% elif database == "Google Scholar" %}
+                                    <td>
+                                        {% if result.pdf_url %}
+                                            <a href="{{ result.pdf_url }}" target="_blank" class="btn btn-secondary btn-sm">PDF</a>
+                                        {% else %}
+                                            <!-- empty cell -->
+                                        {% endif %}
+                                    </td>
                                 {% endif %}
+                                <td>
+                                    <button 
+                                        class="btn btn-primary btn-sm" 
+                                        onclick="openPopupFromServer('{{ result.result_id }}', '{{ database }}')">
+                                        BibTeX
+                                    </button>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -70,5 +84,21 @@ Home
             </div>
         </div>
     {% endif %}
+
+    <script>
+        const bibtexScholar = (resultId) => {
+            console.log("Button pressed for result ID:", resultId);
+
+            fetch(`/sch_bibtex/${resultId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
+    </script>
 </div>
+
 {% endblock %}
