@@ -1,54 +1,11 @@
 from sqlalchemy import text
 from config import db, app
 
-table_name = "refs"
-table2_name = "refs"
-
-def table_exists(name):
-    sql_table_existence = text(
-		"  SELECT EXISTS (  "
-		"  SELECT 1  "
-		"  FROM information_schema.tables  "
-		f" WHERE table_name = '{name}'"
-		"  )  "
-	)
-    print(f"Checking if table {name} exists")
-    print(sql_table_existence)
-    result = db.session.execute(sql_table_existence)
-    return result.fetchall()[0][0]
+TABLE_NAME = "refs"
 
 def reset_db():
-    print(f"Clearing contents from table {table_name}")
-    sql = text(f"DELETE FROM {table_name}")
-    db.session.execute(sql)
-    db.session.commit()
-
-def setup_db():
-    if table_exists(table_name):
-        print(f"Table {table_name} exists, dropping")
-        sql = text(f"DROP TABLE {table_name}")
-        db.session.execute(sql)
-        db.session.commit()
-
-    print(f"Creating table {table_name}")
-    sql = text(
-        f" CREATE TABLE {table_name} ("
-        " id SERIAL PRIMARY KEY, "
-        " key TEXT NOT NULL, "
-        " author TEXT NOT NULL, "
-        " year INTEGER NOT NULL, "
-        " title TEXT NOT NULL, "
-        " publisher TEXT NOT NULL, "
-        " address TEXT, "
-        " volume TEXT, "
-        " series TEXT, "
-        " edition TEXT, "
-        " month TEXT, "
-        " note TEXT, "
-        " url TEXT "
-        ");"
-	)
-
+    print(f"Clearing contents from table {TABLE_NAME}")
+    sql = text(f"DELETE FROM {TABLE_NAME}")
     db.session.execute(sql)
     db.session.commit()
 
@@ -57,29 +14,23 @@ def references_table_exists():
         "SELECT EXISTS ( "
         "  SELECT 1 "
         "  FROM information_schema.tables "
-        f" WHERE table_name = '{table2_name}'"
+        f" WHERE table_name = '{TABLE_NAME}'"
         ")"
     )
-    print(f"Checking if table {table2_name} exists")
+    print(f"Checking if table {TABLE_NAME} exists")
     result = db.session.execute(sql_table_existence)
     return result.fetchall()[0][0]
 
-def reset_references_table():
-    print(f"Clearing contents from table {table2_name}")
-    sql = text(f"DELETE FROM {table2_name}")
-    db.session.execute(sql)
-    db.session.commit()
-
 def setup_references_table():
     if references_table_exists():
-        print(f"Table {table2_name} exists, dropping")
-        sql = text(f"DROP TABLE {table2_name}")
+        print(f"Table {TABLE_NAME} exists, dropping")
+        sql = text(f"DROP TABLE {TABLE_NAME}")
         db.session.execute(sql)
         db.session.commit()
 
-    print(f"Creating table {table2_name}")
+    print(f"Creating table {TABLE_NAME}")
     sql = text(
-        f" CREATE TABLE IF NOT EXISTS {table2_name} ( "
+        f" CREATE TABLE IF NOT EXISTS {TABLE_NAME} ( "
         "id SERIAL PRIMARY KEY, "
         "entry_type TEXT NOT NULL, "
         "citation_key TEXT UNIQUE NOT NULL, "
@@ -95,5 +46,4 @@ def setup_references_table():
 
 if __name__ == "__main__":
     with app.app_context():
-        setup_db()
         setup_references_table()
