@@ -12,7 +12,6 @@ Add a new valid book reference
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
@@ -29,7 +28,6 @@ Add a new valid book reference with optional (address)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set Address  address test
@@ -43,7 +41,6 @@ Add a new valid book reference with optional (volume)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set Volume  volume test
@@ -57,7 +54,6 @@ Add a new valid book reference with optional (series)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set Series  series test
@@ -71,7 +67,6 @@ Add a new valid book reference with optional (edition)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set Edition  edition test
@@ -85,7 +80,6 @@ Add a new valid book reference with optional (month)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set Month  month test
@@ -99,7 +93,6 @@ Add a new valid book reference with optional (note)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set Note  note test
@@ -113,7 +106,6 @@ Add a new valid book reference with optional (URL)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set URL  http://localhost:5001/references
@@ -127,7 +119,6 @@ Add a new valid book reference with optional (ISBN)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Set ISBN  testi isbn
@@ -146,7 +137,6 @@ Add a new partially filled book reference (no number in year)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  -
     Submit 
@@ -159,7 +149,6 @@ Add a new partially filled book reference (year too small)
     Click Button  Add author
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  0
     Submit 
@@ -172,7 +161,6 @@ Add a new partially filled book reference (title too short)
     Click Button  Add author
     Select Reference Type  book
     Set Title  a
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
@@ -186,7 +174,6 @@ Add a new partially filled book reference (title too short)
 #    Select Reference Type  book
 #    Click Button  Optional fields
 #    Set Title  Probabilistic machine learning: an introduction
-#    Select Reference Type  book
 #    Set Publisher  a
 #    Set Year  2022
 #    Submit 
@@ -196,7 +183,6 @@ Add a new partially filled book reference (no author submited)
     Click Link  New reference
     Select Reference Type  book
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  2022
     Submit 
@@ -229,7 +215,6 @@ Add a new invalid book reference (year too large)
     Set Last name  Murphy
     Click Button  Add author
     Set Title  Probabilistic machine learning: an introduction
-    Select Reference Type  book
     Set Publisher  MIT Press
     Set Year  10000
     Submit 
@@ -243,7 +228,6 @@ Add a new invalid book reference (year too large)
 #    Click Button  Add author
 #    Click Button  Optional fields
 #    Set Title  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-#    Select Reference Type  book
 #    Set Publisher  MIT Press
 #    Set Year  2022
 #    Submit 
@@ -257,7 +241,6 @@ Add a new invalid book reference (year too large)
 #    Click Button  Add author
 #    Click Button  Optional fields
 #    Set Title  Probabilistic machine learning: an introduction
-#    Select Reference Type  book
 #    Set Publisher  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 #    Set Year  2022
 #    Submit 
