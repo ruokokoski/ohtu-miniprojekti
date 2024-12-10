@@ -5,30 +5,37 @@
 {% block body %}
 <script>document.getElementById("nav_references").classList.toggle("active")</script>
 <div class="container-fluid text-center">
-    <!-- Hakukentät vasemmalle -->
-    <div class="row justify-content-start" style="text-align: left;">
-        <div class="col-2">
-            <label for="search_author"><b>Author:</b></label>
-            <input type="text" class="form-control" id="search_author" onkeyup="filterTable()" placeholder="Search for author..">
+    <div class="row justify-content-between" style="text-align: left;">
+        <!-- Hakukentät vasemmalle -->
+        <div class="col">
+            <div class="row justify-content-start">
+                <div class="col">
+                    <label for="search_author"><b>Author:</b></label>
+                    <input type="text" class="form-control" id="search_author" onkeyup="filterTable()" placeholder="Search for author..">
+                </div>
+                <div class="col">
+                    <label for="search_title"><b>Title:</b></label>
+                    <input type="text" class="form-control" id="search_title" onkeyup="filterTable()" placeholder="Search for title..">
+                </div>
+                <div class="col-2">
+                    <label for="filter_year"><b>Min Year:</b></label>
+                    <input type="number" class="form-control" id="min_year" onkeyup="filterTable()" placeholder="Min year...">
+                </div>
+                <div class="col-2">
+                    <label for="filter_year"><b>Max Year:</b></label>
+                    <input type="number" class="form-control" id="max_year" onkeyup="filterTable()" placeholder="Max year...">
+                </div>
+            </div>
         </div>
-        <div class="col-2">
-            <label for="search_title"><b>Title:</b></label>
-            <input type="text" class="form-control" id="search_title" onkeyup="filterTable()" placeholder="Search for title..">
-        </div>
-        <div class="col-1">
-            <label for="filter_year"><b>Min Year:</b></label>
-            <input type="number" class="form-control" id="min_year" onkeyup="filterTable()" placeholder="Min year...">
-        </div>
-        <div class="col-1">
-            <label for="filter_year"><b>Max Year:</b></label>
-            <input type="number" class="form-control" id="max_year" onkeyup="filterTable()" placeholder="Max year...">
+        <!-- Painike oikealle -->
+        <div class="col">
+            <div class="row justify-content-end" style="margin-top: 50px;">
+                <button class="btn btn-primary" onclick="downloadReferences()">Download references as BibTeX</button>
+            </div>
         </div>
     </div>
 
-    <!-- Painike oikealle -->
-    <div class="row justify-content-end" style="margin-top: 25px;">
-        <button class="btn btn-primary" onclick="downloadReferences()">Download references as BibTeX</button>
-    </div>
+    
 
     <!-- Taulukko -->
     <div class="row justify-content-center">
