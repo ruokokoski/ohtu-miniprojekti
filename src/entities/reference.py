@@ -31,7 +31,8 @@ class Reference(db.Model):
         },
         "conference": {
             "required": ["author", "title", "booktitle", "year"],
-            "optional": ["editor", "volume", "number", "series", "pages", "address", "month", "organization", "publisher", "note"]
+            "optional": ["editor", "volume", "number", "series", "pages", 
+                         "address", "month", "organization", "publisher", "note"]
         },
         "inbook": {
             "required": ["author", "title", "chapter", "pages", "publisher", "year"],
@@ -39,11 +40,13 @@ class Reference(db.Model):
         },
         "incollection": {
             "required": ["author", "title", "booktitle", "publisher", "year"],
-            "optional": ["editor", "volume", "number", "series", "type", "chapter", "pages", "address", "edition", "month", "note"]
+            "optional": ["editor", "volume", "number", "series", "type", "chapter", 
+                         "pages", "address", "edition", "month", "note"]
         },
         "inproceedings": {
             "required": ["author", "title", "booktitle", "year"],
-            "optional": ["editor", "volume", "number", "series", "pages", "address", "month", "organization", "publisher", "note"]
+            "optional": ["editor", "volume", "number", "series", "pages", "address", 
+                         "month", "organization", "publisher", "note"]
         },
         "manual": {
             "required": ["title"],
@@ -59,7 +62,8 @@ class Reference(db.Model):
         },
         "proceedings": {
             "required": ["title", "year"],
-            "optional": ["editor", "volume", "number", "series", "address", "publisher", "note", "month", "organization"]
+            "optional": ["editor", "volume", "number", "series", "address", 
+                         "publisher", "note", "month", "organization"]
         },
         "techreport": {
             "required": ["author", "title", "institution", "year"],
