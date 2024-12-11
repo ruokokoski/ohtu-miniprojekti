@@ -183,6 +183,7 @@ def search_specific(title):
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
+        generate_human_like_delay(0.2, 1.0)
         bibtex = get_sch_bibtex(driver)
 
     except (TimeoutException, WebDriverException):
@@ -238,7 +239,7 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    generate_human_like_delay(3.0, 4.0)
+    generate_human_like_delay(3.0, 4.5)
     results = get_results(soup, 10)
     if not results:
         driver.quit()
@@ -283,6 +284,12 @@ def initialize_webdriver(headless):
     options = webdriver.ChromeOptions()
     if headless:
         options.add_argument('--headless')
+    options.add_argument('--window-size=1728,972')
+    prefs = {"profile.managed_default_content_settings.images": 2}
+    options.add_experimental_option("prefs", prefs)
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    options.add_argument('--disable-blink-features=ScriptBadging')
+    options.add_argument('--disable-extensions')
     return webdriver.Chrome(options=options)
 
 def build_search_url(search_variable):
