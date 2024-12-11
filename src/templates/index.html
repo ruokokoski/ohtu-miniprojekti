@@ -22,9 +22,13 @@ Home
                         <input class="form-check-input" type="radio" name="database" id="acm_radio" value="ACM" {% if database == 'ACM' or not database %}checked{% endif %}>
                         <label class="form-check-label" for="acm_radio">ACM</label>
                     </div>
-                    <div class="form-check">
+                    <div class="form-check mr-3">
                         <input class="form-check-input" type="radio" name="database" id="scholar_radio" value="Google Scholar" {% if database == 'Google Scholar' %}checked{% endif %}>
                         <label class="form-check-label" for="scholar_radio">Google Scholar</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="database" id="helka_radio" value="Helka" {% if database == 'Helka' %}checked{% endif %}>
+                        <label class="form-check-label" for="helka_radio">Helka</label>
                     </div>
                 </div>
                 <div class="d-flex">
@@ -70,13 +74,15 @@ Home
                                         {% endif %}
                                     </td>
                                 {% endif %}
-                                <td>
-                                    <button 
-                                        class="btn btn-primary btn-sm" 
-                                        onclick="openPopupFromServer('{{ result.result_id }}', '{{ database }}')">
-                                        BibTeX
-                                    </button>
-                                </td>
+                                {% if database != 'Helka' %}
+                                    <td>
+                                        <button 
+                                            class="btn btn-primary btn-sm" 
+                                            onclick="openPopupFromServer('{{ result.result_id }}', '{{ database }}')">
+                                            BibTeX
+                                        </button>
+                                    </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>

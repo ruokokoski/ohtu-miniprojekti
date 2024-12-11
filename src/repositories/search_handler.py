@@ -16,8 +16,93 @@ def generate_human_like_delay(min_delay=0.5, max_delay=3.0):
 def fetch_search_results(database, search_variable):
     if database == "ACM":
         return fetch_acm_search_results(search_variable)
-    #print(database)
-    return fetch_scholar_results(search_variable)
+    if database == "Google Scholar":
+        return fetch_scholar_results(search_variable)
+    return fetch_helka_results(search_variable)
+
+def fetch_helka_results(search_variable):
+    driver = initialize_webdriver(headless = True)
+    search_url = build_helka_url(search_variable)
+
+    driver.get(search_url)
+
+    try:
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "[aria-label='Hakutulokset alue']"))
+        )
+        generate_human_like_delay(2, 3)
+
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        results = parse_results(soup)
+
+        return results
+
+    except (TimeoutException, WebDriverException):
+        results = None
+    finally:
+        driver.quit()
+
+    return results
+
+def build_helka_url(search_variable):
+    base_url = "https://helka.helsinki.fi/discovery/search?vid=358UOH_INST:VU1"
+    return (
+        f"{base_url}&query=any,contains,{search_variable.replace(' ', '%20')}"
+        "&tab=DefaultSlotOrder"
+        "&search_scope=MyInstitution"
+        "&offset=0"
+    )
+
+def parse_results(soup):
+    results = []
+    list_items = soup.find_all('div', class_='list-item-wrapper')
+
+    for index, item in enumerate(list_items):
+        if index >= 10:
+            break
+
+        result = extract_result_data(item, index)
+        if result:
+            results.append(result)
+
+    return results
+
+def extract_result_data(item, index):
+    h3_element = item.find('h3')
+    if not h3_element:
+        return None
+
+    full_text = h3_element.get_text()
+    parts = full_text.split('/ ', 1)
+    title = parts[0].strip(';') if parts else "No title"
+    author = parts[1] if len(parts) > 1 else "n.d."
+
+    link_element = item.find('a', {'ng-href': True})
+    link = link_element['ng-href'] if link_element else None
+
+    year = extract_year(h3_element)
+
+    return {
+        "result_id": index,
+        "title": title,
+        "authors": author,
+        "year": year,
+        "doi_link": link,
+        "pdf_url": None,
+        "bibtex": None,
+    }
+
+
+def extract_year(h3_element):
+    next_div = h3_element.find_next_sibling('div')
+    second_next_div = next_div.find_next_sibling('div') if next_div else None
+
+    if second_next_div:
+        year_elem = second_next_div.find('span', {'ng-if': '::(!$ctrl.isEmailMode())'})
+        if year_elem:
+            return year_elem.get_text(strip=True)
+
+    return "-"
 
 def fetch_scholar_results(search_variable):
     driver = initialize_webdriver(headless = False)
@@ -154,7 +239,7 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    generate_human_like_delay(2.5, 4.0)
+    generate_human_like_delay(3.0, 4.0)
     results = get_results(soup, 10)
     if not results:
         driver.quit()

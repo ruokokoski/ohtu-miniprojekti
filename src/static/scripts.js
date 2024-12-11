@@ -77,13 +77,12 @@ const hideFlashMessage = () => {
 }
 window.addEventListener("load", hideFlashMessage);
 
-/*
+// Hakuominaisuuden flash-message "Searching..."
 window.addEventListener("load", () => {
     document.getElementById('search_form').onsubmit = () => {
         document.getElementById('loading_message').style.display = 'block';
     };
 });
-*/
 
 function createReferenceFormListeners() {
     document.getElementById("add_author_button").addEventListener("click", addNewAuthor);
