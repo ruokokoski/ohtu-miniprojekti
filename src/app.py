@@ -44,15 +44,27 @@ def browse_references():
 @app.route('/edit_reference/<citation_key>')
 def edit_reference(citation_key):
     reference = get_reference_by_key(citation_key)
+
     authors = reference.author.split(" and ")
     authors = [{"lastname":nimi.split(", ")[0] ,
                 "firstnames":nimi.split(", ")[1] }
                 for nimi in authors]
 
+    field_profiles=Reference.FIELD_PROFILES[reference.entry_type]
+    reference_fields= reference.get_all_fields()
+
+    required_fields = field_profiles.get('required', [])
+    required_fields = [field for field in required_fields if field != 'author']
+    optional_fields=field_profiles.get('optional', [])
+
     return render_template(
         'edit_reference.html',
         reference=reference,
-        authors=authors
+        reference_fields=reference_fields,
+        authors=authors,
+        required_fields=required_fields,
+        optional_fields=optional_fields,
+        field_profiles=field_profiles
         )
 
 @app.route('/update_reference', methods=['POST'])

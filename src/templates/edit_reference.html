@@ -11,65 +11,63 @@ Muokkaa viitettä
             <h2>Edit reference</h2>
             <form action="/update_reference" method="post" id="new_reference" style="display: inline-block;">
 
-                <div id="required_fields">
-                    <input type="hidden" name="entry_type" value="{{ reference.entry_type }}">
-                    <b>entry type: </b>{{reference.entry_type}} <br>
-                    
-                    <b>citation key: </b>{{reference.citation_key}} <br>
-                    <input type="hidden" name="citation_key" value="{{reference.citation_key}}">
-
-
-                    <!--label for="citation_key"><b>citation key:</b></label>
-                    <input type="text" name="citation_key" value="{{reference.citation_key}}"-->
+                <div class="form-group entry-type-group">
+                    <label for="entry_type"><b>Entry Type:</b></label>
+                    <input type="text" class="form-control" name="entry_type" id="entry_type" value="{{ reference.entry_type }}" readonly>
+                </div>
+                <div class="form-group entry-type-group">
+                    <label for="citation_key"><b>Citation Key:</b></label>
+                    <input type="text" class="form-control" name="citation_key" id="citation_key" value="{{ reference.citation_key }}" readonly>
                 </div>
 
                 <input type="hidden" id="author" name="author">
 
-                <b>list of authors: </b>(at least one author is required)
+                <div class="author-container">
+                    <h3>Author Information (at least one is required)</h3> <!-- Otsikko kenttäryhmälle -->
 
-                <ul id="author_list">
-                    <!-- LIST OF AUTHORS-->
-                </ul>
-
-                <div class="form-group">
                     <div class="row">
                         <input type="hidden" id="author" name="author">
+
                         <div class="col">
-                            <label for="first_name"><b>first name:</b></label>
+                            <label for="first_name"><b>First name:</b></label>
                             <input type="text" class="form-control" id="first_name">
                         </div>
+
                         <div class="col">
-                            <label for="last_name"><b>last name:</b></label>
+                            <label for="last_name"><b>Last name:</b></label>
                             <input type="text" class="form-control" id="last_name">
                         </div>
+
                         <button type="button" class="btn btn-primary" id="add_author_button">Add author</button>
                     </div>
+                <ul id="author_list">
+                    <!-- Authors will be added here dynamically -->
+                </ul>
 
-                    {% if reference.title %}
-                        <div class="form-group">
-                            <label for="title"><b>title:</b></label>
-                            <input type="text" class="form-control" name="title" value="{{ reference.title }}">
-                        </div>
-                    {% endif %}
-
-                    {% if reference.year %}
-                        <div class="form-group">
-                            <label for="year"><b>year:</b></label>
-                            <input type="text" class="form-control" style="width: 150px;" id="year" name="year" value="{{ reference.year }}">
-                        </div>
-                    {% endif %}
                 </div>
 
-                <!-- OPTIONAL -->
-
-                <div class="form-group" id="optional_fields">
-                    {% for field in reference.extra_fields %}
-                        <label for="{{field}}"><b>{{field}}:</b></label>
-                        <input type="text" class="form-control" name="{{field}}" value="{{reference.extra_fields[field]}}">
+                <div id="required_fields">
+                    {% for field in required_fields %}
+                        <div class="form-group">
+                            <label for="{{ field }}"><b>{{ field.capitalize() }}:</b></label>
+                            <input type="text" class="form-control" name="{{ field }}" value="{{ reference_fields.get(field, '') }}">
+                        </div>
                     {% endfor %}
-               </div>
-               
+                </div>
+
+                <div id="optional_fields">
+                    {% for field in optional_fields %}
+                        <div class="form-group">
+                            <label for="{{ field }}"><b>{{ field.capitalize() }}:</b></label>
+                            <input type="text" class="form-control" name="{{ field }}" value="{{ reference_fields.get(field, '') }}">
+                        </div>
+                    {% endfor %}
+                </div>
+
                <button type="submit" class="btn btn-primary">Save</button>
+
+                <!-- Cancel button -->
+                <a href="{{ url_for('browse_references') }}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </div>

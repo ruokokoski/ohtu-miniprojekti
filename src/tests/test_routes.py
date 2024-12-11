@@ -79,7 +79,7 @@ class TestRoutes(unittest.TestCase):
     def test_edit_reference_route(self, mock_get_reference_by_key):
         mock_get_reference_by_key.return_value = Reference(
             citation_key="Author2020Test",
-            entry_type="journal",
+            entry_type="article",
             author="Author, John",
             title="Test Title",
             year="2020",

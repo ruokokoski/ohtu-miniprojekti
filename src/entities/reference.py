@@ -98,6 +98,18 @@ class Reference(db.Model):
         data["extra_fields"] = self.extra_fields if self.extra_fields else {}
         return data
 
+    def get_all_fields(self):
+        fields = {
+            "entry_type": self.entry_type,
+            "citation_key": self.citation_key,
+            "author": self.author,
+            "title": self.title,
+            "year": self.year,
+        }
+        if self.extra_fields:
+            fields.update(self.extra_fields)
+        return fields
+
     def save(self):
         """Tallenna viite tietokantaan ja tarkista virheet"""
         try:
