@@ -296,7 +296,7 @@ function showRedirectPopup() {
 }
 
 function redirectToDatabase() {
-    document.getElementById("referenceForm").action = "/references";
+    document.getElementById("redirect_to").value = "/references";
     document.getElementById("referenceForm").submit();
     closeRedirectPopup();
     closeAddReferencePopup();
