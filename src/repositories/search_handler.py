@@ -183,7 +183,6 @@ def search_specific(title):
         WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.ID, "gs_res_ccl_mid"))
         )
-        #time.sleep(2)
         bibtex = get_sch_bibtex(driver)
 
     except (TimeoutException, WebDriverException):

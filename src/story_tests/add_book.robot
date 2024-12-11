@@ -166,19 +166,6 @@ Add a new partially filled book reference (title too short)
     Submit 
     Page Should Contain  text=Title must be at least 2 characters long
 
-#Add a new partially filled book reference (publisher too short)
-#    Click Link  New reference
-#    Set First name  Kevin P
-#    Set Last name  Murphy
-#    Click Button  Add author
-#    Select Reference Type  book
-#    Click Button  Optional fields
-#    Set Title  Probabilistic machine learning: an introduction
-#    Set Publisher  a
-#    Set Year  2022
-#    Submit 
-#    Page Should Contain  text=Publisher must be at least 2 characters long
-
 Add a new partially filled book reference (no author submited)
     Click Link  New reference
     Select Reference Type  book
@@ -219,32 +206,6 @@ Add a new invalid book reference (year too large)
     Set Year  10000
     Submit 
     Title Should Be  New reference
-
-#Add a new invalid book reference (title too long)
-#    Click Link  New reference
-#    Select Reference Type  book
-#    Set First name  Kevin P
-#    Set Last name  Murphy
-#    Click Button  Add author
-#    Click Button  Optional fields
-#    Set Title  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-#    Set Publisher  MIT Press
-#    Set Year  2022
-#    Submit 
-#    Page Should Contain  text=Title must be under 100 characters long
-
-#Add a new invalid book reference (publisher too long)
-#    Click Link  New reference
-#    Select Reference Type  book
-#    Set First name  Kevin P
-#    Set Last name  Murphy
-#    Click Button  Add author
-#    Click Button  Optional fields
-#    Set Title  Probabilistic machine learning: an introduction
-#    Set Publisher  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-#    Set Year  2022
-#    Submit 
-#    Page Should Contain  text=Publisher must be under 100 characters long
 
 *** Keywords ***
 Reset Table And Go To Starting Page

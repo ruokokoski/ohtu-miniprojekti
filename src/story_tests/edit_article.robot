@@ -14,7 +14,6 @@ Edit A Reference (Edit Author)
     Set Last name  edited last name
     Click Button  Add author
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited last name, edited first name
     Page Should Not Contain  text=Murphy, Kevin P
 
@@ -24,7 +23,6 @@ Edit A Reference (Edit Title)
     Click Button  Edit
     Set Title  edited title
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited title
     Page Should Not Contain  text=Probabilistic machine learning: an introduction
 
@@ -34,7 +32,6 @@ Edit A Reference (Edit Journal)
     Click Button  Edit
     Set Journal  edited journal
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited journal
     Page Should Not Contain  text=MIT Press
 
@@ -44,7 +41,6 @@ Edit A Reference (Edit Year)
     Click Button  Edit
     Set Year  2000
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=2000
     Page Should Not Contain  text=1234
 
@@ -54,7 +50,6 @@ Edit A Reference (Edit Number)
     Click Button  Edit
     Set Number  edited number
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited number
 
 Edit A Reference (Edit Volume)
@@ -63,7 +58,6 @@ Edit A Reference (Edit Volume)
     Click Button  Edit
     Set Volume  edited volume
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited volume
 
 Edit A Reference (Edit Month)
@@ -72,7 +66,6 @@ Edit A Reference (Edit Month)
     Click Button  Edit
     Set Month  edited month
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited month
 
 Edit A Reference (Edit Note)
@@ -81,7 +74,6 @@ Edit A Reference (Edit Note)
     Click Button  Edit
     Set Note  edited note
     Click Button  Save
-    #Page Should Contain  text=Viite päivitetty onnistuneesti
     Page Should Contain  text=edited note
 
 *** Keywords ***
