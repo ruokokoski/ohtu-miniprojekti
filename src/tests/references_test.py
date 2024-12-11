@@ -31,7 +31,7 @@ class TestProcessReferenceForm(unittest.TestCase):
             'publisher': 'Test Publisher',
             'address': 'Test Address'
         }):
-            result = process_reference_form(is_creation=True)
+            result = process_reference_form(is_creation=True, redirect_to='/new_reference')
 
             self.assertEqual(result.status_code, 302)
             self.assertEqual(mock_response.location, '/new_reference')

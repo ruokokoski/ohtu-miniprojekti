@@ -264,21 +264,17 @@ function showFlashMessage(message) {
     }, 5000);
 }
 
-// Tämä funktio avaa popupin palvelimelta ja välittää result_id:n
 function openPopupFromServer(result_id, database) {
-    // Lähetetään AJAX-pyyntö, jossa mukana result_id
     fetch('/popup_new_search_reference/' + result_id + '?database=' + database)
-
         .then(response => response.text())
         .then(data => {
-            // Lisää haettu sisältö sivulle
+
             document.body.insertAdjacentHTML('beforeend', data);
 
-            // Avaa popup sen jälkeen, kun sisältö on lisätty
             openAddReferencePopup();
         })
         .catch(error => {
-            console.error('Virhe popupin lataamisessa:', error);
+            console.error('Error with popup', error);
         });
 }
 
@@ -291,5 +287,31 @@ function openAddReferencePopup() {
 // Sulje popup
 function closeAddReferencePopup() {
     document.getElementById("addReferencePopup").remove();
+    document.body.classList.remove("popup-open");
+}
+
+function showRedirectPopup() {
+    document.getElementById("redirectPopup").style.display = "block";
+    document.body.classList.add("popup-open");
+}
+
+function redirectToDatabase() {
+    document.getElementById("referenceForm").action = "/references";
+    document.getElementById("referenceForm").submit();
+    closeRedirectPopup();
+    closeAddReferencePopup();
+}
+
+function stayOnPage() {
+    document.getElementById("redirect_to").value = "/";
+    document.getElementById("referenceForm").submit();
+
+    closeRedirectPopup();
+    closeAddReferencePopup();
+
+}
+
+function closeRedirectPopup() {
+    document.getElementById("redirectPopup").style.display = "none";
     document.body.classList.remove("popup-open");
 }

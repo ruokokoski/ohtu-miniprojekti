@@ -6,19 +6,15 @@ from exceptions import UserInputError
 
 
 
-def process_reference_form(is_creation, citation_key=None):
+def process_reference_form(is_creation, redirect_to, citation_key=None):
     """Käsittelee lomakkeen tiedot ja suorittaa validoinnin."""
-    # Haetaan formista lähetetyt tiedot
     entry_type = request.form.get('entry_type', '')
     author = request.form.get('author', '')
     title = request.form.get('title', '')
     year = request.form.get('year', '')
 
-
     extra_fields = create_extra_fields(entry_type)
 
-
-    # Luo data-sanakirja
     data = {
         "entry_type": entry_type,
         "author": author,
@@ -26,24 +22,19 @@ def process_reference_form(is_creation, citation_key=None):
         "year": year,
         "extra_fields": extra_fields
     }
-    print(data)
 
     if not is_creation and citation_key:
         data['citation_key'] = citation_key
 
-    # Suoritetaan validointi
     try:
         validate_reference(data)
-
-        # Luo uusi viite tai päivitä olemassa oleva
         if is_creation:
             create_reference(data)
             flash("New reference created", "success")
         else:
             update_reference(citation_key, data)
             flash("Reference updated", "success")
-
-        return redirect("/references")
+        return redirect(redirect_to)
 
     except UserInputError as error:
         flash(str(error), "failure")

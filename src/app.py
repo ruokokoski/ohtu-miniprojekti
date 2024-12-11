@@ -29,10 +29,13 @@ def new():
 
 @app.route('/create_reference', methods=['POST'])
 def reference_creation():
-    return process_reference_form(is_creation=True)
+    redirect_to = request.form.get('redirect_to', '/references')
+    return process_reference_form(is_creation=True, redirect_to=redirect_to)
 
-@app.route('/references')
+@app.route('/references', methods=["GET", "POST"])
 def browse_references():
+    if request.method == "POST":
+        return redirect('/references')
     session.pop('search_results', None)
     session.pop('database', None)
     references_dict = list_references_as_dict()
@@ -55,13 +58,13 @@ def edit_reference(citation_key):
 @app.route('/update_reference', methods=['POST'])
 def update_reference_entry():
     citation_key = request.form.get('citation_key')
+    redirect_to = request.form.get('redirect_to', '/references')
 
-    if not citation_key:
-        flash("Citation key is missing", "error")
-        return redirect("/references")
-
-    return process_reference_form(is_creation=False, citation_key=citation_key)
-
+    return process_reference_form(
+        is_creation=False,
+        redirect_to=redirect_to,
+        citation_key=citation_key
+    )
 
 @app.route("/delete_reference/<citation_key>", methods=["POST"])
 def reference_remove(citation_key):
@@ -138,7 +141,9 @@ def from_search_new_reference(result_id):
     print(f'Database: {database}')
 
     if request.method == "POST":
-        return process_reference_form(is_creation=True)
+        redirect_to = request.form.get('redirect_to', '/references')  # Oletus: '/references'
+
+        return process_reference_form(is_creation=True, redirect_to=redirect_to)
 
     results = session.get('search_results', None)
 

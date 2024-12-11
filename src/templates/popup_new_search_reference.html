@@ -4,13 +4,12 @@
             <span class="popup-close" onclick="closeAddReferencePopup()">&times;</span>
 
             {% if error_message %}
-            <!-- Virheviesti näkyy, jos on virhe -->
             <div class="alert alert-danger" role="alert">
                 {{ error_message }}
             </div>
             {% else %}
             <h2>Add new reference</h2>
-            <form action="/popup_new_search_reference/{{ result_id }}" method="post">
+            <form id="referenceForm" action="/popup_new_search_reference/{{ result_id }}" method="post">
                 <input type="hidden" name="entry_type" value="{{ entry_type }}">
                 
                 <div class="form-group">
@@ -35,10 +34,21 @@
                     {% endfor %}
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save reference</button>
+                <input type="hidden" name="redirect_to" id="redirect_to" value="/references">
+
+                <button type="button" class="btn btn-primary" onclick="showRedirectPopup()">Save reference</button>
                 <button type="button" class="btn btn-secondary" id="cancel_edit_button" onclick="closeAddReferencePopup()">Cancel</button>
             </form>
             {% endif %}
+        </div>
+    </div>
+
+    <div id="redirectPopup" class="popup" style="display:none;">
+        <div class="popup-content">
+            <span class="popup-close" onclick="closeRedirectPopup()">&times;</span>
+            <h2>Saving... Where would you like to go?</h2>
+            <button type="button" class="btn btn-primary" onclick="redirectToDatabase()">Go to References page</button>
+            <button type="button" class="btn btn-secondary" onclick="stayOnPage()">Stay on current page</button>
         </div>
     </div>
 {% endblock %}

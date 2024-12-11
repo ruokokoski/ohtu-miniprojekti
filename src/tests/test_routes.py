@@ -25,6 +25,27 @@ class TestRoutes(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         #self.assertIn(b"New Reference", response.data)
 
+    @patch("app.process_reference_form")
+    def test_update_reference_route(self, mock_process_reference_form):
+        mock_process_reference_form.return_value = redirect("/references")
+
+        response = self.client.post("/update_reference", data={
+            "citation_key": "Authot2020Updated",
+            "entry_type": "book",
+            "author": "Updated Author",
+            "title": "Updated Title",
+            "year": "2020",
+            "extra_fields": {"publisher": "Test Publisher"}
+        })
+
+        mock_process_reference_form.assert_called_once_with(
+            is_creation=False,
+            redirect_to='/references',
+            citation_key='Authot2020Updated'
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.location, "/references")
 
     @patch("app.process_reference_form")
     def test_create_reference_route(self, mock_process_reference_form):
@@ -33,8 +54,9 @@ class TestRoutes(unittest.TestCase):
             "citation_key": "TestKey",
             "author": "Author Test",
             "title": "Test Title"
+
         })
-        mock_process_reference_form.assert_called_once_with(is_creation=True)
+        mock_process_reference_form.assert_called_once_with(is_creation=True, redirect_to='/references')
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.location, "/references")
 
@@ -67,83 +89,6 @@ class TestRoutes(unittest.TestCase):
         mock_get_reference_by_key.assert_called_once_with("Author2020Test")
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Test Title", response.data)
-
-
-    @patch("app.process_reference_form")
-    def test_update_reference_route(self, mock_process_reference_form):
-        mock_process_reference_form.return_value = redirect("/references")
-        response = self.client.post("/update_reference", data={
-            "citation_key": "TestKey",
-            "entry_type": "book",
-            "author": "Updated Author",
-            "title": "Updated Title",
-            "year":"2020",
-            "extra_fields":{"publisher": "Test Publisher"}
-        })
-        mock_process_reference_form.assert_called_once_with(is_creation=False, citation_key="TestKey")
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.location, "/references")
-
-
-
-    @patch("app.process_reference_form")
-    def test_create_reference_route(self, mock_process_reference_form):
-        mock_process_reference_form.return_value = redirect("/references")
-        response = self.client.post("/create_reference", data={
-            "citation_key": "TestKey",
-            "author": "Author Test",
-            "title": "Test Title"
-
-        })
-        mock_process_reference_form.assert_called_once_with(is_creation=True)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.location, "/references")
-
-
-    @patch("app.list_references_as_dict")
-    def test_browse_references_route(self, mock_list_references_as_dict):
-        mock_list_references_as_dict.return_value = [
-            {
-                "citation_key": "TestKey",
-                "title": "Test Title",
-                "extra_fields": {"field1": "value1", "field2": "value2"}
-            }
-        ]
-        response = self.client.get("/references")
-        mock_list_references_as_dict.assert_called_once()
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Test Title", response.data)
-
-    @patch("app.get_reference_by_key")
-    def test_edit_reference_route(self, mock_get_reference_by_key):
-        mock_get_reference_by_key.return_value = Reference(
-            citation_key="Author2020Test",
-            entry_type="journal",
-            author="Author, John",
-            title="Test Title",
-            year="2020",
-            extra_fields={"journal": "Test Journal"}
-        )
-        response = self.client.get("/edit_reference/Author2020Test")
-        mock_get_reference_by_key.assert_called_once_with("Author2020Test")
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Test Title", response.data)
-
-
-    @patch("app.process_reference_form")
-    def test_update_reference_route(self, mock_process_reference_form):
-        mock_process_reference_form.return_value = redirect("/references")
-        response = self.client.post("/update_reference", data={
-            "citation_key": "TestKey",
-            "entry_type": "book",
-            "author": "Updated Author",
-            "title": "Updated Title",
-            "year":"2020",
-            "extra_fields":{"publisher": "Test Publisher"}
-        })
-        mock_process_reference_form.assert_called_once_with(is_creation=False, citation_key="TestKey")
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.location, "/references")
 
 
     @patch("app.delete_reference")
