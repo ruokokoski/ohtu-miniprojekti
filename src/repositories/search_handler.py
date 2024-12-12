@@ -239,7 +239,7 @@ def fetch_acm_search_results(search_variable):
     if not soup:
         return None
 
-    generate_human_like_delay(3.0, 4.5)
+    generate_human_like_delay(2.0, 4.5)
     results = get_results(soup, 10)
     if not results:
         driver.quit()

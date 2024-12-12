@@ -13,7 +13,12 @@ from repositories.search_handler import (
     get_doi_link,
     check_pdf,
     search_specific,
-    get_sch_bibtex
+    get_sch_bibtex,
+    fetch_helka_results,
+    build_helka_url,
+    parse_results,
+    extract_result_data,
+    extract_year,
 )
 
 
@@ -213,3 +218,86 @@ class TestFetchSearchResults(unittest.TestCase):
         
         bibtex = get_sch_bibtex(mock_driver)
         self.assertEqual(bibtex, "@article{example, title={Example Title}}")
+
+    @patch("repositories.search_handler.initialize_webdriver")
+    def test_fetch_helka_results_success(self, mock_initialize_webdriver):
+        mock_driver = MagicMock()
+        mock_initialize_webdriver.return_value = mock_driver
+
+        mock_driver.page_source = """
+        <div class="list-item-wrapper">
+            <h3>Test Title / Test Author</h3>
+            <a ng-href="https://example.com"></a>
+            <div></div><div><span ng-if="::(!$ctrl.isEmailMode())">2024</span></div>
+        </div>
+        """
+        mock_driver.get.return_value = None
+
+        with patch("repositories.search_handler.generate_human_like_delay"):
+            results = fetch_helka_results("test query")
+
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]["title"], "Test Title ")
+        self.assertEqual(results[0]["authors"], "Test Author")
+        self.assertEqual(results[0]["year"], "2024")
+        self.assertEqual(results[0]["doi_link"], "https://example.com")
+
+        mock_driver.quit.assert_called_once()
+
+    def test_build_helka_url(self):
+        search_variable = "test query"
+        expected_url = (
+            "https://helka.helsinki.fi/discovery/search?vid=358UOH_INST:VU1"
+            "&query=any,contains,test%20query&tab=DefaultSlotOrder"
+            "&search_scope=MyInstitution&offset=0"
+        )
+        self.assertEqual(build_helka_url(search_variable), expected_url)
+
+    def test_parse_results(self):
+        html = """
+        <div class="list-item-wrapper">
+            <h3>Test Title / Test Author</h3>
+            <a ng-href="https://example.com"></a>
+            <div></div><div><span ng-if="::(!$ctrl.isEmailMode())">2024</span></div>
+        </div>
+        """
+        soup = BeautifulSoup(html, "html.parser")
+        results = parse_results(soup)
+
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]["title"], "Test Title ")
+        self.assertEqual(results[0]["authors"], "Test Author")
+        self.assertEqual(results[0]["year"], "2024")
+        self.assertEqual(results[0]["doi_link"], "https://example.com")
+
+    def test_extract_result_data(self):
+        html = """
+        <div class="list-item-wrapper">
+            <h3>Test Title / Test Author</h3>
+            <a ng-href="https://example.com"></a>
+            <div></div><div><span ng-if="::(!$ctrl.isEmailMode())">2024</span></div>
+        </div>
+        """
+        item = BeautifulSoup(html, "html.parser")
+        result = extract_result_data(item, 0)
+
+        self.assertEqual(result["result_id"], 0)
+        self.assertEqual(result["title"], "Test Title ")
+        self.assertEqual(result["authors"], "Test Author")
+        self.assertEqual(result["year"], "2024")
+        self.assertEqual(result["doi_link"], "https://example.com")
+
+    def test_extract_year(self):
+        html = """
+        <h3>Test Title</h3>
+        <div></div>
+        <div>
+            <span ng-if="::(!$ctrl.isEmailMode())">2024</span>
+        </div>
+        """
+        h3_element = BeautifulSoup(html, "html.parser").find("h3")
+        self.assertEqual(extract_year(h3_element), "2024")
+
+        html = "<h3>Test Title</h3>"
+        h3_element = BeautifulSoup(html, "html.parser").find("h3")
+        self.assertEqual(extract_year(h3_element), "-")
