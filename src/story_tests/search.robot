@@ -5,7 +5,7 @@ Suite Teardown  Close Browser
 Test Setup  Go To Starting Page
 
 *** Test Cases ***
-# tests commented out in fear of scraping protection kicking in
+# tests commented out in fear of scraping protection kicking in. adding # at the start of next line activates tests
 *** Comments ***
 Search Google Scholar
     Click Link  Home

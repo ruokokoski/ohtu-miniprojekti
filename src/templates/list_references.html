@@ -56,7 +56,7 @@
                     </thead>
                     <tbody>
                         {% for reference in references %}
-                        <tr class="mainfields">
+                        <tr class="mainfields" id={{reference.citation_key}}>
                             <td>{{ reference.entry_type }}</td>
                             <td>{{ reference.citation_key }}</td>
                             <td>{{ reference.author }}</td>
