@@ -9,6 +9,8 @@ Tämä repositorio sisältää Helsingin Yliopiston Ohjelmistotuotanto-kurssilla
 
 Laura, Ville, Joni, Teemu, Samuli ja Touko
 
+[Loppuraportti](https://docs.google.com/document/d/1Cqcr4pUOMWcQT67TA7TweRkTe6GTQj4RRJQ38YbP_X0/edit?tab=t.0)
+
 ## Projektin käyttöönotto
 
 ### Asentaminen
