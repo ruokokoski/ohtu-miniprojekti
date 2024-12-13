@@ -11,7 +11,6 @@ print(f"Test environment: {test_env}")
 
 app = Flask(__name__)
 app.secret_key = getenv("SECRET_KEY")
-#app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 
 if ci_env:
     app.config["SQLALCHEMY_DATABASE_URI"] = getenv("TEST_DATABASE_URL")

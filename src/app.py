@@ -128,25 +128,6 @@ def search():
     session['database'] = database
     return render_template("index.html", results=results, database=database)
 
-'''test-route
-@app.route("/sch_bibtex/<int:result_id>", methods=["GET"])
-def bibtex_to_console(result_id):
-    results = session.get('search_results', None)
-    selected_result = next((result for result in results if result['result_id'] == result_id), None)
-    if not selected_result:
-        return "Result not found", 404
-
-    title = selected_result.get('title')
-    if title:
-        print(f"Title for result ID {result_id}:")
-        print(title)
-        bibtex = search_specific(title)
-        print("BibTeX:")
-        print(bibtex)
-        return jsonify({"message": "Title printed to console"}), 200
-    return jsonify({"message": "No title available"}), 404
-'''
-
 @app.route("/popup_new_search_reference/<int:result_id>", methods=["GET", "POST"])
 def from_search_new_reference(result_id):
     database = request.args.get('database')
